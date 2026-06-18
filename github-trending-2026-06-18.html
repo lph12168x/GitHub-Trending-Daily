@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Trending 简报 — 2026-06-18</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent2: #f78166;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --purple: #bc8cff;
+    --red: #f85149;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 0;
+  }
+
+  /* Hero Header */
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 40%, #1a0d2e 70%, #0d1117 100%);
+    padding: 48px 24px 40px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(88,166,255,0.06) 0%, transparent 40%),
+                radial-gradient(circle at 70% 50%, rgba(247,129,102,0.05) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+  .hero .date-badge {
+    display: inline-block;
+    background: rgba(88,166,255,0.12);
+    border: 1px solid rgba(88,166,255,0.3);
+    color: var(--accent);
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+  }
+  .hero h1 {
+    font-size: 36px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #58a6ff 0%, #bc8cff 50%, #f78166 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  .hero .subtitle {
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+  .hero .source-link {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .hero .source-link:hover { text-decoration: underline; }
+
+  /* Stats Bar */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    max-width: 800px;
+    margin: 28px auto 0;
+    background: rgba(22,27,34,0.8);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .stat-item {
+    flex: 1;
+    padding: 16px 12px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-value {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text);
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .stat-item:nth-child(1) .stat-value { color: var(--accent); }
+  .stat-item:nth-child(2) .stat-value { color: var(--green); }
+  .stat-item:nth-child(3) .stat-value { color: var(--purple); }
+  .stat-item:nth-child(4) .stat-value { color: var(--accent2); }
+
+  /* Main Content */
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+  }
+
+  /* Section Headers */
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .icon { font-size: 22px; }
+
+  /* Top 3 Cards */
+  .top3-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 700px) {
+    .top3-grid { grid-template-columns: 1fr; }
+  }
+  .top-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .top-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+  }
+  .top-card .rank-badge {
+    position: absolute;
+    top: 0; right: 0;
+    width: 44px; height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+    border-radius: 0 12px 0 12px;
+  }
+  .top-card.rank-1 { border-color: rgba(247,129,102,0.4); }
+  .top-card.rank-1 .rank-badge { background: linear-gradient(135deg, #f78166, #f0883e); color: #fff; }
+  .top-card.rank-2 { border-color: rgba(88,166,255,0.3); }
+  .top-card.rank-2 .rank-badge { background: linear-gradient(135deg, #58a6ff, #388bfd); color: #fff; }
+  .top-card.rank-3 { border-color: rgba(188,140,255,0.3); }
+  .top-card.rank-3 .rank-badge { background: linear-gradient(135deg, #bc8cff, #8957e5); color: #fff; }
+  .top-card .repo-name {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    margin-right: 40px;
+    word-break: break-all;
+  }
+  .top-card .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .top-card .repo-name a:hover { text-decoration: underline; }
+  .top-card .repo-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    min-height: 56px;
+    margin-bottom: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .top-card .today-stars {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .top-card.rank-1 .today-stars { color: var(--accent2); }
+  .top-card.rank-2 .today-stars { color: var(--accent); }
+  .top-card.rank-3 .today-stars { color: var(--purple); }
+  .top-card .today-label {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .top-card .card-footer {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .lang-dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+
+  /* Language Bar Chart */
+  .lang-chart {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 32px;
+  }
+  .lang-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .lang-bar-row:last-child { margin-bottom: 0; }
+  .lang-bar-label {
+    width: 90px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .lang-bar-track {
+    flex: 1;
+    height: 22px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  .lang-bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    transition: width 0.6s ease;
+  }
+  .lang-bar-count {
+    width: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left;
+    flex-shrink: 0;
+  }
+
+  /* Repo Table */
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .repo-row {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .repo-row:hover {
+    border-color: var(--accent);
+    transform: translateX(4px);
+  }
+  .repo-rank {
+    width: 30px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+  .repo-info { flex: 1; min-width: 0; }
+  .repo-info .name-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+  .repo-info .name-line a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .repo-info .name-line a:hover { text-decoration: underline; }
+  .repo-info .lang-tag {
+    font-size: 11px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .repo-info .desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .repo-metrics {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .repo-metric {
+    text-align: center;
+    min-width: 70px;
+  }
+  .repo-metric .val {
+    font-size: 18px;
+    font-weight: 800;
+  }
+  .repo-metric .lbl {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .metric-today .val { color: var(--green); }
+  .metric-total .val { color: var(--text); }
+  .metric-forks .val { color: var(--text-muted); }
+
+  /* Mini bar showing today's stars */
+  .today-bar {
+    width: 50px;
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 4px;
+  }
+  .today-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), #2ea043);
+    border-radius: 3px;
+  }
+
+  /* Highlights */
+  .highlights {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 32px;
+  }
+  .highlights ul { list-style: none; }
+  .highlights li {
+    padding: 8px 0;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(48,54,61,0.5);
+  }
+  .highlights li:last-child { border-bottom: none; }
+  .highlights li strong { color: var(--accent); }
+  .highlights li .tag {
+    display: inline-block;
+    background: rgba(88,166,255,0.1);
+    border: 1px solid rgba(88,166,255,0.2);
+    color: var(--accent);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 6px;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 26px; }
+    .stats-bar { flex-wrap: wrap; }
+    .stat-item { flex: 1 1 45%; border-bottom: 1px solid var(--border); }
+    .repo-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .repo-metrics { width: 100%; justify-content: space-around; }
+    .lang-bar-label { width: 60px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="date-badge">📅 2026 年 6 月 18 日 · 周四</div>
+    <h1>GitHub Trending 简报</h1>
+    <p class="subtitle">数据来源：<a href="https://github.com/trending" class="source-link" target="_blank">github.com/trending</a> · 共 20 个热门仓库</p>
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-value">20</div>
+        <div class="stat-label">热门仓库</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">+8,732</div>
+        <div class="stat-label">今日新增 Stars</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">1,523</div>
+        <div class="stat-label">最高单日涨幅</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">9</div>
+        <div class="stat-label">编程语言</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Top 3 -->
+  <h2 class="section-title"><span class="icon">🏆</span> 今日 Top 3</h2>
+  <div class="top3-grid">
+
+    <div class="top-card rank-1">
+      <div class="rank-badge">#1</div>
+      <div class="repo-name"><a href="https://github.com/mattpocock/skills" target="_blank">mattpocock/skills</a></div>
+      <div class="repo-desc">Skills for Real Engineers. Straight from my .claude directory.</div>
+      <div class="today-stars">+1,523 ⭐</div>
+      <div class="today-label">今日新增</div>
+      <div class="card-footer">
+        <span><span class="lang-dot" style="background:#89e051;"></span>Shell</span>
+        <span>总计 133,665 ⭐</span>
+      </div>
+    </div>
+
+    <div class="top-card rank-2">
+      <div class="rank-badge">#2</div>
+      <div class="repo-name"><a href="https://github.com/Panniantong/Agent-Reach" target="_blank">Panniantong/Agent-Reach</a></div>
+      <div class="repo-desc">Give your AI agent eyes to see the entire internet. Read & search Twitter, Reddit, YouTube, GitHub, Bilibili, XiaoHongShu.</div>
+      <div class="today-stars">+1,161 ⭐</div>
+      <div class="today-label">今日新增</div>
+      <div class="card-footer">
+        <span><span class="lang-dot" style="background:#3572A5;"></span>Python</span>
+        <span>总计 33,266 ⭐</span>
+      </div>
+    </div>
+
+    <div class="top-card rank-3">
+      <div class="rank-badge">#3</div>
+      <div class="repo-name"><a href="https://github.com/obra/superpowers" target="_blank">obra/superpowers</a></div>
+      <div class="repo-desc">An agentic skills framework & software development methodology that works.</div>
+      <div class="today-stars">+1,129 ⭐</div>
+      <div class="today-label">今日新增</div>
+      <div class="card-footer">
+        <span><span class="lang-dot" style="background:#89e051;"></span>Shell</span>
+        <span>总计 231,129 ⭐</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Language Distribution -->
+  <h2 class="section-title"><span class="icon">📊</span> 编程语言分布</h2>
+  <div class="lang-chart">
+    <div class="lang-bar-row">
+      <div class="lang-bar-label">TypeScript</div>
+      <div class="lang-bar-track">
+        <div class="lang-bar-fill" style="width:100%; background:linear-gradient(90deg,#3178c6,#235a97);">6 个仓库</div>
+      </div>
+      <div class="lang-bar-count">6</div>
+    </div>
+    <div class="lang-bar-row">
+      <div class="lang-bar-label">Python</div>
+      <div class="lang-bar-track">
+        <div class="lang-bar-fill" style="width:83%; background:linear-gradient(90deg,#3572A5,#2b5d8a);">5 个仓库</div>
+      </div>
+      <div class="lang-bar-count">5</div>
+    </div>
+    <div class="lang-bar-row">
+      <div class="lang-bar-label">Rust</div>
+      <div class="lang-bar-track">
+        <div class="lang-bar-fill" style="width:50%; background:linear-gradient(90deg,#dea584,#c47e5f);">3 个仓库</div>
+      </div>
+      <div class="lang-bar-count">3</div>
+    </div>
+    <div class="lang-bar-row">
+      <div class="lang-bar-label">Shell</div>
+      <div class="lang-bar-track">
+        <div class="lang-bar-fill" style="width:33%; background:linear-gradient(90deg,#89e051,#5fa632);">2 个仓库</div>
+      </div>
+      <div class="lang-bar-count">2</div>
+    </div>
+    <div class="lang-bar-row">
+      <div class="lang-bar-label">C / Java</div>
+      <div class="lang-bar-track">
+        <div class="lang-bar-fill" style="width:17%; background:linear-gradient(90deg,#555,#777);">各 1 个</div>
+      </div>
+      <div class="lang-bar-count">1+1</div>
+    </div>
+    <div class="lang-bar-row">
+      <div class="lang-bar-label">其他</div>
+      <div class="lang-bar-track">
+        <div class="lang-bar-fill" style="width:17%; background:linear-gradient(90deg,#db5855,#9c4a47);">Clojure/Kotlin/Ruby</div>
+      </div>
+      <div class="lang-bar-count">3</div>
+    </div>
+  </div>
+
+  <!-- Highlights -->
+  <h2 class="section-title"><span class="icon">🧠</span> 今日看点</h2>
+  <div class="highlights">
+    <ul>
+      <li>
+        <strong>mattpocock/skills</strong> 以 +1,523 Stars 登顶今日榜首，TypeScript 大神 Matt Pocock 的 Claude skills 合集引发工程师社区热潮 <span class="tag">🔥 爆款</span>
+      </li>
+      <li>
+        <strong>Panniantong/Agent-Reach</strong> 紧随其后（+1,161），让 AI Agent 一键搜索 Twitter/Reddit/YouTube/B站/小红书，零 API 费用的全平台读取方案 <span class="tag">AI Agent</span>
+      </li>
+      <li>
+        <strong>obra/superpowers</strong> 第三名（+1,129），agentic skills 框架持续走热，已累计 23 万+ Stars，今日日均增长强劲 <span class="tag">Agent 框架</span>
+      </li>
+      <li>
+        <strong>google-research/timesfm</strong> 时间序列基础模型获 +606 Stars，Google 出品的时序预测预训练模型在学术与工业界双双走红 <span class="tag">Google 出品</span>
+      </li>
+      <li>
+        <strong>freeCodeCamp</strong> 常青树稳居榜单（+757），449K Stars 的编程教育巨头持续吸引学习者
+      </li>
+      <li>
+        <strong>DeusData/codebase-memory-mcp</strong>（+371）高性能代码智能 MCP 服务器，158 语言支持、亚毫秒查询 <span class="tag">MCP 生态</span>
+      </li>
+      <li>
+        <strong>nautilus_trader</strong>（+98）Rust 原生生产级交易引擎，确定性事件驱动架构在量化交易圈引发关注 <span class="tag">量化</span>
+      </li>
+      <li>
+        今日 <strong>TypeScript + Python</strong> 占据 11/20 席位，AI Agent 生态与开发者工具依然是 GitHub Trending 的核心主题
+      </li>
+    </ul>
+  </div>
+
+  <!-- Full Ranking -->
+  <h2 class="section-title"><span class="icon">📋</span> 完整排行</h2>
+  <div class="repo-list">
+
+    <!-- 1 -->
+    <div class="repo-row">
+      <div class="repo-rank">1</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/mattpocock/skills" target="_blank">mattpocock/skills</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#89e051;"></span>Shell</span>
+        </div>
+        <div class="desc">Skills for Real Engineers. Straight from my .claude directory.</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+1,523</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:100%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">133,665</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">11,611</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="repo-row">
+      <div class="repo-rank">2</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/Panniantong/Agent-Reach" target="_blank">Panniantong/Agent-Reach</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#3572A5;"></span>Python</span>
+        </div>
+        <div class="desc">AI agent 全平台读取：Twitter, Reddit, YouTube, GitHub, Bilibili, XiaoHongShu — 一个 CLI，零 API 费</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+1,161</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:76%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">33,266</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">2,673</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="repo-row">
+      <div class="repo-rank">3</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/obra/superpowers" target="_blank">obra/superpowers</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#89e051;"></span>Shell</span>
+        </div>
+        <div class="desc">Agentic skills 框架与软件开发方法论</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+1,129</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:74%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">231,129</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">20,543</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="repo-row">
+      <div class="repo-rank">4</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/freeCodeCamp/freeCodeCamp" target="_blank">freeCodeCamp/freeCodeCamp</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#3178c6;"></span>TypeScript</span>
+        </div>
+        <div class="desc">免费学习数学、编程和计算机科学的开源平台</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+757</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:50%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">449,156</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">45,089</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="repo-row">
+      <div class="repo-rank">5</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/google-research/timesfm" target="_blank">google-research/timesfm</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#3572A5;"></span>Python</span>
+        </div>
+        <div class="desc">Google Research 时间序列基础模型（TimesFM），用于时序预测的预训练模型</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+606</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:40%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">21,928</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">2,131</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="repo-row">
+      <div class="repo-rank">6</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation" target="_blank">universal-android-debloater</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#dea584;"></span>Rust</span>
+        </div>
+        <div class="desc">无需 root 的 Android 跨平台去 bloating 工具，改善隐私、安全与续航</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+457</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:30%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">7,656</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">328</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="repo-row">
+      <div class="repo-rank">7</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/n0-computer/iroh" target="_blank">n0-computer/iroh</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#dea584;"></span>Rust</span>
+        </div>
+        <div class="desc">模块化网络协议栈，用 key 寻址替代 IP 地址</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+421</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:28%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">9,672</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">452</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="repo-row">
+      <div class="repo-rank">8</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/DeusData/codebase-memory-mcp" target="_blank">DeusData/codebase-memory-mcp</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#555;"></span>C</span>
+        </div>
+        <div class="desc">高性能代码智能 MCP 服务器，158 语言、亚毫秒查询、零依赖单二进制</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+371</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:24%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">5,389</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">492</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="repo-row">
+      <div class="repo-rank">9</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/chatwoot/chatwoot" target="_blank">chatwoot/chatwoot</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#701516;"></span>Ruby</span>
+        </div>
+        <div class="desc">开源全渠道客服：实时聊天、邮件支持，Intercom/Zendesk 替代方案</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+264</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:17%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">32,386</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">7,714</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="repo-row">
+      <div class="repo-rank">10</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/meshery/meshery" target="_blank">meshery/meshery</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#3178c6;"></span>TypeScript</span>
+        </div>
+        <div class="desc">Meshery — 云原生管理器（服务网格管理平台）</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+196</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:13%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">11,026</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">3,458</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="repo-row">
+      <div class="repo-rank">11</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/bytedance/UI-TARS-desktop" target="_blank">bytedance/UI-TARS-desktop</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#3178c6;"></span>TypeScript</span>
+        </div>
+        <div class="desc">字节跳动开源多模态 AI Agent 桌面端</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+150</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:10%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">36,707</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">3,701</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="repo-row">
+      <div class="repo-rank">12</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/nautechsystems/nautilus_trader" target="_blank">nautilus_trader</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#dea584;"></span>Rust</span>
+        </div>
+        <div class="desc">生产级 Rust 原生交易引擎，确定性事件驱动架构</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+98</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:7%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">23,819</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">3,019</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="repo-row">
+      <div class="repo-rank">13</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/calesthio/OpenMontage" target="_blank">calesthio/OpenMontage</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#3572A5;"></span>Python</span>
+        </div>
+        <div class="desc">全球首个开源 agentic 视频制作系统，12 条流水线、52 个工具</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+98</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:7%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">5,358</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">1,010</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="repo-row">
+      <div class="repo-rank">14</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/krahets/hello-algo" target="_blank">krahets/hello-algo</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#b07219;"></span>Java</span>
+        </div>
+        <div class="desc">《Hello 算法》：动画图解数据结构与算法教程，支持 14 种编程语言</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+96</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:6%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">127,474</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">15,175</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 15 -->
+    <div class="repo-row">
+      <div class="repo-rank">15</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/makeplane/plane" target="_blank">makeplane/plane</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#3178c6;"></span>TypeScript</span>
+        </div>
+        <div class="desc">开源项目管理平台 — Jira/Linear/Monday 替代方案</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+89</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:6%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">51,316</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">4,563</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 16 -->
+    <div class="repo-row">
+      <div class="repo-rank">16</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/penpot/penpot" target="_blank">penpot/penpot</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#db5855;"></span>Clojure</span>
+        </div>
+        <div class="desc">开源设计工具，设计到代码的协作平台</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+70</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:5%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">50,108</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">3,234</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 17 -->
+    <div class="repo-row">
+      <div class="repo-rank">17</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/continuedev/continue" target="_blank">continuedev/continue</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#3178c6;"></span>TypeScript</span>
+        </div>
+        <div class="desc">开源编码 Agent</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+49</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:3%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">33,916</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">4,699</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 18 -->
+    <div class="repo-row">
+      <div class="repo-rank">18</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/alexzhang13/rlm" target="_blank">alexzhang13/rlm</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#3572A5;"></span>Python</span>
+        </div>
+        <div class="desc">递归语言模型（RLM）通用推理库，支持多种沙箱</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+43</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:3%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">4,935</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">823</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 19 -->
+    <div class="repo-row">
+      <div class="repo-rank">19</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/RocketChat/Rocket.Chat" target="_blank">RocketChat/Rocket.Chat</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#3178c6;"></span>TypeScript</span>
+        </div>
+        <div class="desc">关键任务通信操作系统（Secure CommsOS）</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+22</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:2%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">45,595</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">13,657</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 20 -->
+    <div class="repo-row">
+      <div class="repo-rank">20</div>
+      <div class="repo-info">
+        <div class="name-line">
+          <a href="https://github.com/yairm210/Unciv" target="_blank">yairm210/Unciv</a>
+          <span class="lang-tag"><span class="lang-dot" style="background:#A97BFF;"></span>Kotlin</span>
+        </div>
+        <div class="desc">开源文明 V 重制版（Android / 桌面）</div>
+      </div>
+      <div class="repo-metrics">
+        <div class="repo-metric metric-today">
+          <div class="val">+24</div>
+          <div class="lbl">今日</div>
+          <div class="today-bar"><div class="today-bar-fill" style="width:2%;"></div></div>
+        </div>
+        <div class="repo-metric metric-total">
+          <div class="val">10,673</div>
+          <div class="lbl">总 Stars</div>
+        </div>
+        <div class="repo-metric metric-forks">
+          <div class="val">1,844</div>
+          <div class="lbl">Forks</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>📊 由 WorkBuddy 自动生成 · <a href="https://github.com/trending" target="_blank">查看原始 GitHub Trending 页面</a></p>
+  <p style="margin-top:4px;">数据抓取于 2026-06-18 · 仅供参考，Stars 数据实时变化</p>
+</div>
+
+</body>
+</html>
