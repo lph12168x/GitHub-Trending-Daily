@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Trending 简报 — 2026-06-12</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --card-hover: #1c2230;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent2: #f78166;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --purple: #bc8cff;
+    --red: #f85149;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 40%, #1a0d2e 70%, #0d1117 100%);
+    padding: 48px 24px 40px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(88,166,255,0.06) 0%, transparent 40%),
+                radial-gradient(circle at 70% 50%, rgba(247,129,102,0.05) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+  .hero .badge {
+    display: inline-block;
+    background: rgba(88,166,255,0.12);
+    border: 1px solid rgba(88,166,255,0.3);
+    color: var(--accent);
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+  }
+  .hero h1 {
+    font-size: 36px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #58a6ff 0%, #bc8cff 50%, #f78166 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  .hero .subtitle { color: var(--text-muted); font-size: 15px; }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+  /* Report content */
+  .report-body { padding: 0 0 48px; }
+  .report-body h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 36px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+  .report-body h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    color: var(--accent);
+  }
+  .report-body p { margin-bottom: 12px; color: var(--text); }
+  .report-body blockquote {
+    border-left: 3px solid var(--accent);
+    background: rgba(88,166,255,0.06);
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 0 6px 6px 0;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .report-body blockquote a { color: var(--accent); }
+  .report-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .report-body th {
+    background: var(--card);
+    color: var(--accent);
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .report-body td {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .report-body tr:nth-child(even) td { background: rgba(22,27,34,0.5); }
+  .report-body ul, .report-body ol { margin: 12px 0 12px 24px; }
+  .report-body li { margin-bottom: 6px; }
+  .report-body strong { color: var(--text); font-weight: 700; }
+  .report-body hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+  .report-body code {
+    background: var(--card);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 13px;
+    color: var(--accent2);
+  }
+  .report-body pre {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    margin: 16px 0;
+  }
+  .report-body pre code {
+    background: none;
+    padding: 0;
+    color: var(--text);
+  }
+  .report-body a { color: var(--accent); }
+  .nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 0;
+  }
+  .footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-content">
+    <span class="badge">📅 2026-06-12 周五</span>
+    <h1>GitHub Trending 简报</h1>
+    <p class="subtitle">数据来源：<a href="https://github.com/trending" target="_blank">github.com/trending</a> · 每日自动生成</p>
+  </div>
+</div>
+<div class="container">
+  <a href="index.html" class="nav-back">← 返回首页</a>
+  <div class="report-body">
+<h2>GitHub Trending — 2026 年 6 月 12 日</h2>
+<blockquote>
+<p>数据来源：<a href="https://github.com/trending" target="_blank">github.com/trending</a> | 共收录 <strong>19</strong> 个热门仓库</p>
+</blockquote>
+<hr>
+<h2>📊 总览</h2>
+<table>
+<tr><th>排名</th><th>仓库</th><th>语言</th><th>⭐ Total</th><th>🔥 Today</th></tr>
+<tr><td>1</td><td><a href="https://github.com/addyosmani/agent-skills" target="_blank">addyosmani/agent-skills</a></td><td>Shell</td><td>54,866</td><td>+3,278</td></tr>
+<tr><td>2</td><td><a href="https://github.com/apple/container" target="_blank">apple/container</a></td><td>Swift</td><td>32,638</td><td>+2,430</td></tr>
+<tr><td>3</td><td><a href="https://github.com/phuryn/pm-skills" target="_blank">phuryn/pm-skills</a></td><td>—</td><td>16,256</td><td>+1,978</td></tr>
+<tr><td>4</td><td><a href="https://github.com/msitarzewski/agency-agents" target="_blank">msitarzewski/agency-agents</a></td><td>Shell</td><td>111,630</td><td>+1,599</td></tr>
+<tr><td>5</td><td><a href="https://github.com/obra/superpowers" target="_blank">obra/superpowers</a></td><td>Shell</td><td>224,890</td><td>+1,322</td></tr>
+<tr><td>6</td><td><a href="https://github.com/soxoj/maigret" target="_blank">soxoj/maigret</a></td><td>Python</td><td>32,636</td><td>+661</td></tr>
+<tr><td>7</td><td><a href="https://github.com/refactoringhq/tolaria" target="_blank">refactoringhq/tolaria</a></td><td>TypeScript</td><td>15,418</td><td>+604</td></tr>
+<tr><td>8</td><td><a href="https://github.com/masterking32/MasterDnsVPN" target="_blank">masterking32/MasterDnsVPN</a></td><td>Go</td><td>5,713</td><td>+507</td></tr>
+<tr><td>9</td><td><a href="https://github.com/maziyarpanahi/openmed" target="_blank">maziyarpanahi/openmed</a></td><td>Python</td><td>2,784</td><td>+426</td></tr>
+<tr><td>10</td><td><a href="https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools" target="_blank">x1xhlol/system-prompts-and-models-of-ai-tools</a></td><td>—</td><td>139,886</td><td>+368</td></tr>
+<tr><td>11</td><td><a href="https://github.com/NVIDIA/SkillSpector" target="_blank">NVIDIA/SkillSpector</a></td><td>Python</td><td>2,708</td><td>+319</td></tr>
+<tr><td>12</td><td><a href="https://github.com/hexo-ai/sia" target="_blank">hexo-ai/sia</a></td><td>Python</td><td>1,323</td><td>+199</td></tr>
+<tr><td>13</td><td><a href="https://github.com/bannedbook/fanqiang" target="_blank">bannedbook/fanqiang</a></td><td>Kotlin</td><td>46,829</td><td>+161</td></tr>
+<tr><td>14</td><td><a href="https://github.com/kenn-io/agentsview" target="_blank">kenn-io/agentsview</a></td><td>Go</td><td>1,670</td><td>+114</td></tr>
+<tr><td>15</td><td><a href="https://github.com/alchaincyf/zhangxuefeng-skill" target="_blank">alchaincyf/zhangxuefeng-skill</a></td><td>—</td><td>7,968</td><td>+89</td></tr>
+<tr><td>16</td><td><a href="https://github.com/TapXWorld/ChinaTextbook" target="_blank">TapXWorld/ChinaTextbook</a></td><td>Roff</td><td>73,945</td><td>+88</td></tr>
+<tr><td>17</td><td><a href="https://github.com/chatwoot/chatwoot" target="_blank">chatwoot/chatwoot</a></td><td>Ruby</td><td>30,381</td><td>+67</td></tr>
+<tr><td>18</td><td><a href="https://github.com/restic/restic" target="_blank">restic/restic</a></td><td>Go</td><td>34,177</td><td>+61</td></tr>
+<tr><td>19</td><td><a href="https://github.com/mattermost/mattermost" target="_blank">mattermost/mattermost</a></td><td>TypeScript</td><td>37,329</td><td>+53</td></tr>
+</table>
+<hr>
+<h2>🔥 今日焦点</h2>
+<h3>🏆 增速之王：agent-skills（+3,278 stars）</h3>
+<p><strong>addyosmani/agent-skills</strong> 连续多日霸榜，今日以 +3,278 星的惊人增速登顶。这是 Google Chrome 工程总监 Addy Osmani 维护的「面向 AI 编码 Agent 的生产级工程 skills」合集，54.8K total stars。Skills 赛道不仅没有降温，反而在加速——开源社区在用脚投票，skills 已成为 AI 编程 Agent 的标准配件。</p>
+<h3>🍏 Apple container 持续爆发（+2,430 stars）</h3>
+<p><strong>apple/container</strong> 昨日 +1,611，今日再夺 +2,430，总星数突破 32.6K。Apple 用 Swift 编写的这个轻量级 Linux 容器工具（基于 Virtualization.framework，专为 Apple Silicon 优化），正在重新定义 Mac 上的容器体验。连续两天超过 2000+ 日增，热度堪比发布周。</p>
+<h3>🏢 企业级 Agent 团队冒头：agency-agents（+1,599 stars）</h3>
+<p><strong>msitarzewski/agency-agents</strong> 提供了一个「完整 AI 代理机构」——从前端专家到 Reddit 社区忍者，每个 Agent 都是具有独立人格、流程和交付物的专业专家。111K total stars，今日 +1,599，说明人们不再满足于单个 Coding Agent，而是期待「一支 AI 团队」协作交付完整项目。</p>
+<hr>
+<h2>🧭 分类解读</h2>
+<h3>一、Agent Skills 生态（5 个项目，持续霸榜）</h3>
+<p>Agent Skills 生态已是第五天霸占 Trending 前排，今日再度占据 5 席：</p>
+<table>
+<tr><th>项目</th><th>定位</th><th>今日增长</th></tr>
+<tr><td><strong>addyosmani/agent-skills</strong></td><td>工程级 Agent Skills</td><td>+3,278</td></tr>
+<tr><td><strong>phuryn/pm-skills</strong></td><td>PM Skills 市场，100+ skills</td><td>+1,978</td></tr>
+<tr><td><strong>obra/superpowers</strong></td><td>Agent skills 框架 & 开发方法论</td><td>+1,322</td></tr>
+<tr><td><strong>msitarzewski/agency-agents</strong></td><td>完整 AI Agent 团队</td><td>+1,599</td></tr>
+<tr><td><strong>NVIDIA/SkillSpector</strong></td><td>AI Agent Skills 安全扫描器</td><td>+319</td></tr>
+</table>
+<p><strong>趋势解读</strong>：Skills 生态已经从"有没有"进化到"安不安全"。NVIDIA 的 SkillSpector 专门检测 skills 中的漏洞和恶意模式——这是生态走向成熟的标志。框架（superpowers）+ 市场（pm-skills/agent-skills）+ 安全（SkillSpector）+ 团队化（agency-agents），四层体系已经成型。</p>
+<h3>二、AI 开发工具 & 框架（3 个项目）</h3>
+<table>
+<tr><th>项目</th><th>亮点</th></tr>
+<tr><td><strong>x1xhlol/system-prompts-and-models-of-ai-tools</strong></td><td>收集了 25+ AI 编码工具的内部 system prompts 和模型信息，139.8K stars，堪称「AI 工具考古大全」</td></tr>
+<tr><td><strong>hexo-ai/sia</strong></td><td>自我改进 AI 框架，可自主提升任何 AI 系统的基准性能，1.3K stars 起步</td></tr>
+<tr><td><strong>kenn-io/agentsview</strong></td><td>面向 Coding Agent 的本地优先会话分析工具，支持 Claude Code、Codex 等 20+ Agent，宣称比 ccusage 快 100 倍</td></tr>
+</table>
+<p><strong>趋势解读</strong>：AI 工具透明化（system prompts 收集）和自我进化（SIA 框架）是两条并行主线。agentsview 则抓住了「用量分析」这个被忽视的刚需——当开发者重度依赖 Coding Agent 时，了解 agent 的 Token 消耗和行为模式成为刚需。</p>
+<h3>三、Apple 开发者工具（1 个项目，现象级）</h3>
+<ul>
+<li><strong>apple/container</strong>（+2,430 stars）：不用多说了，这是本周最大的明星项目。Swift 编写 + Apple Silicon 优化 + 轻量级 VM，正在改变 Mac 开发者的容器工作流。</li>
+</ul>
+<h3>四、隐私与安全（2 个项目）</h3>
+<table>
+<tr><th>项目</th><th>定位</th></tr>
+<tr><td><strong>soxoj/maigret</strong></td><td>通过用户名在 3000+ 网站搜集个人信息，OSINT（开源情报）经典工具，32.6K stars</td></tr>
+<tr><td><strong>masterking32/MasterDnsVPN</strong></td><td>基于 DNS 隧道的 VPN 工具，用于绕过审查，5.7K stars</td></tr>
+</table>
+<h3>五、开源替代品 & 基础设施（3 个项目）</h3>
+<table>
+<tr><th>项目</th><th>定位</th><th>总星数</th></tr>
+<tr><td><strong>chatwoot/chatwoot</strong></td><td>开源的客服/邮件/全渠道服务台，Intercom/Zendesk 替代品</td><td>30.3K</td></tr>
+<tr><td><strong>mattermost/mattermost</strong></td><td>开源安全协作平台，Slack/Teams 替代品</td><td>37.3K</td></tr>
+<tr><td><strong>restic/restic</strong></td><td>快速安全高效的备份程序</td><td>34.1K</td></tr>
+</table>
+<h3>六、知识库 & 内容管理（1 个项目）</h3>
+<ul>
+<li><strong>refactoringhq/tolaria</strong>（+604 stars）：管理 Markdown 知识库的桌面应用，15.4K stars，TypeScript 编写。作为"AI 时代的笔记工具"，它正在捕获一波知识管理工具升级的需求。</li>
+</ul>
+<h3>七、医疗 AI（1 个项目）</h3>
+<ul>
+<li><strong>maziyarpanahi/openmed</strong>（+426 stars）：开源医疗 AI，虽然只有 2.7K stars，但连续多日上榜增速可观。医疗垂直 AI 正在从「大模型+医疗」的通用方案走向「专为医疗设计」的专用方案。</li>
+</ul>
+<h3>八、中文社区关注（3 个项目）</h3>
+<table>
+<tr><th>项目</th><th>定位</th><th>总星数</th></tr>
+<tr><td><strong>alchaincyf/zhangxuefeng-skill</strong></td><td>张雪峰认知操作系统 Skill——高考志愿/考研/职业规划思维框架</td><td>7.9K</td></tr>
+<tr><td><strong>TapXWorld/ChinaTextbook</strong></td><td>小初高、大学全部 PDF 教材合集</td><td>73.9K</td></tr>
+<tr><td><strong>bannedbook/fanqiang</strong></td><td>科学上网工具合集</td><td>46.8K</td></tr>
+</table>
+<hr>
+<h2>📈 趋势洞察</h2>
+<h3>🔑 三大主线</h3>
+<ol>
+<li><strong>Skills 生态成熟化</strong>（5/19 = 26%）—— 从框架 → 市场 → 安全 → 团队协作，四层体系已成型。但这也意味着赛道开始分化：简单收集 skills 的仓库将面临同质化竞争，安全扫描（NVIDIA SkillSpector）和 Agent 编排（agency-agents）是新的差异化方向。</li>
+</ol>
+<ol>
+<li><strong>Apple 开发者工具崛起</strong>（apple/container 现象级增长）—— Apple Silicon 生态走向成熟，Mac 原生开发工具开始替代传统 Linux 工具链。Swift 在系统编程领域的能见度在提升。</li>
+</ol>
+<ol>
+<li><strong>Coding Agent 用量分析成新刚需</strong>（agentsview、ccusage）—— 当开发者重度使用 Claude Code、Cursor 等工具时，"我的 Agent 花了多少 Token？做了什么？"成为必须回答的问题。</li>
+</ol>
+<h3>⚡ 与昨日对比</h3>
+<table>
+<tr><th>指标</th><th>6/11</th><th>6/12</th><th>变化</th></tr>
+<tr><td>上榜仓库数</td><td>17</td><td>19</td><td>+2</td></tr>
+<tr><td>Skills 生态占比</td><td>29%（5/17）</td><td>26%（5/19）</td><td>持续高位</td></tr>
+<tr><td>apple/container 日增</td><td>+1,611</td><td>+2,430</td><td>🔺继续加速</td></tr>
+<tr><td>agent-skills 日增</td><td>+821</td><td>+3,278</td><td>🔺爆发增长</td></tr>
+</table>
+<hr>
+<p>*报告生成时间：2026-06-12 09:50 CST · 自动化每日简报*</p>
+  </div>
+</div>
+<div class="footer">
+  GitHub Trending Daily · <a href="https://github.com/lph12168x/GitHub-Trending-Daily" target="_blank">查看仓库</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Trending 简报 — 2026-06-16</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --card-hover: #1c2230;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent2: #f78166;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --purple: #bc8cff;
+    --red: #f85149;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 40%, #1a0d2e 70%, #0d1117 100%);
+    padding: 48px 24px 40px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(88,166,255,0.06) 0%, transparent 40%),
+                radial-gradient(circle at 70% 50%, rgba(247,129,102,0.05) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+  .hero .badge {
+    display: inline-block;
+    background: rgba(88,166,255,0.12);
+    border: 1px solid rgba(88,166,255,0.3);
+    color: var(--accent);
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+  }
+  .hero h1 {
+    font-size: 36px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #58a6ff 0%, #bc8cff 50%, #f78166 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  .hero .subtitle { color: var(--text-muted); font-size: 15px; }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+  /* Report content */
+  .report-body { padding: 0 0 48px; }
+  .report-body h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 36px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+  .report-body h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    color: var(--accent);
+  }
+  .report-body p { margin-bottom: 12px; color: var(--text); }
+  .report-body blockquote {
+    border-left: 3px solid var(--accent);
+    background: rgba(88,166,255,0.06);
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 0 6px 6px 0;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .report-body blockquote a { color: var(--accent); }
+  .report-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .report-body th {
+    background: var(--card);
+    color: var(--accent);
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .report-body td {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .report-body tr:nth-child(even) td { background: rgba(22,27,34,0.5); }
+  .report-body ul, .report-body ol { margin: 12px 0 12px 24px; }
+  .report-body li { margin-bottom: 6px; }
+  .report-body strong { color: var(--text); font-weight: 700; }
+  .report-body hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+  .report-body code {
+    background: var(--card);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 13px;
+    color: var(--accent2);
+  }
+  .report-body pre {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    margin: 16px 0;
+  }
+  .report-body pre code {
+    background: none;
+    padding: 0;
+    color: var(--text);
+  }
+  .report-body a { color: var(--accent); }
+  .nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 0;
+  }
+  .footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-content">
+    <span class="badge">📅 2026-06-16 周二</span>
+    <h1>GitHub Trending 简报</h1>
+    <p class="subtitle">数据来源：<a href="https://github.com/trending" target="_blank">github.com/trending</a> · 每日自动生成</p>
+  </div>
+</div>
+<div class="container">
+  <a href="index.html" class="nav-back">← 返回首页</a>
+  <div class="report-body">
+<h2>GitHub Trending 简报 — 2026-06-16（周二）</h2>
+<blockquote>
+<p>📅 数据来源：<a href="https://github.com/trending" target="_blank">github.com/trending</a> · 共 18 个热门仓库 · 今日总新增约 <strong>9,842</strong> Stars</p>
+</blockquote>
+<hr>
+<h2>🏆 今日热度 TOP 5</h2>
+<table>
+<tr><th>排名</th><th>仓库</th><th>Stars (今日)</th><th>总 Stars</th><th>语言</th></tr>
+<tr><td>🥇</td><td><a href="https://github.com/iptv-org/iptv" target="_blank">iptv-org/iptv</a></td><td><strong>+2,657</strong></td><td>122,906</td><td>TypeScript</td></tr>
+<tr><td>🥈</td><td><a href="https://github.com/Panniantong/Agent-Reach" target="_blank">Panniantong/Agent-Reach</a></td><td><strong>+1,100</strong></td><td>30,101</td><td>Python</td></tr>
+<tr><td>🥉</td><td><a href="https://github.com/NVIDIA/SkillSpector" target="_blank">NVIDIA/SkillSpector</a></td><td><strong>+1,079</strong></td><td>6,343</td><td>Python</td></tr>
+<tr><td>4</td><td><a href="https://github.com/freeCodeCamp/freeCodeCamp" target="_blank">freeCodeCamp/freeCodeCamp</a></td><td><strong>+736</strong></td><td>447,865</td><td>TypeScript</td></tr>
+<tr><td>5</td><td><a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank">rohitg00/ai-engineering-from-scratch</a></td><td><strong>+562</strong></td><td>33,117</td><td>Python</td></tr>
+</table>
+<hr>
+<h2>📂 分类解读</h2>
+<h3>🤖 AI Agent & 工具（5 个）</h3>
+<p>#### 🥈 <a href="https://github.com/Panniantong/Agent-Reach" target="_blank">Panniantong/Agent-Reach</a> — AI Agent 互联网之眼</p>
+<ul>
+<li><strong>语言</strong>: Python · <strong>今日</strong>: +1,100 ⭐ · <strong>累计</strong>: 30,101 ⭐</li>
+<li><strong>简介</strong>: 赋予 AI Agent 观察整个互联网的能力。一个命令行工具即可读取和搜索 Twitter、Reddit、YouTube、GitHub、Bilibili、小红书——零 API 费用。</li>
+<li><strong>解读</strong>: 今日最大黑马，单日 1,100 stars 直接冲入 TOP3。它的核心卖点是"零 API 费用访问所有主流平台"，在当前 API 价格攀升的背景下极度诱人。覆盖中西主流社交+内容平台（含 Bilibili、小红书），是国内开发者的实用利器。</li>
+</ul>
+<p>#### 🥉 <a href="https://github.com/NVIDIA/SkillSpector" target="_blank">NVIDIA/SkillSpector</a> — AI Agent 技能安全扫描器</p>
+<ul>
+<li><strong>语言</strong>: Python · <strong>今日</strong>: +1,079 ⭐ · <strong>累计</strong>: 6,343 ⭐</li>
+<li><strong>简介</strong>: NVIDIA 推出的 AI Agent Skills 安全检测工具，可扫描漏洞、恶意模式和安全风险。</li>
+<li><strong>解读</strong>: <strong>连续第三日上榜</strong>，累计突破 6,300 stars！从上周的 +964 → 今日 +1,079，增速不减反增。Agent Skills 生态持续膨胀，安全审计从"可有可无"变成"刚需基础设施"，NVIDIA 在这个新赛道的先发优势正在转化为事实标准。</li>
+</ul>
+<p>#### 5️⃣ <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank">rohitg00/ai-engineering-from-scratch</a> — AI 工程实践手册</p>
+<ul>
+<li><strong>语言</strong>: Python · <strong>今日</strong>: +562 ⭐ · <strong>累计</strong>: 33,117 ⭐</li>
+<li><strong>简介</strong>: "Learn it. Build it. Ship it." 从零开始的 AI 工程实践指南。</li>
+<li><strong>解读</strong>: 3.3 万 stars 的 AI 工程实践项目持续高增长。与纯理论教程不同，它强调"学、建、交付"的闭环，正好击中了涌入 AI 领域的工程师的动手需求。</li>
+</ul>
+<p>#### 8 <a href="https://github.com/shiyu-coder/Kronos" target="_blank">shiyu-coder/Kronos</a> — 金融市场基础模型</p>
+<ul>
+<li><strong>语言</strong>: Python · <strong>今日</strong>: +396 ⭐ · <strong>累计</strong>: 30,343 ⭐</li>
+<li><strong>简介</strong>: 专为金融市场语言设计的基础模型。</li>
+<li><strong>解读</strong>: 连续多日上榜的垂直领域大模型代表，已稳定突破 3 万 stars。金融+AI 是最快找到 PMF 的赛道之一。</li>
+</ul>
+<p>#### 16 <a href="https://github.com/trycua/cua" target="_blank">trycua/cua</a> — Computer-Use Agent 基础设施</p>
+<ul>
+<li><strong>语言</strong>: HTML · <strong>今日</strong>: +70 ⭐ · <strong>累计</strong>: 18,138 ⭐</li>
+<li><strong>简介</strong>: Computer-Use Agents 的开源基础设施。提供沙箱、SDK 和基准测试，用于训练和评估能操控完整桌面的 AI Agent（支持 macOS、Linux、Windows）。</li>
+<li><strong>解读</strong>: Computer-Use 是 AI Agent 的终极形态之一。cua 提供完整的训练-评估-部署基础设施，降低进入门槛。1.8 万 stars 证明这个概念正在被开发者社区认真对待。</li>
+</ul>
+<hr>
+<h3>🎬 媒体 & IPTV（2 个）</h3>
+<p>#### 🥇 <a href="https://github.com/iptv-org/iptv" target="_blank">iptv-org/iptv</a> — 全球 IPTV 频道合集</p>
+<ul>
+<li><strong>语言</strong>: TypeScript · <strong>今日</strong>: +2,657 ⭐ · <strong>累计</strong>: 122,906 ⭐</li>
+<li><strong>简介</strong>: 收集全球公开可用的 IPTV 频道，最大最全的 IPTV 播放列表。</li>
+<li><strong>解读</strong>: <strong>连续多日登顶的绝对王者</strong>。昨日 +1,528，今日 +2,657，增速近翻倍！12.2 万总 stars。免费流媒体内容聚合的需求在全球范围内持续猛烈增长。值得注意的是总 forks 仅 6.6k，stars/fork 比极高（~18.6），说明更多是"消费者"而非"贡献者"在使用。</li>
+</ul>
+<p>#### 10 <a href="https://github.com/Free-TV/IPTV" target="_blank">Free-TV/IPTV</a> — 免费电视频道 M3U 播放列表</p>
+<ul>
+<li><strong>语言</strong>: Python · <strong>今日</strong>: +361 ⭐ · <strong>累计</strong>: 17,268 ⭐</li>
+<li><strong>简介</strong>: 免费电视频道的 M3U 播放列表。</li>
+<li><strong>解读</strong>: 与 iptv-org/iptv 形成互补生态，前者是结构化数据库，后者是即用播放列表。双榜齐上说明 IPTV 聚合赛道热度全面升温。</li>
+</ul>
+<hr>
+<h3>📚 教育 & 学习（4 个）</h3>
+<p>#### 4️⃣ <a href="https://github.com/freeCodeCamp/freeCodeCamp" target="_blank">freeCodeCamp/freeCodeCamp</a> — 免费编程学习平台</p>
+<ul>
+<li><strong>语言</strong>: TypeScript · <strong>今日</strong>: +736 ⭐ · <strong>累计</strong>: 447,865 ⭐</li>
+<li><strong>简介</strong>: freeCodeCamp.org 的开源代码库和课程。免费学习数学、编程和计算机科学。</li>
+<li><strong>解读</strong>: GitHub 上 Stars 最多的项目之一（44.7 万），常年霸榜。作为免费编程教育的标杆，每一次上榜都代表着新一轮学习者涌入编程世界。</li>
+</ul>
+<p>#### 9 <a href="https://github.com/jwasham/coding-interview-university" target="_blank">jwasham/coding-interview-university</a> — 面试通关学习计划</p>
+<ul>
+<li><strong>语言</strong>: — · <strong>今日</strong>: +364 ⭐ · <strong>累计</strong>: 352,317 ⭐</li>
+<li><strong>简介</strong>: 成为软件工程师的完整计算机科学学习计划。</li>
+<li><strong>解读</strong>: 35 万 stars 的面试圣经。在科技行业招聘回暖的背景下，面试准备类资源重新受到关注。</li>
+</ul>
+<p>#### 13 <a href="https://github.com/Introduction-to-Autonomous-Robots/Introduction-to-Autonomous-Robots" target="_blank">Introduction-to-Autonomous-Robots/Introduction-to-Autonomous-Robots</a> — 自主机器人导论</p>
+<ul>
+<li><strong>语言</strong>: TeX · <strong>今日</strong>: +489 ⭐ · <strong>累计</strong>: 3,113 ⭐</li>
+<li><strong>简介</strong>: 《Introduction to Autonomous Robots》开源教材。</li>
+<li><strong>解读</strong>: <strong>连续第二日上榜</strong>，从 +293 跃升至 +489，几乎翻倍！一本机器人学教材杀入 TOP15 极为罕见。背后反映的是具身智能和机器人创业热潮驱动下的学习需求爆发。</li>
+</ul>
+<p>#### 15 <a href="https://github.com/krahets/hello-algo" target="_blank">krahets/hello-algo</a> — 《Hello 算法》动画图解教程</p>
+<ul>
+<li><strong>语言</strong>: Java · <strong>今日</strong>: +71 ⭐ · <strong>累计</strong>: 126,899 ⭐</li>
+<li><strong>简介</strong>: 动画图解、一键运行的数据结构与算法教程，支持 14 种编程语言。</li>
+<li><strong>解读</strong>: 12.6 万 stars 的中文算法经典，稳定长青。虽然今日增速不高，但它是中文技术教育领域最具影响力的开源项目之一。</li>
+</ul>
+<hr>
+<h3>🛠️ 开源工具 & 基础设施（4 个）</h3>
+<p>#### 7 <a href="https://github.com/chatwoot/chatwoot" target="_blank">chatwoot/chatwoot</a> — 开源客服平台</p>
+<ul>
+<li><strong>语言</strong>: Ruby · <strong>今日</strong>: +431 ⭐ · <strong>累计</strong>: 31,739 ⭐</li>
+<li><strong>简介</strong>: 开源在线客服、邮件支持、全渠道工作台。Intercom、Zendesk 的开源替代品。</li>
+<li><strong>解读</strong>: <strong>连续第二日上榜</strong>，从 +400 → +431 稳中有升。累计突破 3.1 万 stars，Ruby 生态中少有的高增长项目。开源客服替代方案的市场需求持续旺盛。</li>
+</ul>
+<p>#### 12 <a href="https://github.com/meshery/meshery" target="_blank">meshery/meshery</a> — 云原生管理器</p>
+<ul>
+<li><strong>语言</strong>: TypeScript · <strong>今日</strong>: +228 ⭐ · <strong>累计</strong>: 10,576 ⭐</li>
+<li><strong>简介</strong>: Meshery，云原生管理器。</li>
+<li><strong>解读</strong>: CNCF 旗下的服务网格管理平台，突破 1 万 stars 后增长加速。云原生生态中管理平面统一直是刚需。</li>
+</ul>
+<p>#### 11 <a href="https://github.com/music-assistant/server" target="_blank">music-assistant/server</a> — 开源媒体库管理器</p>
+<ul>
+<li><strong>语言</strong>: Python · <strong>今日</strong>: +225 ⭐ · <strong>累计</strong>: 2,390 ⭐</li>
+<li><strong>简介</strong>: 免费开源的媒体库管理器，可连接流媒体服务和各类音箱设备。</li>
+<li><strong>解读</strong>: <strong>连续第二日上榜</strong>。智能家居 + 音乐流媒体整合的趋势下，这个项目精准卡位了 Sonos 替代品 + 自托管音乐服务器的需求。</li>
+</ul>
+<p>#### 14 <a href="https://github.com/mikeroyal/Self-Hosting-Guide" target="_blank">mikeroyal/Self-Hosting-Guide</a> — 自托管指南</p>
+<ul>
+<li><strong>语言</strong>: Dockerfile · <strong>今日</strong>: +188 ⭐ · <strong>累计</strong>: 20,987 ⭐</li>
+<li><strong>简介</strong>: 自托管全指南，涵盖本地部署和私有服务器上管理软件应用的所有知识。</li>
+<li><strong>解读</strong>: 2 万 stars 的自托管百科全书。随着数据隐私意识增强和云成本上升，自托管趋势持续升温。</li>
+</ul>
+<hr>
+<h3>🪟 Windows 优化（2 个）</h3>
+<p>#### 17 <a href="https://github.com/itsfatduck/optimizerDuck" target="_blank">itsfatduck/optimizerDuck</a> — Windows 优化工具</p>
+<ul>
+<li><strong>语言</strong>: C# · <strong>今日</strong>: +340 ⭐ · <strong>累计</strong>: 3,716 ⭐</li>
+<li><strong>简介</strong>: 免费开源的 Windows 优化工具，专注于性能、隐私和简洁。</li>
+<li><strong>解读</strong>: 新秀项目，今日 +340 stars 对 3,700 总 stars 来说是非常高的增长率。C# 编写的原生 Windows 工具，UI 和功能并重，击中了 Windows 用户的痛点。</li>
+</ul>
+<p>#### 18 <a href="https://github.com/Raphire/Win11Debloat" target="_blank">Raphire/Win11Debloat</a> — Windows 11 精简脚本</p>
+<ul>
+<li><strong>语言</strong>: PowerShell · <strong>今日</strong>: +112 ⭐ · <strong>累计</strong>: 48,037 ⭐</li>
+<li><strong>简介</strong>: 轻量级 PowerShell 脚本，可移除预装应用、禁用遥测、自定义 Windows 体验。</li>
+<li><strong>解读</strong>: 4.8 万 stars 的 Windows 精简神器。与 optimizerDuck 一起上榜，说明 Windows 用户对系统"瘦身"的需求非常旺盛。</li>
+</ul>
+<hr>
+<h3>🚗 硬件 & IoT（1 个）</h3>
+<p>#### 19 <a href="https://github.com/teslamate-org/teslamate" target="_blank">teslamate-org/teslamate</a> — Tesla 自托管数据记录器</p>
+<ul>
+<li><strong>语言</strong>: Elixir · <strong>今日</strong>: +33 ⭐ · <strong>累计</strong>: 8,223 ⭐</li>
+<li><strong>简介</strong>: 特斯拉车辆的自托管数据记录器。</li>
+<li><strong>解读</strong>: 虽然今日增速不高，但作为 Elixir 语言生态中难得的 8,000+ stars 项目，它在 IoT/车联网爱好者群体中拥有忠实用户群。</li>
+</ul>
+<hr>
+<h2>🔥 趋势洞察</h2>
+<h3>1. IPTV 赛道三连冠，需求远未见顶</h3>
+<p>iptv-org/iptv 连续三天霸榜，且增速从 +1,528 → +2,657 还在加速。免费流媒体内容聚合是一种全球性的刚需，这个赛道没有天花板。</p>
+<h3>2. NVIDIA SkillSpector 三连冠确立 Agent 安全新赛道</h3>
+<p>从首日的 +3,278 到昨日的 +964 到今日的 +1,079，SkillSpector 连续第三天上榜，且日增仍保持在 1,000+ 级别。Agent Skills 安全审计正在从概念验证走向基础设施。</p>
+<h3>3. Agent-Reach：零 API 费的「互联网之眼」</h3>
+<p>+1,100 stars 的首日表现非常亮眼。核心卖点"零 API 费用"在当前 API 成本攀升的背景下极具吸引力。覆盖国内平台（Bilibili、小红书）也是差异化优势。</p>
+<h3>4. 机器人教育意外走红</h3>
+<p>《Introduction to Autonomous Robots》教材连续两日上榜且增速翻倍（+293 → +489），罕见地实现了学术内容的病毒式传播。具身智能/机器人赛道的人才缺口正在催生强烈的学习需求。</p>
+<h3>5. Windows 优化需求回归</h3>
+<p>optimizerDuck 和 Win11Debloat 双双上榜，一个工具型、一个脚本型，覆盖了 Windows 用户对系统"纯净化"的不同偏好。</p>
+<h3>6. 自托管（Self-Hosting）趋势不减</h3>
+<p>chatwoot（客服）、music-assistant（音乐）、Self-Hosting-Guide（指南）三大自托管项目同时上榜。云成本上升 + 数据隐私意识增强，让"自己的服务自己管"成为持续趋势。</p>
+<hr>
+<p>*📝 简报由自动化任务每日生成 · 上一次运行: 2026-06-15 · <a href="https://github.com/trending" target="_blank">查看历史文件</a>*</p>
+  </div>
+</div>
+<div class="footer">
+  GitHub Trending Daily · <a href="https://github.com/lph12168x/GitHub-Trending-Daily" target="_blank">查看仓库</a>
+</div>
+</body>
+</html>

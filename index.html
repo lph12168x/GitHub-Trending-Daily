@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Trending Daily — 每日 GitHub 热门简报</title>
+<style>
+
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --card-hover: #1c2230;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent2: #f78166;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --purple: #bc8cff;
+    --red: #f85149;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 40%, #1a0d2e 70%, #0d1117 100%);
+    padding: 48px 24px 40px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(88,166,255,0.06) 0%, transparent 40%),
+                radial-gradient(circle at 70% 50%, rgba(247,129,102,0.05) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+  .hero .badge {
+    display: inline-block;
+    background: rgba(88,166,255,0.12);
+    border: 1px solid rgba(88,166,255,0.3);
+    color: var(--accent);
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+  }
+  .hero h1 {
+    font-size: 36px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #58a6ff 0%, #bc8cff 50%, #f78166 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  .hero .subtitle { color: var(--text-muted); font-size: 15px; }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+  /* Report content */
+  .report-body { padding: 0 0 48px; }
+  .report-body h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 36px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+  .report-body h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    color: var(--accent);
+  }
+  .report-body p { margin-bottom: 12px; color: var(--text); }
+  .report-body blockquote {
+    border-left: 3px solid var(--accent);
+    background: rgba(88,166,255,0.06);
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 0 6px 6px 0;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .report-body blockquote a { color: var(--accent); }
+  .report-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .report-body th {
+    background: var(--card);
+    color: var(--accent);
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .report-body td {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .report-body tr:nth-child(even) td { background: rgba(22,27,34,0.5); }
+  .report-body ul, .report-body ol { margin: 12px 0 12px 24px; }
+  .report-body li { margin-bottom: 6px; }
+  .report-body strong { color: var(--text); font-weight: 700; }
+  .report-body hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+  .report-body code {
+    background: var(--card);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 13px;
+    color: var(--accent2);
+  }
+  .report-body pre {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    margin: 16px 0;
+  }
+  .report-body pre code {
+    background: none;
+    padding: 0;
+    color: var(--text);
+  }
+  .report-body a { color: var(--accent); }
+  .nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 0;
+  }
+  .footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+  }
+
+
+  /* Index page specific styles */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    padding: 24px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+  }
+  .stat-item {
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(180deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+  }
+
+  .reports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .report-card {
+    display: block;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .report-card:hover {
+    background: var(--card-hover);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .card-date {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .card-weekday {
+    font-size: 12px;
+    color: var(--text-muted);
+    background: rgba(139,148,158,0.12);
+    padding: 2px 10px;
+    border-radius: 12px;
+  }
+  .card-body {
+    margin-bottom: 12px;
+  }
+  .card-repos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .tag {
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(88,166,255,0.1);
+    border: 1px solid rgba(88,166,255,0.2);
+    padding: 2px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+  .stars-badge {
+    display: inline-block;
+    font-size: 13px;
+    color: var(--yellow);
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .card-footer {
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+    margin-top: 4px;
+  }
+  .report-card:first-child .card-date::after {
+    content: ' 🆕';
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-content">
+    <span class="badge">🔥 GitHub Trending Daily</span>
+    <h1>每日 GitHub 热门简报</h1>
+    <p class="subtitle">自动追踪 GitHub Trending · 每日 10:00 更新 · <a href="https://github.com/lph12168x/GitHub-Trending-Daily" target="_blank">查看仓库 →</a></p>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">8</div>
+    <div class="stat-label">期数</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">2026-06-09</div>
+    <div class="stat-label">最新</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">2026-06-18</div>
+    <div class="stat-label">起始</div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="section-title">历史简报</div>
+  <div class="reports-grid">
+
+    <a href="github-trending-2026-06-18.html" class="report-card">
+      <div class="card-header">
+        <span class="card-date">2026-06-18</span>
+        <span class="card-weekday">周四</span>
+      </div>
+      <div class="card-body">
+        <div class="card-repos"><span class="tag">mattpocock/skills</span><span class="tag">Panniantong/Agent-Reach</span><span class="tag">obra/superpowers</span></div>
+        <span class="stars-badge">≈ 8,732 ⭐</span>
+      </div>
+      <div class="card-footer">
+        <span>查看详情 →</span>
+      </div>
+    </a>
+
+    <a href="github-trending-2026-06-17.html" class="report-card">
+      <div class="card-header">
+        <span class="card-date">2026-06-17</span>
+        <span class="card-weekday">周三</span>
+      </div>
+      <div class="card-body">
+        <div class="card-repos"><span class="tag">iptv-org/iptv</span><span class="tag">freeCodeCamp/freeCodeCamp</span><span class="tag">OpenBMB/VoxCPM</span></div>
+        <span class="stars-badge">≈ 3,748 ⭐</span>
+      </div>
+      <div class="card-footer">
+        <span>查看详情 →</span>
+      </div>
+    </a>
+
+    <a href="github-trending-2026-06-16.html" class="report-card">
+      <div class="card-header">
+        <span class="card-date">2026-06-16</span>
+        <span class="card-weekday">周二</span>
+      </div>
+      <div class="card-body">
+        <div class="card-repos"><span class="tag">iptv-org/iptv</span><span class="tag">Panniantong/Agent-Reach</span><span class="tag">NVIDIA/SkillSpector</span></div>
+        <span class="stars-badge">≈ 9,842 ⭐</span>
+      </div>
+      <div class="card-footer">
+        <span>查看详情 →</span>
+      </div>
+    </a>
+
+    <a href="github-trending-2026-06-15.html" class="report-card">
+      <div class="card-header">
+        <span class="card-date">2026-06-15</span>
+        <span class="card-weekday">周一</span>
+      </div>
+      <div class="card-body">
+        <div class="card-repos"><span class="tag">iptv-org/iptv</span><span class="tag">NVIDIA/SkillSpector</span><span class="tag">chatwoot/chatwoot</span></div>
+        <span class="stars-badge">≈ 4,667 ⭐</span>
+      </div>
+      <div class="card-footer">
+        <span>查看详情 →</span>
+      </div>
+    </a>
+
+    <a href="github-trending-2026-06-12.html" class="report-card">
+      <div class="card-header">
+        <span class="card-date">2026-06-12</span>
+        <span class="card-weekday">周五</span>
+      </div>
+      <div class="card-body">
+        <div class="card-repos"><span class="tag">addyosmani/agent-skills</span><span class="tag">apple/container</span><span class="tag">phuryn/pm-skills</span></div>
+        
+      </div>
+      <div class="card-footer">
+        <span>查看详情 →</span>
+      </div>
+    </a>
+
+    <a href="github-trending-2026-06-11.html" class="report-card">
+      <div class="card-header">
+        <span class="card-date">2026-06-11</span>
+        <span class="card-weekday">周四</span>
+      </div>
+      <div class="card-body">
+        <div class="card-repos"><span class="tag">addayosmani/agent-skills</span><span class="tag">phuryn/pm-skills</span><span class="tag">refactoringhq/tolaria</span></div>
+        
+      </div>
+      <div class="card-footer">
+        <span>查看详情 →</span>
+      </div>
+    </a>
+
+    <a href="github-trending-2026-06-10.html" class="report-card">
+      <div class="card-header">
+        <span class="card-date">2026-06-10</span>
+        <span class="card-weekday">周三</span>
+      </div>
+      <div class="card-body">
+        <div class="card-repos"><span class="tag">mvanhorn/last30days-skill</span><span class="tag">RyanCodrai/turbovec</span><span class="tag">santifer/career-ops</span></div>
+        
+      </div>
+      <div class="card-footer">
+        <span>查看详情 →</span>
+      </div>
+    </a>
+
+    <a href="github-trending-2026-06-09.html" class="report-card">
+      <div class="card-header">
+        <span class="card-date">2026-06-09</span>
+        <span class="card-weekday">周二</span>
+      </div>
+      <div class="card-body">
+        <div class="card-repos"><span class="tag">MemPalace/mempalace</span><span class="tag">santifer/career-ops</span><span class="tag">aaif-goose/goose</span></div>
+        <span class="stars-badge">≈ 23 repos ⭐</span>
+      </div>
+      <div class="card-footer">
+        <span>查看详情 →</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<div class="footer">
+  GitHub Trending Daily · 由 <a href="https://github.com/lph12168x" target="_blank">@lph12168x</a> 维护 · 每日自动生成
+</div>
+
+</body>
+</html>

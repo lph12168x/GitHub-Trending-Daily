@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Trending 简报 — 2026-06-10</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --card-hover: #1c2230;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent2: #f78166;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --purple: #bc8cff;
+    --red: #f85149;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 40%, #1a0d2e 70%, #0d1117 100%);
+    padding: 48px 24px 40px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(88,166,255,0.06) 0%, transparent 40%),
+                radial-gradient(circle at 70% 50%, rgba(247,129,102,0.05) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+  .hero .badge {
+    display: inline-block;
+    background: rgba(88,166,255,0.12);
+    border: 1px solid rgba(88,166,255,0.3);
+    color: var(--accent);
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+  }
+  .hero h1 {
+    font-size: 36px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #58a6ff 0%, #bc8cff 50%, #f78166 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  .hero .subtitle { color: var(--text-muted); font-size: 15px; }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+  /* Report content */
+  .report-body { padding: 0 0 48px; }
+  .report-body h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 36px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+  .report-body h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    color: var(--accent);
+  }
+  .report-body p { margin-bottom: 12px; color: var(--text); }
+  .report-body blockquote {
+    border-left: 3px solid var(--accent);
+    background: rgba(88,166,255,0.06);
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 0 6px 6px 0;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .report-body blockquote a { color: var(--accent); }
+  .report-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .report-body th {
+    background: var(--card);
+    color: var(--accent);
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .report-body td {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .report-body tr:nth-child(even) td { background: rgba(22,27,34,0.5); }
+  .report-body ul, .report-body ol { margin: 12px 0 12px 24px; }
+  .report-body li { margin-bottom: 6px; }
+  .report-body strong { color: var(--text); font-weight: 700; }
+  .report-body hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+  .report-body code {
+    background: var(--card);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 13px;
+    color: var(--accent2);
+  }
+  .report-body pre {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    margin: 16px 0;
+  }
+  .report-body pre code {
+    background: none;
+    padding: 0;
+    color: var(--text);
+  }
+  .report-body a { color: var(--accent); }
+  .nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 0;
+  }
+  .footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-content">
+    <span class="badge">📅 2026-06-10 周三</span>
+    <h1>GitHub Trending 简报</h1>
+    <p class="subtitle">数据来源：<a href="https://github.com/trending" target="_blank">github.com/trending</a> · 每日自动生成</p>
+  </div>
+</div>
+<div class="container">
+  <a href="index.html" class="nav-back">← 返回首页</a>
+  <div class="report-body">
+<h2>GitHub Trending 日报 — 2026年6月10日</h2>
+<blockquote>
+<p>数据来源：<a href="https://github.com/trending" target="_blank">GitHub Trending</a> | 共收录 <strong>16</strong> 个热门仓库</p>
+</blockquote>
+<hr>
+<h2>🔥 今日之星（日增 ⭐ > 1000）</h2>
+<table>
+<tr><th>排名</th><th>仓库</th><th>⭐ 总量</th><th>今日新增</th><th>语言</th><th>简介</th></tr>
+<tr><td>🥇</td><td><strong>mvanhorn/last30days-skill</strong></td><td>37,907</td><td><strong>+3,191</strong></td><td>Python</td><td>AI 代理技能：跨 Reddit/X/YouTube/HN/Polymarket 研究任意主题并生成摘要</td></tr>
+<tr><td>🥈</td><td><strong>RyanCodrai/turbovec</strong></td><td>10,396</td><td><strong>+1,801</strong></td><td>Python</td><td>基于 TurboQuant 的 Rust 向量索引，Python 绑定</td></tr>
+<tr><td>🥉</td><td><strong>santifer/career-ops</strong></td><td>51,950</td><td><strong>+1,110</strong></td><td>JavaScript</td><td>AI 求职系统：14 种技能模式 + Go 仪表盘 + PDF 生成 + 批量处理</td></tr>
+</table>
+<hr>
+<h2>📂 分类解读</h2>
+<h3>一、AI Agent & 技能生态（6 个仓库）🤖</h3>
+<table>
+<tr><th>仓库</th><th>⭐</th><th>日增</th><th>看点</th></tr>
+<tr><td><strong>mvanhorn/last30days-skill</strong></td><td>37,907</td><td>+3,191</td><td>🔥今日冠军！跨多平台的 AI 研究摘要技能</td></tr>
+<tr><td><strong>aaif-goose/goose</strong></td><td>48,577</td><td>+489</td><td>开源可扩展 AI 代理，支持任意 LLM——不只是代码建议，还能安装、执行、编辑、测试</td></tr>
+<tr><td><strong>phuryn/pm-skills</strong></td><td>13,615</td><td>+806</td><td>PM 技能市场：100+ 代理技能从需求到增长全覆盖</td></tr>
+<tr><td><strong>santifer/career-ops</strong></td><td>51,950</td><td>+1,110</td><td>Claude Code 驱动的求职系统，含 14 种技能</td></tr>
+<tr><td><strong>addyosmani/agent-skills</strong></td><td>49,980</td><td>+443</td><td>AI 编码代理的生产级工程技能集合</td></tr>
+<tr><td><strong>openai/plugins</strong></td><td>2,660</td><td>+284</td><td>OpenAI 官方插件仓库（久违回归榜单）</td></tr>
+</table>
+<p><strong>趋势洞察</strong>：AI Agent Skills 生态持续爆发。今日 6 个上榜仓库全部与 AI Agent 或技能相关，覆盖研究、编码、项目管理、求职等场景。"Skills" 正成为 AI Agent 时代的基础设施层。</p>
+<hr>
+<h3>二、计算机视觉（2 个仓库）👁️</h3>
+<table>
+<tr><th>仓库</th><th>⭐</th><th>日增</th><th>语言</th><th>简介</th></tr>
+<tr><td><strong>roboflow/supervision</strong></td><td>43,168</td><td>+733</td><td>Python</td><td>可复用的计算机视觉工具集</td></tr>
+<tr><td><strong>opencv/opencv</strong></td><td>88,736</td><td>+102</td><td>C++</td><td>CV 领域常青树，经典永流传</td></tr>
+</table>
+<hr>
+<h3>三、本地 AI & LLM（2 个仓库）🧠</h3>
+<table>
+<tr><th>仓库</th><th>⭐</th><th>日增</th><th>语言</th><th>简介</th></tr>
+<tr><td><strong>Andyyyy64/whichllm</strong></td><td>4,210</td><td>+633</td><td>Python</td><td>🔥 <strong>新秀！</strong> 基于真实基准测试，找到你硬件上跑得最好的本地 LLM</td></tr>
+<tr><td><strong>x1xhlol/system-prompts-and-models-of-ai-tools</strong></td><td>139,263</td><td>+79</td><td>—</td><td>收录数十款 AI 工具的系统提示与内部模型信息（⭐总量全场最高）</td></tr>
+</table>
+<p><strong>趋势洞察</strong>：whichllm 的增长非常亮眼，反映了"本地跑大模型"需求的持续升温。用户不再只看参数规模，更关心实际运行效果。</p>
+<hr>
+<h3>四、开发工具 & 知识管理（2 个仓库）🛠️</h3>
+<table>
+<tr><th>仓库</th><th>⭐</th><th>日增</th><th>语言</th><th>简介</th></tr>
+<tr><td><strong>refactoringhq/tolaria</strong></td><td>14,474</td><td>+829</td><td>TypeScript</td><td>Markdown 知识库桌面管理应用</td></tr>
+<tr><td><strong>RyanCodrai/turbovec</strong></td><td>10,396</td><td>+1,801</td><td>Python</td><td>🔥 高性能向量索引，Rust 内核 + Python 绑定</td></tr>
+</table>
+<hr>
+<h3>五、教育与资源（2 个仓库）📚</h3>
+<table>
+<tr><th>仓库</th><th>⭐</th><th>日增</th><th>语言</th><th>简介</th></tr>
+<tr><td><strong>TapXWorld/ChinaTextbook</strong></td><td>73,618</td><td>+519</td><td>Roff</td><td>小初高大学全部 PDF 教材</td></tr>
+<tr><td><strong>yikart/AiToEarn</strong></td><td>20,135</td><td>+402</td><td>TypeScript</td><td>AI 赚钱方法合集</td></tr>
+</table>
+<hr>
+<h3>六、医疗 & IoT（2 个仓库）💊</h3>
+<table>
+<tr><th>仓库</th><th>⭐</th><th>日增</th><th>语言</th><th>简介</th></tr>
+<tr><td><strong>maziyarpanahi/openmed</strong></td><td>1,983</td><td>+191</td><td>Python</td><td>开源医疗 AI 项目</td></tr>
+<tr><td><strong>francescopace/espectre</strong></td><td>8,301</td><td>+134</td><td>Python</td><td>Wi-Fi CSI 运动检测，集成 Home Assistant</td></tr>
+</table>
+<hr>
+<h2>📊 数据统计</h2>
+<table>
+<tr><th>维度</th><th>数据</th></tr>
+<tr><td>今日上榜仓库总数</td><td><strong>16</strong></td></tr>
+<tr><td>日增 ⭐ 超过 1000 的仓库</td><td>3 个（last30days-skill、turbovec、career-ops）</td></tr>
+<tr><td>最高总 ⭐ 仓库</td><td>system-prompts-and-models-of-ai-tools（139,263 ⭐）</td></tr>
+<tr><td>最高日增 ⭐ 仓库</td><td>last30days-skill（+3,191）</td></tr>
+<tr><td>编程语言分布</td><td>Python 7、TypeScript 2、JavaScript 2、Rust 1、C++ 1、Roff 1、Shell 1、无标注 1</td></tr>
+<tr><td>新秀（< 1万 ⭐ 但增长迅猛）</td><td>turbovec（+1,801）、whichllm（+633）、pm-skills（+806）</td></tr>
+</table>
+<hr>
+<h2>🔑 今日关键信号</h2>
+<ol>
+<li><strong>AI Agent Skills 已成主流赛道</strong> — 今日上榜的 16 个仓库中，6 个（37.5%）直接与 AI Agent Skills 相关，从研究、编码到求职全覆盖。</li>
+</ol>
+<ol>
+<li><strong>"Local First" 持续升温</strong> — whichllm 凭借"一条命令在本地跑最优 LLM"的直球打法快速走红，反映出开发者对本地推理的强烈需求。</li>
+</ol>
+<ol>
+<li><strong>向量基础设施受关注</strong> — turbovec（Rust 核心 + Python 绑定）日增 1,801 ⭐，说明高性能向量索引正在成为 AI 应用的基础设施层。</li>
+</ol>
+<ol>
+<li><strong>Claude Code 生态壮大</strong> — career-ops 基于 Claude Code 构建，addyosmani/agent-skills 也被广泛用于编码代理，Claude Code 正从工具走向平台。</li>
+</ol>
+<ol>
+<li><strong>教育类长尾稳定增长</strong> — ChinaTextbook（+519）保持稳定的日增量，教育资源共享需求长期存在。</li>
+</ol>
+<hr>
+<p>*报告由自动化「每日 GitHub 简报」生成 · 2026年6月10日*</p>
+  </div>
+</div>
+<div class="footer">
+  GitHub Trending Daily · <a href="https://github.com/lph12168x/GitHub-Trending-Daily" target="_blank">查看仓库</a>
+</div>
+</body>
+</html>
