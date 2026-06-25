@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Trending 2026年06月25日 &middot; 每日简报</title>
+<style>*, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+:root {
+    --bg: #f6f8fa; --bg-card: #ffffff; --text: #1f2328; --text-secondary: #656d76;
+    --border: #d0d7de; --accent: #0969da; --accent-light: #ddf4ff;
+    --star-color: #e67700; --rank-bg: #f6f8fa; --shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+[data-theme="dark"] {
+    --bg: #0d1117; --bg-card: #161b22; --text: #e6edf3; --text-secondary: #8b949e;
+    --border: #30363d; --accent: #58a6ff; --accent-light: #0c2d6b;
+    --star-color: #f0883e; --rank-bg: #0d1117; --shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; transition: background 0.3s, color 0.3s; }
+.header { background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%); color: #fff; padding: 48px 24px 36px; text-align: center; position: relative; }
+.header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+.header .subtitle { color: rgba(255,255,255,0.7); font-size: 1rem; }
+.theme-toggle { position: absolute; top: 20px; right: 24px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); color: #fff; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; }
+.summary { max-width: 900px; margin: 32px auto 0; padding: 20px 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; box-shadow: var(--shadow); }
+.summary-item { text-align: center; }
+.summary-num { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+.summary-label { font-size: 0.85rem; color: var(--text-secondary); margin-top: 2px; }
+.container { max-width: 900px; margin: 32px auto; padding: 0 24px; }
+.repo-card { display: flex; gap: 16px; padding: 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; box-shadow: var(--shadow); transition: transform 0.15s; }
+.repo-card:hover { transform: translateY(-2px); }
+.repo-rank { flex-shrink: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: var(--rank-bg); border: 1px solid var(--border); border-radius: 10px; font-weight: 700; font-size: 0.95rem; color: var(--text-secondary); }
+.repo-body { flex: 1; min-width: 0; }
+.repo-header { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+.repo-name { font-size: 1.1rem; font-weight: 600; color: var(--accent); text-decoration: none; }
+.repo-name:hover { text-decoration: underline; }
+.stars-today { font-size: 0.8rem; background: var(--accent-light); color: var(--accent); padding: 2px 10px; border-radius: 20px; font-weight: 600; white-space: nowrap; }
+.repo-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.5; }
+.repo-meta { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-secondary); flex-wrap: wrap; }
+.lang-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.meta-sep { color: var(--border); }
+.today-stars { color: var(--star-color); font-weight: 600; }
+.footer { text-align: center; padding: 32px 24px; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 32px; }
+.footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+<header class="header">
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">&#127769; Dark</button>
+    <h1>&#128299; GitHub Trending 每日简报</h1>
+    <p class="subtitle">2026年06月25日 &middot; 13 repos &middot; +10,610 stars today</p>
+</header>
+<div class="summary">
+    <div class="summary-item"><div class="summary-num">13</div><div class="summary-label">Repositories</div></div>
+    <div class="summary-item"><div class="summary-num">10,610</div><div class="summary-label">Stars Today</div></div>
+    <div class="summary-item"><div class="summary-num">8</div><div class="summary-label">Languages</div></div>
+    <div class="summary-item"><div class="summary-num" style="font-size:0.9rem;color:var(--text-secondary)">Python 4 &middot; TypeScript 3 &middot; Swift 1 &middot; HTML 1 &middot; Dart 1</div><div class="summary-label">Top Languages</div></div>
+</div>
+<div class="container">
+        <div class="repo-card">
+            <div class="repo-rank">#1</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/calesthio/OpenMontage" target="_blank">calesthio/OpenMontage</a>
+                    <span class="stars-today">+3719 &#11088; today</span>
+                </div>
+                <p class="repo-desc">World's first open-source, agentic video production system. 12 pipelines, 52 tools, 500+ agent skills.</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#3776AB"></span>
+                    <span class="lang-name">Python</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="total-stars">&#11088; 19.6k</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +3719 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#2</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/ZhuLinsen/daily_stock_analysis" target="_blank">ZhuLinsen/daily_stock_analysis</a>
+                    <span class="stars-today">+1468 &#11088; today</span>
+                </div>
+                <p class="repo-desc">LLM驱动的多市场股票智能分析系统：多源行情、实时新闻、决策看板与自动推送，支持零成本定时运行。</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#3776AB"></span>
+                    <span class="lang-name">Python</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="total-stars">&#11088; 48.6k</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +1468 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#3</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/apple/container" target="_blank">apple/container</a>
+                    <span class="stars-today">+1838 &#11088; today</span>
+                </div>
+                <p class="repo-desc">A tool for creating and running Linux containers using lightweight virtual machines on a Mac. Written in Swift, optimized for Apple silicon.</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#FA7343"></span>
+                    <span class="lang-name">Swift</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="total-stars">&#11088; 42.3k</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +1838 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#4</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/interviewstreet/hiring-agent" target="_blank">interviewstreet/hiring-agent</a>
+                    <span class="stars-today">+203 &#11088; today</span>
+                </div>
+                <p class="repo-desc">AI agent to evaluate and score resumes.</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#3776AB"></span>
+                    <span class="lang-name">Python</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="total-stars">&#11088; 2.2k</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +203 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#5</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/JCodesMore/ai-website-cloner-template" target="_blank">JCodesMore/ai-website-cloner-template</a>
+                    <span class="stars-today">+692 &#11088; today</span>
+                </div>
+                <p class="repo-desc">Clone any website with one command using AI coding agents</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#3178C6"></span>
+                    <span class="lang-name">TypeScript</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="total-stars">&#11088; 19.4k</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +692 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#6</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/revfactory/harness" target="_blank">revfactory/harness</a>
+                    <span class="stars-today">+277 &#11088; today</span>
+                </div>
+                <p class="repo-desc">A meta-skill that designs domain-specific agent teams, defines specialized agents, and generates the skills they use.</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#E34F26"></span>
+                    <span class="lang-name">HTML</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="total-stars">&#11088; 7.8k</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +277 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#7</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/flutter/flutter" target="_blank">flutter/flutter</a>
+                    <span class="stars-today">+73 &#11088; today</span>
+                </div>
+                <p class="repo-desc">Flutter makes it easy and fast to build beautiful apps for mobile and beyond</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#0175C2"></span>
+                    <span class="lang-name">Dart</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="total-stars">&#11088; 177.3k</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +73 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#8</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/andreknieriem/headunit-revived" target="_blank">andreknieriem/headunit-revived</a>
+                    <span class="stars-today">+41 &#11088; today</span>
+                </div>
+                <p class="repo-desc">Headunit App for displaying Android Auto</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#7F52FF"></span>
+                    <span class="lang-name">Kotlin</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="total-stars">&#11088; 1.4k</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +41 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#9</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/stablyai/orca" target="_blank">stablyai/orca</a>
+                    <span class="stars-today">+331 &#11088; today</span>
+                </div>
+                <p class="repo-desc">Orca is the ADE for working with a fleet of parallel agents. Run any coding agent with your own subscription.</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#3178C6"></span>
+                    <span class="lang-name">TypeScript</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="total-stars">&#11088; 6.8k</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +331 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#10</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/google-labs-code/design.md" target="_blank">google-labs-code/design.md</a>
+                    <span class="stars-today">+619 &#11088; today</span>
+                </div>
+                <p class="repo-desc">A format specification for describing a visual identity to coding agents. DESIGN.md gives agents a persistent, structured understanding of a design system.</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#3178C6"></span>
+                    <span class="lang-name">TypeScript</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="total-stars">&#11088; 17.4k</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +619 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#11</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/Flowseal/zapret-discord-youtube" target="_blank">Flowseal/zapret-discord-youtube</a>
+                    <span class="stars-today">+61 &#11088; today</span>
+                </div>
+                <p class="repo-desc">Batchfile scripts to bypass internet restrictions for Discord and YouTube</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#C1F12E"></span>
+                    <span class="lang-name">Batchfile</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="total-stars">&#11088; 30.0k</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +61 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#12</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/kunchenguid/no-mistakes" target="_blank">kunchenguid/no-mistakes</a>
+                    <span class="stars-today">+110 &#11088; today</span>
+                </div>
+                <p class="repo-desc">git push no-mistakes - A tool for mistake-free git workflows</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#00ADD8"></span>
+                    <span class="lang-name">Go</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="total-stars">&#11088; 2.2k</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +110 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#13</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/NousResearch/hermes-agent" target="_blank">NousResearch/hermes-agent</a>
+                    <span class="stars-today">+1178 &#11088; today</span>
+                </div>
+                <p class="repo-desc">The agent that grows with you</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#3776AB"></span>
+                    <span class="lang-name">Python</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="total-stars">&#11088; 202.1k</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +1178 today</span>
+                </div>
+            </div>
+        </div>
+</div>
+<footer class="footer">
+    <p>Source: <a href="https://github.com/trending" target="_blank">GitHub Trending</a> &middot; 2026-06-25 &middot; <a href="index.html">&#8592; Archive</a></p>
+</footer>
+<script>
+function toggleTheme() {
+    const body = document.body;
+    const btn = document.getElementById('themeBtn');
+    const current = body.getAttribute('data-theme');
+    if (current === 'dark') { body.removeAttribute('data-theme'); btn.innerHTML = '&#127769; Dark'; localStorage.setItem('theme', 'light'); }
+    else { body.setAttribute('data-theme', 'dark'); btn.innerHTML = '&#9728;&#65039; Light'; localStorage.setItem('theme', 'dark'); }
+}
+(function() {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') { document.body.setAttribute('data-theme', 'dark'); document.getElementById('themeBtn').innerHTML = '&#9728;&#65039; Light'; }
+})();
+</script>
+</body>
+</html>
