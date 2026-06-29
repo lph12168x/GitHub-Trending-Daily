@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Trending 2026年06月29日 &middot; 每日简报</title>
+<style>*, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+:root {
+    --bg: #f6f8fa; --bg-card: #ffffff; --text: #1f2328; --text-secondary: #656d76;
+    --border: #d0d7de; --accent: #0969da; --accent-light: #ddf4ff;
+    --star-color: #e67700; --rank-bg: #f6f8fa; --shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+[data-theme="dark"] {
+    --bg: #0d1117; --bg-card: #161b22; --text: #e6edf3; --text-secondary: #8b949e;
+    --border: #30363d; --accent: #58a6ff; --accent-light: #0c2d6b;
+    --star-color: #f0883e; --rank-bg: #0d1117; --shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); line-height:1.6; transition: background 0.3s, color 0.3s; }
+.header { background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%); color: #fff; padding: 48px 24px 36px; text-align: center; position: relative; }
+.header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+.header .subtitle { color: rgba(255,255,255,0.7); font-size: 1rem; }
+.theme-toggle { position: absolute; top: 20px; right: 24px; background: rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); color: #fff; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; }
+.summary { max-width: 900px; margin: 32px auto 0; padding: 20px 24px; background: var(--bg-card); border:1px solid var(--border); border-radius: 12px; display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; box-shadow: var(--shadow); }
+.summary-item { text-align: center; }
+.summary-num { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+.summary-label { font-size: 0.85rem; color: var(--text-secondary); margin-top: 2px; }
+.container { max-width: 900px; margin: 32px auto; padding:0 24px; }
+.repo-card { display: flex; gap: 16px; padding: 20px; background: var(--bg-card); border:1px solid var(--border); border-radius: 12px; margin-bottom: 12px; box-shadow: var(--shadow); transition: transform 0.15s; }
+.repo-card:hover { transform: translateY(-2px); }
+.repo-rank { flex-shrink: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: var(--rank-bg); border:1px solid var(--border); border-radius: 10px; font-weight: 700; font-size: 0.95rem; color: var(--text-secondary); }
+.repo-body { flex:1; min-width: 0; }
+.repo-header { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+.repo-name { font-size: 1.1rem; font-weight: 600; color: var(--accent); text-decoration: none; }
+.repo-name:hover { text-decoration: underline; }
+.stars-today { font-size: 0.8rem; background: var(--accent-light); color: var(--accent); padding: 2px 10px; border-radius: 20px; font-weight: 600; white-space: nowrap; }
+.repo-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px; line-height:1.5; }
+.repo-meta { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-secondary); flex-wrap: wrap; }
+.lang-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.meta-sep { color: var(--border); }
+.today-stars { color: var(--star-color); font-weight: 600; }
+.footer { text-align: center; padding: 32px 24px; color: var(--text-secondary); font-size: 0.85rem; border-top:1px solid var(--border); margin-top: 32px; }
+.footer a { color: var(--accent); text-decoration: none; }</style>
+</head>
+<body>
+<header class="header">
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">&#127769; Dark</button>
+    <h1>&#128299; GitHub Trending 每日简报</h1>
+    <p class="subtitle">2026年06月29日 &middot; 13 repos &middot; +7,927 stars today</p>
+</header>
+<div class="summary">
+    <div class="summary-item"><div class="summary-num">13</div><div class="summary-label">Repositories</div></div>
+    <div class="summary-item"><div class="summary-num">7,927</div><div class="summary-label">Stars Today</div></div>
+    <div class="summary-item"><div class="summary-num">6</div><div class="summary-label">Languages</div></div>
+    <div class="summary-item"><div class="summary-num" style="font-size:0.9rem;color:var(--text-secondary)">Python 8 &middot; C 1 &middot; Haskell 1 &middot; HTML 1 &middot; Swift 1</div><div class="summary-label">Top Languages</div></div>
+</div>
+<div class="container">
+        <div class="repo-card">
+            <div class="repo-rank">#1</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/DeusData/codebase-memory-mcp" target="_blank">DeusData/codebase-memory-mcp</a>
+                    <span class="stars-today">+2,190 &#11088; today</span>
+                </div>
+                <p class="repo-desc">High-performance code intelligence MCP server. Indexes codebases into a persistent knowledge graph — average repo in milliseconds. 158 languages, sub-ms queries, 99% fewer tokens. Single static binary, zero dependencies.</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#A8B9CC"></span>
+                    <span>C</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span>&#11088; 19,777</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +2,190 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#2</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/xbtlin/ai-berkshire" target="_blank">xbtlin/ai-berkshire</a>
+                    <span class="stars-today">+1,445 &#11088; today</span>
+                </div>
+                <p class="repo-desc">AI 时代的伯克希尔：基于 Claude Code / Codex 的价值投资研究框架。巴菲特·芒格·段永平·李录四大师方法论 + 多Agent并行研究。| AI-era Berkshire: a value investing research framework built for Claude Code / Codex. 4 masters' methodologies + multi-agent adversarial analysis.</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#3776AB"></span>
+                    <span>Python</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span>&#11088; 5,406</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +1,445 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#3</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/simplex-chat/simplex-chat" target="_blank">simplex-chat/simplex-chat</a>
+                    <span class="stars-today">+1,180 &#11088; today</span>
+                </div>
+                <p class="repo-desc">SimpleX - the first messaging network operating without user identifiers of any kind - 100% private by design! iOS, Android and desktop apps 📱!</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#5E5086"></span>
+                    <span>Haskell</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span>&#11088; 15,107</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +1,180 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#4</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/ripienaar/free-for-dev" target="_blank">ripienaar/free-for-dev</a>
+                    <span class="stars-today">+495 &#11088; today</span>
+                </div>
+                <p class="repo-desc">A list of SaaS, PaaS and IaaS offerings that have free tiers of interest to devops and infradev</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#E34F26"></span>
+                    <span>HTML</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span>&#11088; 125,313</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +495 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#5</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/HKUDS/Vibe-Trading" target="_blank">HKUDS/Vibe-Trading</a>
+                    <span class="stars-today">+492 &#11088; today</span>
+                </div>
+                <p class="repo-desc">"Vibe-Trading: Your Personal Trading Agent"</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#3776AB"></span>
+                    <span>Python</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span>&#11088; 14,364</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +492 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#6</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/opendatalab/MinerU" target="_blank">opendatalab/MinerU</a>
+                    <span class="stars-today">+380 &#11088; today</span>
+                </div>
+                <p class="repo-desc">Transforms complex documents like PDFs and Office docs into LLM-ready markdown/JSON for your Agentic workflows.</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#3776AB"></span>
+                    <span>Python</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span>&#11088; 71,649</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +380 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#7</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/Robbyant/lingbot-map" target="_blank">Robbyant/lingbot-map</a>
+                    <span class="stars-today">+372 &#11088; today</span>
+                </div>
+                <p class="repo-desc">A feed-forward 3D foundation model for reconstructing scenes from streaming data</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#3776AB"></span>
+                    <span>Python</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span>&#11088; 8,249</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +372 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#8</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/altic-dev/FluidVoice" target="_blank">altic-dev/FluidVoice</a>
+                    <span class="stars-today">+365 &#11088; today</span>
+                </div>
+                <p class="repo-desc">FluidVoice - Fastest macOS Offline Dictation app - Voice to Text fully Local. One ⭐ takes us a long way :))</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#FA7343"></span>
+                    <span>Swift</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span>&#11088; 3,774</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +365 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#9</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/commaai/openpilot" target="_blank">commaai/openpilot</a>
+                    <span class="stars-today">+266 &#11088; today</span>
+                </div>
+                <p class="repo-desc">openpilot is an operating system for robotics. Currently, it upgrades the driver assistance system on 300+ supported cars.</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#3776AB"></span>
+                    <span>Python</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span>&#11088; 62,418</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +266 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#10</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/ByteByteGoHq/system-design-101" target="_blank">ByteByteGoHq/system-design-101</a>
+                    <span class="stars-today">+250 &#11088; today</span>
+                </div>
+                <p class="repo-desc">Explain complex systems using visuals and simple terms. Help you prepare for system design interviews.</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#888"></span>
+                    <span>Unknown</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span>&#11088; 84,496</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +250 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#11</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/browser-use/video-use" target="_blank">browser-use/video-use</a>
+                    <span class="stars-today">+196 &#11088; today</span>
+                </div>
+                <p class="repo-desc">Edit videos with coding agents</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#3776AB"></span>
+                    <span>Python</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span>&#11088; 11,105</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +196 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#12</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/cupy/cupy" target="_blank">cupy/cupy</a>
+                    <span class="stars-today">+174 &#11088; today</span>
+                </div>
+                <p class="repo-desc">NumPy &amp; SciPy for GPU</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#3776AB"></span>
+                    <span>Python</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span>&#11088; 11,532</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +174 today</span>
+                </div>
+            </div>
+        </div>
+        <div class="repo-card">
+            <div class="repo-rank">#13</div>
+            <div class="repo-body">
+                <div class="repo-header">
+                    <a class="repo-name" href="https://github.com/usestrix/strix" target="_blank">usestrix/strix</a>
+                    <span class="stars-today">+122 &#11088; today</span>
+                </div>
+                <p class="repo-desc">Open-source AI hackers to find and fix your app’s vulnerabilities.</p>
+                <div class="repo-meta">
+                    <span class="lang-dot" style="background:#3776AB"></span>
+                    <span>Python</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span>&#11088; 26,767</span>
+                    <span class="meta-sep">&middot;</span>
+                    <span class="today-stars">&#128200; +122 today</span>
+                </div>
+            </div>
+        </div>
+</div>
+<footer class="footer">
+    <p>Source: <a href="https://github.com/trending" target="_blank">GitHub Trending</a> &middot; 2026-06-29 &middot; <a href="index.html">&#8592; Archive</a></p>
+</footer>
+<script>
+function toggleTheme(){
+    const body=document.body;
+    const btn=document.getElementById('themeBtn');
+    const current=body.getAttribute('data-theme');
+    if(current==='dark'){body.removeAttribute('data-theme');btn.innerHTML='&#127769; Dark';localStorage.setItem('theme','light');}
+    else{body.setAttribute('data-theme','dark');btn.innerHTML='&#9728;&#65039; Light';localStorage.setItem('theme','dark');}
+}
+(function(){
+    const saved=localStorage.getItem('theme');
+    if(saved==='dark'){document.body.setAttribute('data-theme','dark');document.getElementById('themeBtn').innerHTML='&#9728;&#65039; Light';}
+})();
+</script>
+</body>
+</html>
