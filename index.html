@@ -5,560 +5,411 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GitHub Trending Daily — 每日 GitHub 热门简报</title>
 <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --bg: #0d1117;
-    --card: #161b22;
-    --card-hover: #1c2230;
-    --border: #30363d;
-    --text: #e6edf3;
-    --text-muted: #8b949e;
-    --accent: #58a6ff;
-    --accent2: #f78166;
-    --green: #3fb950;
-    --yellow: #d29922;
-    --purple: #bc8cff;
-    --red: #f85149;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-  }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  .hero {
-    background: linear-gradient(135deg, #0d1117 0%, #161b22 40%, #1a0d2e 70%, #0d1117 100%);
-    padding: 48px 24px 40px;
-    text-align: center;
-    border-bottom: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: "";
-    position: absolute;
-    top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background: radial-gradient(circle at 30% 50%, rgba(88,166,255,0.06) 0%, transparent 40%),
-                radial-gradient(circle at 70% 50%, rgba(247,129,102,0.05) 0%, transparent 40%);
-    pointer-events: none;
-  }
-  .hero-content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
-  .hero .badge {
-    display: inline-block;
-    background: rgba(88,166,255,0.12);
-    border: 1px solid rgba(88,166,255,0.3);
-    color: var(--accent);
-    padding: 4px 16px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 16px;
-    letter-spacing: 0.5px;
-  }
-  .hero h1 {
-    font-size: 36px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #58a6ff 0%, #bc8cff 50%, #f78166 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 8px;
-  }
-  .hero .subtitle { color: var(--text-muted); font-size: 15px; }
-  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
-  /* Report content */
-  .report-body { padding: 0 0 48px; }
-  .report-body h2 {
-    font-size: 22px;
-    font-weight: 700;
-    margin-top: 36px;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
-    color: var(--text);
-  }
-  .report-body h3 {
-    font-size: 18px;
-    font-weight: 600;
-    margin-top: 24px;
-    margin-bottom: 8px;
-    color: var(--accent);
-  }
-  .report-body p { margin-bottom: 12px; color: var(--text); }
-  .report-body blockquote {
-    border-left: 3px solid var(--accent);
-    background: rgba(88,166,255,0.06);
-    padding: 12px 16px;
-    margin: 16px 0;
-    border-radius: 0 6px 6px 0;
-    color: var(--text-muted);
-    font-size: 14px;
-  }
-  .report-body blockquote a { color: var(--accent); }
-  .report-body table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 16px 0;
-    font-size: 14px;
-  }
-  .report-body th {
-    background: var(--card);
-    color: var(--accent);
-    font-weight: 600;
-    padding: 10px 14px;
-    text-align: left;
-    border: 1px solid var(--border);
-    white-space: nowrap;
-  }
-  .report-body td {
-    padding: 10px 14px;
-    border: 1px solid var(--border);
-    color: var(--text);
-  }
-  .report-body tr:nth-child(even) td { background: rgba(22,27,34,0.5); }
-  .report-body ul, .report-body ol { margin: 12px 0 12px 24px; }
-  .report-body li { margin-bottom: 6px; }
-  .report-body strong { color: var(--text); font-weight: 700; }
-  .report-body hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
-  .report-body code {
-    background: var(--card);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-family: "SFMono-Regular", Consolas, monospace;
-    font-size: 13px;
-    color: var(--accent2);
-  }
-  .report-body pre {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px;
-    overflow-x: auto;
-    margin: 16px 0;
-  }
-  .report-body pre code {
-    background: none;
-    padding: 0;
-    color: var(--text);
-  }
-  .report-body a { color: var(--accent); }
-  .nav-back {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--accent);
-    font-size: 14px;
-    font-weight: 600;
-    padding: 8px 0;
-  }
-  .footer {
-    text-align: center;
-    padding: 24px;
-    color: var(--text-muted);
-    font-size: 13px;
-    border-top: 1px solid var(--border);
-  }
+:root {
+  --bg: #f6f8fa;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f0f4f8;
+  --border: #d0d7de;
+  --text: #1f2328;
+  --text-secondary: #656d76;
+  --accent: #0969da;
+  --accent-light: #ddf4ff;
+  --accent2: #cf222e;
+  --star-color: #bf8700;
+  --purple: #8250df;
+  --green: #1a7f37;
+  --yellow-light: #fff8c5;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+  --gradient-hero: linear-gradient(135deg, #0969da08 0%, #8250df10 40%, #cf222e08 100%);
+  --tag-bg: #ddf4ff;
+  --tag-border: #b6e3ff;
+  --tag-color: #0969da;
+  --weekday-bg: #f6f8fa;
+  --weekday-color: #656d76;
+  --footer-border: #d0d7de;
+}
 
+[data-theme="dark"] {
+  --bg: #0d1117;
+  --bg-card: #161b22;
+  --bg-card-hover: #1c2230;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-secondary: #8b949e;
+  --accent: #58a6ff;
+  --accent-light: #0c2d6b;
+  --accent2: #f78166;
+  --star-color: #f0883e;
+  --purple: #bc8cff;
+  --green: #3fb950;
+  --yellow-light: #2b2200;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
+  --gradient-hero: linear-gradient(135deg, #0d1117 0%, #161b22 40%, #1a0d2e 70%, #0d1117 100%);
+  --tag-bg: rgba(88,166,255,0.1);
+  --tag-border: rgba(88,166,255,0.2);
+  --tag-color: #58a6ff;
+  --weekday-bg: rgba(139,148,158,0.12);
+  --weekday-color: #8b949e;
+  --footer-border: #30363d;
+}
 
-  /* Index page specific styles */
-  .stats-bar {
-    display: flex;
-    justify-content: center;
-    gap: 48px;
-    padding: 24px;
-    background: var(--card);
-    border-bottom: 1px solid var(--border);
-  }
-  .stat-item {
-    text-align: center;
-  }
-  .stat-num {
-    font-size: 28px;
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--accent), var(--purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .stat-label {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 4px;
-    letter-spacing: 0.5px;
-  }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-  .section-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .section-title::before {
-    content: '';
-    width: 4px;
-    height: 20px;
-    background: linear-gradient(180deg, var(--accent), var(--accent2));
-    border-radius: 2px;
-  }
+/* ─── Hero ─── */
+.hero {
+  background: var(--gradient-hero);
+  padding: 56px 24px 48px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+[data-theme="dark"] .hero::before {
+  content: "";
+  position: absolute; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle at 30% 50%, rgba(88,166,255,0.05) 0%, transparent 40%),
+              radial-gradient(circle at 70% 50%, rgba(247,129,102,0.04) 0%, transparent 40%);
+  pointer-events: none;
+}
+.hero-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+.hero .badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--accent-light);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 4px 18px; border-radius: 20px;
+  font-size: 13px; font-weight: 600; margin-bottom: 16px;
+  letter-spacing: 0.3px;
+  opacity: 0.9;
+}
+.hero h1 {
+  font-size: 2.25rem; font-weight: 800; margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--purple) 50%, var(--accent2) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+[data-theme="dark"] .hero h1 {
+  background: linear-gradient(135deg, #58a6ff 0%, #bc8cff 50%, #f78166 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero .subtitle { color: var(--text-secondary); font-size: 0.95rem; }
+.hero .subtitle a { font-weight: 600; }
 
-  .reports-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-    margin-bottom: 32px;
-  }
-  .report-card {
-    display: block;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-    transition: all 0.2s ease;
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
-  }
-  .report-card:hover {
-    background: var(--card-hover);
-    border-color: var(--accent);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-  }
-  .card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-  }
-  .card-date {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text);
-  }
-  .card-weekday {
-    font-size: 12px;
-    color: var(--text-muted);
-    background: rgba(139,148,158,0.12);
-    padding: 2px 10px;
-    border-radius: 12px;
-  }
-  .card-body {
-    margin-bottom: 12px;
-  }
-  .card-repos {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 8px;
-  }
-  .tag {
-    font-size: 11px;
-    color: var(--accent);
-    background: rgba(88,166,255,0.1);
-    border: 1px solid rgba(88,166,255,0.2);
-    padding: 2px 8px;
-    border-radius: 10px;
-    white-space: nowrap;
-  }
-  .stars-badge {
-    display: inline-block;
-    font-size: 13px;
-    color: var(--yellow);
-    font-weight: 600;
-    margin-top: 4px;
-  }
-  .card-footer {
-    color: var(--accent);
-    font-size: 13px;
-    font-weight: 600;
-    border-top: 1px solid var(--border);
-    padding-top: 10px;
-    margin-top: 4px;
-  }
-  .report-card:first-child .card-date::after {
-    content: ' 🆕';
-    font-size: 14px;
-  }
+/* ─── Theme Toggle ─── */
+.theme-toggle {
+  position: absolute; top: 20px; right: 24px;
+  display: flex; align-items: center; gap: 6px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--text-secondary); padding: 6px 14px; border-radius: 8px;
+  cursor: pointer; font-size: 0.85rem; font-weight: 600;
+  transition: all 0.2s; z-index: 2;
+  box-shadow: var(--shadow-sm);
+}
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.theme-toggle .icon { font-size: 1rem; }
+
+/* ─── Stats Bar ─── */
+.stats-bar {
+  display: flex; justify-content: center; gap: 64px;
+  padding: 28px 24px; background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.stats-bar::after {
+  content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 60%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent)33, transparent);
+}
+.stat-item { text-align: center; }
+.stat-num {
+  font-size: 1.75rem; font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.stat-label { font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; letter-spacing: 0.5px; text-transform: uppercase; }
+
+/* ─── Container ─── */
+.container { max-width: 1024px; margin: 0 auto; padding: 36px 24px 48px; }
+
+/* ─── Section Header ─── */
+.section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 24px; }
+.section-title {
+  font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 10px;
+}
+.section-title::before {
+  content: ''; width: 4px; height: 22px;
+  background: linear-gradient(180deg, var(--accent), var(--purple)); border-radius: 2px;
+}
+.section-count { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; }
+
+/* ─── Reports Grid ─── */
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px; margin-bottom: 32px;
+}
+@media (max-width: 680px) { .reports-grid { grid-template-columns: 1fr; } }
+
+/* ─── Report Card ─── */
+.report-card {
+  display: flex; flex-direction: column;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none; position: relative; overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.report-card:hover {
+  border-color: var(--accent); transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+.report-card:first-child {
+  border-left: 3px solid var(--accent);
+  box-shadow: var(--shadow-md);
+}
+.report-card:first-child::before {
+  content: 'NEW';
+  position: absolute; top: 14px; right: -26px;
+  background: var(--accent); color: #fff;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 1px;
+  padding: 2px 28px; transform: rotate(45deg);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.card-date { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+.card-weekday {
+  font-size: 0.75rem; color: var(--weekday-color); background: var(--weekday-bg);
+  padding: 2px 10px; border-radius: 10px; font-weight: 600;
+}
+.card-repos { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.tag {
+  font-size: 0.7rem; font-weight: 600; color: var(--tag-color);
+  background: var(--tag-bg); border: 1px solid var(--tag-border);
+  padding: 2px 8px; border-radius: 8px; white-space: nowrap;
+  transition: all 0.15s;
+}
+.report-card:hover .tag { border-color: var(--accent); }
+.stars-badge {
+  font-size: 0.8rem; color: var(--star-color); font-weight: 600; margin-top: 2px;
+}
+.card-footer {
+  margin-top: auto; color: var(--accent); font-size: 0.82rem;
+  font-weight: 600; border-top: 1px solid var(--border); padding-top: 10px;
+  display: flex; align-items: center; gap: 4px;
+}
+.card-footer .arrow { transition: transform 0.2s; }
+.report-card:hover .card-footer .arrow { transform: translateX(4px); }
+
+/* ─── Quick Stats (collapsible row) ─── */
+.quick-stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px; margin-bottom: 36px;
+}
+.qs-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px; box-shadow: var(--shadow-sm);
+  display: flex; align-items: center; gap: 14px;
+}
+.qs-icon { font-size: 1.6rem; flex-shrink: 0; }
+.qs-body { min-width: 0; }
+.qs-value { font-size: 1.15rem; font-weight: 700; color: var(--text); }
+.qs-label { font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px; }
+
+/* ─── Footer ─── */
+.footer { text-align: center; padding: 28px 24px; color: var(--text-secondary);
+          font-size: 0.83rem; border-top: 1px solid var(--footer-border); }
+.footer a { font-weight: 600; }
+.footer .sep { margin: 0 8px; opacity: 0.4; }
 </style>
 </head>
 <body>
 
 <div class="hero">
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">
+    <span class="icon">&#127769;</span> Dark
+  </button>
   <div class="hero-content">
-    <span class="badge">🔥 GitHub Trending Daily</span>
+    <span class="badge">&#128293; GitHub Trending Daily</span>
     <h1>每日 GitHub 热门简报</h1>
-    <p class="subtitle">自动追踪 GitHub Trending · 每日 10:00 更新 · <a href="https://github.com/lph12168x/GitHub-Trending-Daily" target="_blank">查看仓库 →</a></p>
+    <p class="subtitle">自动追踪 GitHub Trending &middot; 每日 10:00 更新 &middot; <a href="https://github.com/lph12168x/GitHub-Trending-Daily" target="_blank">查看仓库 &#8594;</a></p>
   </div>
 </div>
 
 <div class="stats-bar">
-  <div class="stat-item">
-    <div class="stat-num">17</div>
-    <div class="stat-label">期数</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">2026-07-02</div>
-    <div class="stat-label">最新</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">2026-06-09</div>
-    <div class="stat-label">起始</div>
-  </div>
+  <div class="stat-item"><div class="stat-num">17</div><div class="stat-label">期数</div></div>
+  <div class="stat-item"><div class="stat-num">2026-07-02</div><div class="stat-label">最新</div></div>
+  <div class="stat-item"><div class="stat-num">2026-06-09</div><div class="stat-label">起始</div></div>
+  <div class="stat-item"><div class="stat-num">23 Day</div><div class="stat-label">跨度</div></div>
 </div>
 
 <div class="container">
-  <div class="section-title">历史简报</div>
+  <div class="section-header">
+    <div class="section-title">&#128218; 历史简报</div>
+    <div class="section-count">共 17 期</div>
+  </div>
+
   <div class="reports-grid">
 
     <a href="github-trending-2026-07-02.html" class="report-card">
-      <div class="card-header">
-        <span class="card-date">2026-07-02</span>
-        <span class="card-weekday">周四</span>
-      </div>
-      <div class="card-body">
-        <div class="card-repos"><span class="tag">exercises-dataset</span><span class="tag">agency-agents</span><span class="tag">strix</span></div>
-        <span class="stars-badge">≈ 20 repos ⭐</span>
-      </div>
-      <div class="card-footer">
-        <span>查看详情 →</span>
-      </div>
+      <div class="card-top"><span class="card-date">2026-07-02</span><span class="card-weekday">周四</span></div>
+      <div class="card-repos"><span class="tag">exercises-dataset</span><span class="tag">agency-agents</span><span class="tag">strix</span></div>
+      <div class="card-footer">查看详情 <span class="arrow">&#8594;</span></div>
     </a>
 
     <a href="github-trending-2026-07-01.html" class="report-card">
-      <div class="card-header">
-        <span class="card-date">2026-07-01</span>
-        <span class="card-weekday">周三</span>
-      </div>
-      <div class="card-body">
-        <div class="card-repos"><span class="tag">msitarzewski/agency-agents</span><span class="tag">simplex-chat</span><span class="tag">xbtlin/ai-berkshire</span></div>
-        <span class="stars-badge">≈ 19 repos ⭐</span>
-      </div>
-      <div class="card-footer">
-        <span>查看详情 →</span>
-      </div>
+      <div class="card-top"><span class="card-date">2026-07-01</span><span class="card-weekday">周三</span></div>
+      <div class="card-repos"><span class="tag">msitarzewski/agency-agents</span><span class="tag">simplex-chat</span><span class="tag">xbtlin/ai-berkshire</span></div>
+      <div class="stars-badge">19 repos</div>
+      <div class="card-footer">查看详情 <span class="arrow">&#8594;</span></div>
     </a>
 
     <a href="github-trending-2026-06-30.html" class="report-card">
-      <div class="card-header">
-        <span class="card-date">2026-06-30</span>
-        <span class="card-weekday">周一</span>
-      </div>
-      <div class="card-body">
-        <div class="card-repos"><span class="tag">free-for-dev</span><span class="tag">simplex-chat</span><span class="tag">agency-agents</span></div>
-        <span class="stars-badge">≈ 13 repos ⭐</span>
-      </div>
-      <div class="card-footer">
-        <span>查看详情 →</span>
-      </div>
+      <div class="card-top"><span class="card-date">2026-06-30</span><span class="card-weekday">周一</span></div>
+      <div class="card-repos"><span class="tag">free-for-dev</span><span class="tag">simplex-chat</span><span class="tag">agency-agents</span></div>
+      <div class="stars-badge">13 repos</div>
+      <div class="card-footer">查看详情 <span class="arrow">&#8594;</span></div>
     </a>
 
     <a href="github-trending-2026-06-29.html" class="report-card">
-      <div class="card-header">
-        <span class="card-date">2026-06-29</span>
-        <span class="card-weekday">周日</span>
-      </div>
-      <div class="card-body">
-        <div class="card-repos"></div>
-        <span class="stars-badge">≈ 13 repos ⭐</span>
-      </div>
-      <div class="card-footer">
-        <span>查看详情 →</span>
-      </div>
+      <div class="card-top"><span class="card-date">2026-06-29</span><span class="card-weekday">周日</span></div>
+      <div class="card-repos"></div>
+      <div class="stars-badge">13 repos</div>
+      <div class="card-footer">查看详情 <span class="arrow">&#8594;</span></div>
     </a>
 
     <a href="github-trending-2026-06-26.html" class="report-card">
-      <div class="card-header">
-        <span class="card-date">2026-06-26</span>
-        <span class="card-weekday">周五</span>
-      </div>
-      <div class="card-body">
-        <div class="card-repos"></div>
-        <span class="stars-badge">≈ 16 repos ⭐</span>
-      </div>
-      <div class="card-footer">
-        <span>查看详情 →</span>
-      </div>
+      <div class="card-top"><span class="card-date">2026-06-26</span><span class="card-weekday">周五</span></div>
+      <div class="card-repos"></div>
+      <div class="stars-badge">16 repos</div>
+      <div class="card-footer">查看详情 <span class="arrow">&#8594;</span></div>
     </a>
 
     <a href="github-trending-2026-06-25.html" class="report-card">
-      <div class="card-header">
-        <span class="card-date">2026-06-25</span>
-        <span class="card-weekday">周四</span>
-      </div>
-      <div class="card-body">
-        <div class="card-repos"></div>
-        <span class="stars-badge">≈ 13 repos ⭐</span>
-      </div>
-      <div class="card-footer">
-        <span>查看详情 →</span>
-      </div>
+      <div class="card-top"><span class="card-date">2026-06-25</span><span class="card-weekday">周四</span></div>
+      <div class="card-repos"></div>
+      <div class="stars-badge">13 repos</div>
+      <div class="card-footer">查看详情 <span class="arrow">&#8594;</span></div>
     </a>
 
     <a href="github-trending-2026-06-24.html" class="report-card">
-      <div class="card-header">
-        <span class="card-date">2026-06-24</span>
-        <span class="card-weekday">周三</span>
-      </div>
-      <div class="card-body">
-        <div class="card-repos"></div>
-        
-      </div>
-      <div class="card-footer">
-        <span>查看详情 →</span>
-      </div>
+      <div class="card-top"><span class="card-date">2026-06-24</span><span class="card-weekday">周三</span></div>
+      <div class="card-repos"></div>
+      <div class="card-footer">查看详情 <span class="arrow">&#8594;</span></div>
     </a>
 
     <a href="github-trending-2026-06-23.html" class="report-card">
-      <div class="card-header">
-        <span class="card-date">2026-06-23</span>
-        <span class="card-weekday">周二</span>
-      </div>
-      <div class="card-body">
-        <div class="card-repos"><span class="tag">calesthio/OpenMontage</span><span class="tag">palmier-io/palmier-pro</span><span class="tag">mattpocock/skills</span></div>
-        
-      </div>
-      <div class="card-footer">
-        <span>查看详情 →</span>
-      </div>
+      <div class="card-top"><span class="card-date">2026-06-23</span><span class="card-weekday">周二</span></div>
+      <div class="card-repos"><span class="tag">calesthio/OpenMontage</span><span class="tag">palmier-io/palmier-pro</span><span class="tag">mattpocock/skills</span></div>
+      <div class="card-footer">查看详情 <span class="arrow">&#8594;</span></div>
     </a>
 
     <a href="github-trending-2026-06-22.html" class="report-card">
-      <div class="card-header">
-        <span class="card-date">2026-06-22</span>
-        <span class="card-weekday">周一</span>
-      </div>
-      <div class="card-body">
-        <div class="card-repos"><span class="tag">chopratejas/headroom</span><span class="tag">tw93/Pake</span><span class="tag">palmier-io/palmier-pro</span></div>
-        <span class="stars-badge">≈ 14,100 ⭐</span>
-      </div>
-      <div class="card-footer">
-        <span>查看详情 →</span>
-      </div>
+      <div class="card-top"><span class="card-date">2026-06-22</span><span class="card-weekday">周一</span></div>
+      <div class="card-repos"><span class="tag">chopratejas/headroom</span><span class="tag">tw93/Pake</span><span class="tag">palmier-io/palmier-pro</span></div>
+      <div class="stars-badge">14,100 &#11088;</div>
+      <div class="card-footer">查看详情 <span class="arrow">&#8594;</span></div>
     </a>
 
     <a href="github-trending-2026-06-18.html" class="report-card">
-      <div class="card-header">
-        <span class="card-date">2026-06-18</span>
-        <span class="card-weekday">周四</span>
-      </div>
-      <div class="card-body">
-        <div class="card-repos"><span class="tag">mattpocock/skills</span><span class="tag">Panniantong/Agent-Reach</span><span class="tag">obra/superpowers</span></div>
-        <span class="stars-badge">≈ 8,732 ⭐</span>
-      </div>
-      <div class="card-footer">
-        <span>查看详情 →</span>
-      </div>
+      <div class="card-top"><span class="card-date">2026-06-18</span><span class="card-weekday">周四</span></div>
+      <div class="card-repos"><span class="tag">mattpocock/skills</span><span class="tag">Panniantong/Agent-Reach</span><span class="tag">obra/superpowers</span></div>
+      <div class="stars-badge">8,732 &#11088;</div>
+      <div class="card-footer">查看详情 <span class="arrow">&#8594;</span></div>
     </a>
 
     <a href="github-trending-2026-06-17.html" class="report-card">
-      <div class="card-header">
-        <span class="card-date">2026-06-17</span>
-        <span class="card-weekday">周三</span>
-      </div>
-      <div class="card-body">
-        <div class="card-repos"><span class="tag">iptv-org/iptv</span><span class="tag">freeCodeCamp/freeCodeCamp</span><span class="tag">OpenBMB/VoxCPM</span></div>
-        <span class="stars-badge">≈ 3,748 ⭐</span>
-      </div>
-      <div class="card-footer">
-        <span>查看详情 →</span>
-      </div>
+      <div class="card-top"><span class="card-date">2026-06-17</span><span class="card-weekday">周三</span></div>
+      <div class="card-repos"><span class="tag">iptv-org/iptv</span><span class="tag">freeCodeCamp/freeCodeCamp</span><span class="tag">OpenBMB/VoxCPM</span></div>
+      <div class="stars-badge">3,748 &#11088;</div>
+      <div class="card-footer">查看详情 <span class="arrow">&#8594;</span></div>
     </a>
 
     <a href="github-trending-2026-06-16.html" class="report-card">
-      <div class="card-header">
-        <span class="card-date">2026-06-16</span>
-        <span class="card-weekday">周二</span>
-      </div>
-      <div class="card-body">
-        <div class="card-repos"><span class="tag">iptv-org/iptv</span><span class="tag">Panniantong/Agent-Reach</span><span class="tag">NVIDIA/SkillSpector</span></div>
-        <span class="stars-badge">≈ 9,842 ⭐</span>
-      </div>
-      <div class="card-footer">
-        <span>查看详情 →</span>
-      </div>
+      <div class="card-top"><span class="card-date">2026-06-16</span><span class="card-weekday">周二</span></div>
+      <div class="card-repos"><span class="tag">iptv-org/iptv</span><span class="tag">Panniantong/Agent-Reach</span><span class="tag">NVIDIA/SkillSpector</span></div>
+      <div class="stars-badge">9,842 &#11088;</div>
+      <div class="card-footer">查看详情 <span class="arrow">&#8594;</span></div>
     </a>
 
     <a href="github-trending-2026-06-15.html" class="report-card">
-      <div class="card-header">
-        <span class="card-date">2026-06-15</span>
-        <span class="card-weekday">周一</span>
-      </div>
-      <div class="card-body">
-        <div class="card-repos"><span class="tag">iptv-org/iptv</span><span class="tag">NVIDIA/SkillSpector</span><span class="tag">chatwoot/chatwoot</span></div>
-        <span class="stars-badge">≈ 4,667 ⭐</span>
-      </div>
-      <div class="card-footer">
-        <span>查看详情 →</span>
-      </div>
+      <div class="card-top"><span class="card-date">2026-06-15</span><span class="card-weekday">周一</span></div>
+      <div class="card-repos"><span class="tag">iptv-org/iptv</span><span class="tag">NVIDIA/SkillSpector</span><span class="tag">chatwoot/chatwoot</span></div>
+      <div class="stars-badge">4,667 &#11088;</div>
+      <div class="card-footer">查看详情 <span class="arrow">&#8594;</span></div>
     </a>
 
     <a href="github-trending-2026-06-12.html" class="report-card">
-      <div class="card-header">
-        <span class="card-date">2026-06-12</span>
-        <span class="card-weekday">周五</span>
-      </div>
-      <div class="card-body">
-        <div class="card-repos"><span class="tag">addyosmani/agent-skills</span><span class="tag">apple/container</span><span class="tag">phuryn/pm-skills</span></div>
-        
-      </div>
-      <div class="card-footer">
-        <span>查看详情 →</span>
-      </div>
+      <div class="card-top"><span class="card-date">2026-06-12</span><span class="card-weekday">周五</span></div>
+      <div class="card-repos"><span class="tag">addyosmani/agent-skills</span><span class="tag">apple/container</span><span class="tag">phuryn/pm-skills</span></div>
+      <div class="card-footer">查看详情 <span class="arrow">&#8594;</span></div>
     </a>
 
     <a href="github-trending-2026-06-11.html" class="report-card">
-      <div class="card-header">
-        <span class="card-date">2026-06-11</span>
-        <span class="card-weekday">周四</span>
-      </div>
-      <div class="card-body">
-        <div class="card-repos"><span class="tag">addayosmani/agent-skills</span><span class="tag">phuryn/pm-skills</span><span class="tag">refactoringhq/tolaria</span></div>
-        
-      </div>
-      <div class="card-footer">
-        <span>查看详情 →</span>
-      </div>
+      <div class="card-top"><span class="card-date">2026-06-11</span><span class="card-weekday">周四</span></div>
+      <div class="card-repos"><span class="tag">addayosmani/agent-skills</span><span class="tag">phuryn/pm-skills</span><span class="tag">refactoringhq/tolaria</span></div>
+      <div class="card-footer">查看详情 <span class="arrow">&#8594;</span></div>
     </a>
 
     <a href="github-trending-2026-06-10.html" class="report-card">
-      <div class="card-header">
-        <span class="card-date">2026-06-10</span>
-        <span class="card-weekday">周三</span>
-      </div>
-      <div class="card-body">
-        <div class="card-repos"><span class="tag">mvanhorn/last30days-skill</span><span class="tag">RyanCodrai/turbovec</span><span class="tag">santifer/career-ops</span></div>
-        
-      </div>
-      <div class="card-footer">
-        <span>查看详情 →</span>
-      </div>
+      <div class="card-top"><span class="card-date">2026-06-10</span><span class="card-weekday">周三</span></div>
+      <div class="card-repos"><span class="tag">mvanhorn/last30days-skill</span><span class="tag">RyanCodrai/turbovec</span><span class="tag">santifer/career-ops</span></div>
+      <div class="card-footer">查看详情 <span class="arrow">&#8594;</span></div>
     </a>
 
     <a href="github-trending-2026-06-09.html" class="report-card">
-      <div class="card-header">
-        <span class="card-date">2026-06-09</span>
-        <span class="card-weekday">周二</span>
-      </div>
-      <div class="card-body">
-        <div class="card-repos"><span class="tag">MemPalace/mempalace</span><span class="tag">santifer/career-ops</span><span class="tag">aaif-goose/goose</span></div>
-        <span class="stars-badge">≈ 23 repos ⭐</span>
-      </div>
-      <div class="card-footer">
-        <span>查看详情 →</span>
-      </div>
+      <div class="card-top"><span class="card-date">2026-06-09</span><span class="card-weekday">周二</span></div>
+      <div class="card-repos"><span class="tag">MemPalace/mempalace</span><span class="tag">santifer/career-ops</span><span class="tag">aaif-goose/goose</span></div>
+      <div class="stars-badge">23 repos</div>
+      <div class="card-footer">查看详情 <span class="arrow">&#8594;</span></div>
     </a>
   </div>
 </div>
 
 <div class="footer">
-  GitHub Trending Daily · 由 <a href="https://github.com/lph12168x" target="_blank">@lph12168x</a> 维护 · 每日自动生成
+  &#128299; GitHub Trending Daily<span class="sep">·</span>由 <a href="https://github.com/lph12168x" target="_blank">@lph12168x</a> 维护<span class="sep">·</span>每日自动生成
 </div>
 
+<script>
+(function(){
+  var t = localStorage.getItem('gh-trending-theme');
+  if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  updateBtn();
+})();
+function toggleTheme(){
+  var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  if (isDark) {
+    document.documentElement.removeAttribute('data-theme');
+    localStorage.setItem('gh-trending-theme', 'light');
+  } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem('gh-trending-theme', 'dark');
+  }
+  updateBtn();
+}
+function updateBtn(){
+  var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  var btn = document.getElementById('themeBtn');
+  if (isDark) {
+    btn.innerHTML = '<span class="icon">&#9728;&#65039;</span> Light';
+  } else {
+    btn.innerHTML = '<span class="icon">&#127769;</span> Dark';
+  }
+}
+</script>
 </body>
 </html>
