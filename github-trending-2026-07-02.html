@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Trending 2026年07月02日 &middot; 每日简报</title>
+<style>*, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+:root {
+    --bg: #f6f8fa; --bg-card: #ffffff; --text: #1f2328; --text-secondary: #656d76;
+    --border: #d0d7de; --accent: #0969da; --accent-light: #ddf4ff;
+    --star-color: #e67700; --rank-bg: #f6f8fa; --shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+[data-theme="dark"] {
+    --bg: #0d1117; --bg-card: #161b22; --text: #e6edf3; --text-secondary: #8b949e;
+    --border: #30363d; --accent: #58a6ff; --accent-light: #0c2d6b;
+    --star-color: #f0883e; --rank-bg: #0d1117; --shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; transition: background 0.3s, color 0.3s; }
+.header { background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%); color: #fff; padding: 48px 24px 36px; text-align: center; position: relative; }
+.header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+.header .subtitle { color: rgba(255,255,255,0.7); font-size: 1rem; }
+.theme-toggle { position: absolute; top: 20px; right: 24px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); color: #fff; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; }
+.theme-toggle:hover { background: rgba(255,255,255,0.25); }
+.summary { max-width: 900px; margin: 32px auto 0; padding: 20px 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; box-shadow: var(--shadow); }
+.summary-item { text-align: center; }
+.summary-num { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+.summary-label { font-size: 0.85rem; color: var(--text-secondary); margin-top: 2px; }
+.container { max-width: 900px; margin: 32px auto; padding: 0 24px; }
+.repo-card { display: flex; gap: 16px; padding: 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; box-shadow: var(--shadow); transition: transform 0.15s; }
+.repo-card:hover { transform: translateY(-2px); }
+.repo-rank { flex-shrink: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: var(--rank-bg); border: 1px solid var(--border); border-radius: 10px; font-weight: 700; font-size: 0.95rem; color: var(--text-secondary); }
+.repo-card:nth-child(1) .repo-rank { background: #ffd70022; border-color: #ffd70044; color: #ffd700; }
+.repo-card:nth-child(2) .repo-rank { background: #c0c0c022; border-color: #c0c0c044; color: #c0c0c0; }
+.repo-card:nth-child(3) .repo-rank { background: #cd7f3222; border-color: #cd7f3244; color: #cd7f32; }
+.repo-body { flex: 1; min-width: 0; }
+.repo-header { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+.repo-name { font-size: 1.1rem; font-weight: 600; color: var(--accent); text-decoration: none; }
+.repo-name:hover { text-decoration: underline; }
+.stars-today { font-size: 0.8rem; background: var(--accent-light); color: var(--accent); padding: 2px 10px; border-radius: 20px; font-weight: 600; white-space: nowrap; }
+.repo-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.5; }
+.repo-meta { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-secondary); flex-wrap: wrap; }
+.lang-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.meta-sep { color: var(--border); }
+.today-stars { color: var(--star-color); font-weight: 600; }
+.stats-section { max-width: 900px; margin: 0 auto 32px; padding: 0 24px; }
+.stats-section h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 16px; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+.lang-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+.lang-badge { display: flex; align-items: center; gap: 6px; background: var(--bg-card); border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; color: var(--text-secondary); box-shadow: var(--shadow); }
+.lang-badge .dot { width: 10px; height: 10px; border-radius: 50%; }
+.lang-badge strong { color: var(--text); }
+.insight-box { max-width: 900px; margin: 0 auto 32px; padding: 20px 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); }
+.insight-box h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; color: var(--text); }
+.insight-box ul { margin-left: 20px; }
+.insight-box li { margin-bottom: 8px; color: var(--text-secondary); line-height: 1.5; }
+.insight-box li strong { color: var(--text); }
+.back-nav { max-width: 900px; margin: 0 auto 20px; padding: 0 24px; }
+.back-nav a { color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+.back-nav a:hover { text-decoration: underline; }
+.footer { text-align: center; padding: 32px 24px; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 32px; }
+.footer a { color: var(--accent); text-decoration: none; }
+@media (max-width: 600px) { .repo-card { flex-direction: column; gap: 8px; } .header h1 { font-size: 1.5rem; } .summary { gap: 16px; } }
+</style>
+</head>
+<body>
+<header class="header">
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">&#127769; Dark</button>
+    <h1>&#128299; GitHub Trending 每日简报</h1>
+    <p class="subtitle">2026年07月02日 &middot; 20 repos &middot; +12,996 stars today</p>
+</header>
+<div class="back-nav" style="padding-top:24px"><a href="index.html">&larr; 返回日报列表</a></div>
+<div class="summary">
+    <div class="summary-item"><div class="summary-num">20</div><div class="summary-label">Trending 仓库</div></div>
+    <div class="summary-item"><div class="summary-num">+12,996</div><div class="summary-label">今日新增 Stars</div></div>
+    <div class="summary-item"><div class="summary-num">3</div><div class="summary-label">中国项目</div></div>
+    <div class="summary-item"><div class="summary-num">7</div><div class="summary-label">编程语言</div></div>
+</div>
+
+<div class="container">
+
+<div class="repo-card">
+    <div class="repo-rank">1</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/hasaneyldrm/exercises-dataset" target="_blank">hasaneyldrm/exercises-dataset</a>
+            <span class="stars-today">+2,470</span>
+        </div>
+        <div class="repo-desc">433 种健身动作数据集，每个条目包含名称、类别、目标肌群、器械、指令、缩略图和动画视频。</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#e34c26"></span> HTML
+            <span class="meta-sep">&middot;</span>
+            &#11088; 8,454
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+2,470</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">2</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/msitarzewski/agency-agents" target="_blank">msitarzewski/agency-agents</a>
+            <span class="stars-today">+2,114</span>
+        </div>
+        <div class="repo-desc">触手可及的完整 AI 机构 —— 从前端魔法师到 Reddit 社区忍者，从创意注入者到现实检查者。每个 Agent 都是专注领域的专家，自带个性、流程和经过验证的交付成果。</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#89e051"></span> Shell
+            <span class="meta-sep">&middot;</span>
+            &#11088; 123,526
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+2,114</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">3</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/usestrix/strix" target="_blank">usestrix/strix</a>
+            <span class="stars-today">+1,211</span>
+        </div>
+        <div class="repo-desc">开源 AI 渗透测试工具，用于发现和修复应用安全漏洞。</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#3572A5"></span> Python
+            <span class="meta-sep">&middot;</span>
+            &#11088; 29,782
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+1,211</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">4</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/microsoft/AI-For-Beginners" target="_blank">microsoft/AI-For-Beginners</a>
+            <span class="stars-today">+1,096</span>
+        </div>
+        <div class="repo-desc">12 周、24 节课，AI for All！微软官方 AI 入门课程。</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#DA5B0B"></span> Jupyter Notebook
+            <span class="meta-sep">&middot;</span>
+            &#11088; 50,478
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+1,096</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">5</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/diegosouzapw/OmniRoute" target="_blank">diegosouzapw/OmniRoute</a>
+            <span class="stars-today">+1,010</span>
+        </div>
+        <div class="repo-desc">永不停歇地编码。免费 AI 网关：一个端点接入 231+ 提供商（50+ 免费），连接 Claude Code、Codex、Cursor、Cline & Copilot 到免费 Claude/GPT/Gemini。RTK+Caveman 堆叠压缩节省 15-95% Token，智能自动回退，MCP/A2A，多模态 API。</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#3178c6"></span> TypeScript
+            <span class="meta-sep">&middot;</span>
+            &#11088; 9,568
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+1,010</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">6</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/facebook/astryx" target="_blank">facebook/astryx</a>
+            <span class="stars-today">+708</span>
+        </div>
+        <div class="repo-desc">开源设计系统，完全可定制且为 AI Agent 就绪。</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#3178c6"></span> TypeScript
+            <span class="meta-sep">&middot;</span>
+            &#11088; 2,680
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+708</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">7</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/HKUDS/Vibe-Trading" target="_blank">HKUDS/Vibe-Trading</a>
+            <span class="stars-today">+694</span>
+        </div>
+        <div class="repo-desc">Vibe-Trading：你的个人交易代理。</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#3572A5"></span> Python
+            <span class="meta-sep">&middot;</span>
+            &#11088; 16,576
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+694</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">8</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/browser-use/video-use" target="_blank">browser-use/video-use</a>
+            <span class="stars-today">+693</span>
+        </div>
+        <div class="repo-desc">用编程 Agent 编辑视频。</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#3572A5"></span> Python
+            <span class="meta-sep">&middot;</span>
+            &#11088; 13,239
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+693</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">9</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/ogulcancelik/herdr" target="_blank">ogulcancelik/herdr</a>
+            <span class="stars-today">+609</span>
+        </div>
+        <div class="repo-desc">Agent 多路复用器，栖息在你的终端里。</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#dea584"></span> Rust
+            <span class="meta-sep">&middot;</span>
+            &#11088; 9,629
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+609</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">10</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/altic-dev/FluidVoice" target="_blank">altic-dev/FluidVoice</a>
+            <span class="stars-today">+572</span>
+        </div>
+        <div class="repo-desc">最快且唯一的 macOS 端侧语音听写应用，搭载自定义训练的 AI 增强模型 —— 本地 Wispr Flow 替代方案。Windows、iOS 和 Linux 即将推出。</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#F05138"></span> Swift
+            <span class="meta-sep">&middot;</span>
+            &#11088; 5,511
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+572</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">11</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/CoreBunch/Instatic" target="_blank">CoreBunch/Instatic</a>
+            <span class="stars-today">+508</span>
+        </div>
+        <div class="repo-desc">Instatic 是现代自托管可视化 CMS，1 分钟即可启动运行。</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#3178c6"></span> TypeScript
+            <span class="meta-sep">&middot;</span>
+            &#11088; 2,026
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+508</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">12</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/allenai/olmocr" target="_blank">allenai/olmocr</a>
+            <span class="stars-today">+334</span>
+        </div>
+        <div class="repo-desc">用于将 PDF 线性化为 LLM 数据集/训练的工具包。</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#3572A5"></span> Python
+            <span class="meta-sep">&middot;</span>
+            &#11088; 18,289
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+334</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">13</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/Mebus/cupp" target="_blank">Mebus/cupp</a>
+            <span class="stars-today">+184</span>
+        </div>
+        <div class="repo-desc">通用用户密码分析器（CUPP），安全审计必备工具。</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#3572A5"></span> Python
+            <span class="meta-sep">&middot;</span>
+            &#11088; 6,251
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+184</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">14</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/0xNyk/council-of-high-intelligence" target="_blank">0xNyk/council-of-high-intelligence</a>
+            <span class="stars-today">+161</span>
+        </div>
+        <div class="repo-desc">18 个 AI 角色为你最艰难的决策进行多轮审议。亚里士多德、费曼、卡尼曼、林纳斯·托瓦兹等 —— 结构化多轮审议，真正的模型多样性。一条命令：/council</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#89e051"></span> Shell
+            <span class="meta-sep">&middot;</span>
+            &#11088; 2,646
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+161</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">15</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/refactoringhq/tolaria" target="_blank">refactoringhq/tolaria</a>
+            <span class="stars-today">+150</span>
+        </div>
+        <div class="repo-desc">管理 Markdown 知识库的桌面应用。</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#3178c6"></span> TypeScript
+            <span class="meta-sep">&middot;</span>
+            &#11088; 18,028
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+150</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">16</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/Unclecheng-li/VulnClaw" target="_blank">Unclecheng-li/VulnClaw</a>
+            <span class="stars-today">+132</span>
+        </div>
+        <div class="repo-desc">基于 AI Agent + MCP 工具链 + 渗透 Skill 编排，配合大语言模型，自然语言输入自动完成「信息收集→漏洞发现→漏洞利用→报告生成」全流程。</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#3572A5"></span> Python
+            <span class="meta-sep">&middot;</span>
+            &#11088; 1,585
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+132</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">17</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/yikart/AiToEarn" target="_blank">yikart/AiToEarn</a>
+            <span class="stars-today">+116</span>
+        </div>
+        <div class="repo-desc">用 AI 来赚钱吧！</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#3178c6"></span> TypeScript
+            <span class="meta-sep">&middot;</span>
+            &#11088; 22,566
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+116</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">18</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/logto-io/logto" target="_blank">logto-io/logto</a>
+            <span class="stars-today">+113</span>
+        </div>
+        <div class="repo-desc">SaaS 和 AI 应用的身份认证与授权基础设施，基于 OIDC 和 OAuth 2.1，支持多租户、SSO 和 RBAC。</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#3178c6"></span> TypeScript
+            <span class="meta-sep">&middot;</span>
+            &#11088; 13,279
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+113</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">19</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/TencentCloud/CubeSandbox" target="_blank">TencentCloud/CubeSandbox</a>
+            <span class="stars-today">+79</span>
+        </div>
+        <div class="repo-desc">即时、并发、安全且轻量级的 AI Agent 沙箱 —— 腾讯云出品。</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#dea584"></span> Rust
+            <span class="meta-sep">&middot;</span>
+            &#11088; 6,808
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+79</span>
+        </div>
+    </div>
+</div>
+
+<div class="repo-card">
+    <div class="repo-rank">20</div>
+    <div class="repo-body">
+        <div class="repo-header">
+            <a class="repo-name" href="https://github.com/togatoga/karukan" target="_blank">togatoga/karukan</a>
+            <span class="stars-today">+42</span>
+        </div>
+        <div class="repo-desc">适用于 Linux、macOS 的日语输入法系统，神经假名-汉字转换引擎。</div>
+        <div class="repo-meta">
+            <span class="lang-dot" style="background:#dea584"></span> Rust
+            <span class="meta-sep">&middot;</span>
+            &#11088; 587
+            <span class="meta-sep">&middot;</span>
+            今日 <span class="today-stars">+42</span>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div class="stats-section">
+    <h2>&#128200; 编程语言分布</h2>
+    <div class="lang-grid">
+        <div class="lang-badge"><span class="dot" style="background:#3572A5"></span> <strong>Python</strong> 6 repos</div>
+        <div class="lang-badge"><span class="dot" style="background:#3178c6"></span> <strong>TypeScript</strong> 6 repos</div>
+        <div class="lang-badge"><span class="dot" style="background:#dea584"></span> <strong>Rust</strong> 3 repos</div>
+        <div class="lang-badge"><span class="dot" style="background:#89e051"></span> <strong>Shell</strong> 2 repos</div>
+        <div class="lang-badge"><span class="dot" style="background:#e34c26"></span> <strong>HTML</strong> 1 repo</div>
+        <div class="lang-badge"><span class="dot" style="background:#DA5B0B"></span> <strong>Jupyter NB</strong> 1 repo</div>
+        <div class="lang-badge"><span class="dot" style="background:#F05138"></span> <strong>Swift</strong> 1 repo</div>
+    </div>
+</div>
+
+<div class="insight-box">
+    <h2>&#128161; 今日看点</h2>
+    <ul>
+        <li><strong>健身数据集意外领跑</strong>：hasaneyldrm/exercises-dataset 以 +2,470 Stars 登顶，说明开发者社区对高质量结构化数据集的需求旺盛。这份 433 种健身动作的完整数据集自带缩略图和动画视频，健身科技赛道潜力巨大。</li>
+        <li><strong>AI Agent 生态持续爆发</strong>：agency-agents (+2,114) 连续多周霸榜，herdr (+609)、VulnClaw (+132)、council-of-high-intelligence (+161) 多点开花。Agent 即服务（AaaS）和终端 Agent 多路复用成为新趋势。</li>
+        <li><strong>AI 安全赛道崛起</strong>：strix (+1,211) 作为开源 AI 渗透测试工具引发关注，VulnClaw 打造 AI + MCP 全流程漏洞利用，安全行业正在积极拥抱 AI 能力武装自己。</li>
+        <li><strong>免费 AI 网关需求强劲</strong>：OmniRoute (+1,010) 用一个端点连接 231+ 模型提供商，Token 压缩和智能回退机制直击开发者痛点 —— 在 API 成本与可用性之间找到平衡成为新刚需。</li>
+        <li><strong>中国力量持续输出</strong>：腾讯云 CubeSandbox（AI Agent 安全沙箱）、HKUDS Vibe-Trading（个人交易代理）、VulnClaw（AI 渗透测试）三项中国项目上榜，覆盖安全、金融、基础设施三个方向。</li>
+        <li><strong>本地化 AI 体验崛起</strong>：FluidVoice (+572) 提供端侧语音听写能力，karukan 提供本地日语输入法引擎，端侧推理正在从概念走向实用产品。</li>
+    </ul>
+</div>
+
+<div class="footer">
+    &#128299; GitHub Trending Daily &middot; 数据来源 <a href="https://github.com/trending" target="_blank">GitHub Trending</a> &middot; 自动生成于 2026-07-02 10:00 CST<br>
+    由 <a href="https://github.com/lph12168x" target="_blank">@lph12168x</a> 维护 &middot; <a href="index.html">日报列表</a>
+</div>
+
+<script>
+(function(){
+    var t = localStorage.getItem('gh-trending-theme');
+    if (t === 'dark') document.documentElement.setAttribute('data-theme','dark');
+})();
+function toggleTheme(){
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('gh-trending-theme','light');
+        document.getElementById('themeBtn').innerHTML = '&#127769; Dark';
+    } else {
+        document.documentElement.setAttribute('data-theme','dark');
+        localStorage.setItem('gh-trending-theme','dark');
+        document.getElementById('themeBtn').innerHTML = '&#9728;&#65039; Light';
+    }
+}
+</script>
+</body>
+</html>
