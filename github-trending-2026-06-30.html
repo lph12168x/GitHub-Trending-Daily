@@ -1,484 +1,402 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GitHub Trending 每日简报 - 2026-06-30</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Trending 2026年06月30日 · 每日简报</title>
   <style>
-    :root {
-      --bg: #ffffff;
-      --bg-secondary: #f6f8fa;
-      --bg-card: #ffffff;
-      --text: #1f2328;
-      --text-secondary: #656d76;
-      --border: #d0d7de;
-      --accent: #0969da;
-      --accent-bg: #ddf4ff;
-      --star-color: #e67700;
-      --tag-bg: #f6f8fa;
-      --tag-text: #1f2328;
-      --shadow: 0 1px 3px rgba(0,0,0,0.08);
-      --today-star: #cf222e;
-    }
-    [data-theme="dark"] {
-      --bg: #0d1117;
-      --bg-secondary: #161b22;
-      --bg-card: #161b22;
-      --text: #e6edf3;
-      --text-secondary: #8b949e;
-      --border: #30363d;
-      --accent: #58a6ff;
-      --accent-bg: #0c2d6b;
-      --star-color: #f0883e;
-      --tag-bg: #21262d;
-      --tag-text: #e6edf3;
-      --shadow: 0 1px 3px rgba(0,0,0,0.3);
-      --today-star: #f85149;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji";
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      transition: background 0.3s, color 0.3s;
-    }
-    .header {
-      background: linear-gradient(135deg, #2d333b 0%, #1f2328 100%);
-      color: #e6edf3;
-      padding: 40px 20px;
-      text-align: center;
-    }
-    [data-theme="dark"] .header {
-      background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
-    }
-    .header h1 { font-size: 2em; margin-bottom: 8px; }
-    .header p { color: #8b949e; font-size: 1.1em; }
-    .theme-toggle {
-      position: fixed;
-      top: 16px;
-      right: 16px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 8px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
-      z-index: 100;
-      box-shadow: var(--shadow);
-      transition: all 0.2s;
-    }
-    .theme-toggle:hover { transform: scale(1.05); }
-    .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
-    .stats-bar {
-      display: flex;
-      gap: 16px;
-      margin-bottom: 30px;
-      flex-wrap: wrap;
-    }
-    .stat-card {
-      flex: 1;
-      min-width: 150px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: var(--shadow);
-    }
-    .stat-card .num { font-size: 2em; font-weight: 700; color: var(--accent); }
-    .stat-card .label { font-size: 0.9em; color: var(--text-secondary); margin-top: 4px; }
-    .section-title {
-      font-size: 1.4em;
-      font-weight: 600;
-      margin: 30px 0 16px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid var(--border);
-    }
-    .repo-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 16px;
-      box-shadow: var(--shadow);
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-    .repo-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
-    .repo-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
-    .repo-rank {
-      background: var(--accent);
-      color: #fff;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 0.9em;
-      flex-shrink: 0;
-    }
-    .repo-title { font-size: 1.2em; font-weight: 600; }
-    .repo-title a { color: var(--accent); text-decoration: none; }
-    .repo-title a:hover { text-decoration: underline; }
-    .repo-desc { color: var(--text-secondary); margin: 8px 0 12px; font-size: 0.95em; }
-    .repo-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
-    .meta-item { display: flex; align-items: center; gap: 4px; font-size: 0.85em; color: var(--text-secondary); }
-    .lang-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
-    .star-total { color: var(--star-color); font-weight: 600; }
-    .star-today { color: var(--today-star); font-weight: 700; font-size: 1.05em; }
-    .today-badge {
-      background: var(--today-star);
-      color: #fff;
-      font-size: 0.75em;
-      padding: 2px 8px;
-      border-radius: 12px;
-      font-weight: 600;
-      margin-left: 4px;
-    }
-    .lang-tag {
-      background: var(--tag-bg);
-      color: var(--tag-text);
-      padding: 2px 10px;
-      border-radius: 12px;
-      font-size: 0.8em;
-      font-weight: 500;
-    }
-    .highlights {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 16px;
-      margin-bottom: 30px;
-    }
-    .highlight-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: var(--shadow);
-    }
-    .highlight-card h3 { font-size: 1em; margin-bottom: 8px; }
-    .highlight-card h3 a { color: var(--accent); text-decoration: none; }
-    .highlight-card p { font-size: 0.85em; color: var(--text-secondary); }
-    .footer {
-      text-align: center;
-      padding: 30px;
-      color: var(--text-secondary);
-      font-size: 0.9em;
-      border-top: 1px solid var(--border);
-      margin-top: 40px;
-    }
-    .footer a { color: var(--accent); text-decoration: none; }
-    @media (max-width: 600px) {
-      .header h1 { font-size: 1.4em; }
-      .stat-card .num { font-size: 1.5em; }
-      .highlights { grid-template-columns: 1fr; }
-    }
-  </style>
+:root{
+  --bg:#f6f7f9; --bg-soft:#eceff3; --card:#ffffff; --ink:#0b0f17; --muted:#5a6472;
+  --line:#e5e8ee; --accent:#6d5efc; --accent-2:#13c2a3;
+  --gold:#f6b73c; --silver:#9aa7b8; --bronze:#cd8a5c;
+  --shadow-sm:0 1px 2px rgba(16,24,40,.05); --shadow:0 6px 24px rgba(16,24,40,.08);
+  --shadow-lg:0 16px 40px rgba(16,24,40,.12); --radius:18px;
+}
+[data-theme="dark"]{
+  --bg:#080b10; --bg-soft:#0e131b; --card:#10151e; --ink:#e8edf4; --muted:#8a96a8;
+  --line:#1c2531; --accent:#8b7bff; --accent-2:#22d3b0;
+  --gold:#ffcc5c; --silver:#aab6c6; --bronze:#d99a6c;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3); --shadow:0 8px 28px rgba(0,0,0,.4);
+  --shadow-lg:0 18px 44px rgba(0,0,0,.5); --radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',Helvetica,Arial,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;
+  transition:background .3s,color .3s;min-height:100vh}
+a{color:inherit}
+.toggle{position:absolute;top:20px;right:22px;z-index:3;display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 14px;
+  border-radius:999px;cursor:pointer;font-size:.85rem;font-weight:600;transition:.2s}
+.toggle:hover{background:rgba(255,255,255,.18)}
+/* ---------- HERO ---------- */
+.hero{position:relative;overflow:hidden;color:#fff;text-align:center;padding:74px 24px 60px;
+  background:
+    radial-gradient(900px 420px at 12% -30%, rgba(109,94,252,.35), transparent 60%),
+    radial-gradient(820px 420px at 92% -10%, rgba(19,194,163,.28), transparent 55%),
+    linear-gradient(135deg,#0a0e16 0%,#0f1420 55%,#0a0e16 100%)}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:46px 46px;
+  -webkit-mask-image:radial-gradient(720px 380px at 50% 0%,#000,transparent 75%);
+          mask-image:radial-gradient(720px 380px at 50% 0%,#000,transparent 75%)}
+.hero-inner{position:relative;z-index:1;max-width:920px;margin:0 auto}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.16);padding:6px 14px;border-radius:999px;margin-bottom:18px}
+.hero h1{font-size:2.6rem;font-weight:800;letter-spacing:-.02em;margin-bottom:10px;
+  background:linear-gradient(180deg,#fff,#cdd3e0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{color:rgba(255,255,255,.74);font-size:1.05rem}
+.stats{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(6px);
+  border-radius:16px;padding:16px 22px;min-width:132px}
+.stat .n{font-size:1.7rem;font-weight:800;background:linear-gradient(90deg,#fff,#b9c0d4);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .l{font-size:.78rem;color:rgba(255,255,255,.66);margin-top:2px}
+/* ---------- LAYOUT ---------- */
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+.backnav{max-width:960px;margin:22px auto 0;padding:0 20px}
+.backnav a{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;
+  font-size:.9rem;font-weight:600;transition:.15s}
+.backnav a:hover{color:var(--accent)}
+.section{margin:46px auto}
+.section-head{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.section-head h2{font-size:1.4rem;font-weight:800;letter-spacing:-.01em}
+.section-head .hint{font-size:.85rem;color:var(--muted)}
+/* ---------- REPO CARD ---------- */
+.repo{position:relative;display:grid;grid-template-columns:56px 1fr;gap:18px;background:var(--card);
+  border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px 20px 24px;margin-bottom:14px;
+  box-shadow:var(--shadow-sm);transition:transform .18s ease,border-color .18s,box-shadow .18s}
+.repo:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--shadow-lg)}
+.repo::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:4px;border-radius:0 4px 4px 0;
+  background:var(--stripe,#cbd2dc)}
+.rank{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:1.15rem;background:var(--bg-soft);color:var(--muted);border:1px solid var(--line)}
+.repo.top1 .rank{background:linear-gradient(145deg,#fff3d1,#ffe39a);color:#9a6b00;border-color:#f3d27a}
+.repo.top2 .rank{background:linear-gradient(145deg,#f2f5f9,#dde4ee);color:#5b6b7e;border-color:#cfd8e4}
+.repo.top3 .rank{background:linear-gradient(145deg,#fbe7d6,#f0c9a6);color:#92552a;border-color:#e6c09a}
+.r-main{min-width:0}
+.r-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.r-name{font-size:1.12rem;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+.r-name:hover{color:var(--accent)}
+.r-name .owner{color:var(--muted);font-weight:500}
+.gain{margin-left:auto;font-size:.82rem;font-weight:700;color:#fff;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:5px 13px;border-radius:999px;
+  white-space:nowrap;box-shadow:var(--shadow-sm)}
+.r-desc{font-size:.92rem;color:var(--muted);line-height:1.6;margin-bottom:12px}
+.r-meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:.85rem;color:var(--muted)}
+.lang{display:inline-flex;align-items:center;gap:7px}
+.lang .dot{width:11px;height:11px;border-radius:50%}
+.r-meta b{color:var(--ink);font-weight:700}
+/* ---------- LANGUAGE BARS ---------- */
+.lang-list{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px}
+.lrow{display:flex;align-items:center;gap:12px}
+.lname{width:108px;flex-shrink:0;font-size:.88rem;color:var(--ink);font-weight:600;display:flex;align-items:center;gap:7px}
+.lname .dot{width:10px;height:10px;border-radius:50%}
+.ltrack{flex:1;height:9px;background:var(--bg-soft);border-radius:999px;overflow:hidden}
+.lfill{height:100%;border-radius:999px;background:var(--c,var(--accent))}
+.lcount{width:54px;text-align:right;font-size:.82rem;color:var(--muted);font-weight:600}
+/* ---------- INSIGHTS ---------- */
+.insights{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;
+  box-shadow:var(--shadow-sm)}
+.insights ul{list-style:none;display:grid;gap:12px;margin-top:6px}
+.insights li{position:relative;padding-left:26px;color:var(--muted);line-height:1.6}
+.insights li::before{content:"\25B9";position:absolute;left:0;top:0;color:var(--accent);font-weight:800}
+.insights li b{color:var(--ink)}
+/* ---------- FOOTER ---------- */
+.footer{margin-top:56px;border-top:1px solid var(--line);padding:30px 24px;text-align:center;
+  color:var(--muted);font-size:.85rem;line-height:1.8}
+.footer a{color:var(--accent);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+/* ---------- INDEX / ARCHIVE ---------- */
+.archive{max-width:1000px;margin:0 auto;padding:0 20px}
+.month{margin:46px auto 6px;font-size:1.15rem;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:10px}
+.month::after{content:"";flex:1;height:1px;background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;margin-top:18px}
+.day{display:flex;flex-direction:column;gap:6px;background:var(--card);border:1px solid var(--line);
+  border-radius:16px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;position:relative;overflow:hidden}
+.day:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:var(--shadow-lg)}
+.day .d-date{font-size:1.08rem;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.day .d-sub{font-size:.82rem;color:var(--muted)}
+.day .d-bar{margin-top:10px;height:6px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+.badge-new{position:absolute;top:13px;right:13px;font-size:.66rem;font-weight:700;color:#fff;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:3px 9px;border-radius:999px;
+  letter-spacing:.04em}
+@media(max-width:680px){
+  .hero h1{font-size:1.9rem}
+  .lang-list{grid-template-columns:1fr}
+  .repo{grid-template-columns:48px 1fr;gap:14px;padding:16px 16px 16px 20px}
+  .rank{width:48px;height:48px;font-size:1rem}
+  .gain{margin-left:0}
+}
+</style>
 </head>
 <body>
-  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙 暗色主题</button>
-
-  <div class="header">
-    <h1>📈 GitHub Trending 每日简报</h1>
-    <p>2026 年 6 月 30 日（星期二）· 今日共 13 个热门项目</p>
-  </div>
-
-  <div class="container">
-    <!-- 统计概览 -->
-    <div class="stats-bar">
-      <div class="stat-card">
-        <div class="num">13</div>
-        <div class="label">热门项目</div>
-      </div>
-      <div class="stat-card">
-        <div class="num">11,288</div>
-        <div class="label">今日新增 Stars</div>
-      </div>
-      <div class="stat-card">
-        <div class="num">5</div>
-        <div class="label">Python 项目</div>
-      </div>
-      <div class="stat-card">
-        <div class="num">2</div>
-        <div class="label">Shell 项目</div>
-      </div>
-      <div class="stat-card">
-        <div class="num">2</div>
-        <div class="label">TypeScript 项目</div>
+  <header class="hero">
+    <button class="toggle" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
+    <div class="hero-inner">
+      <span class="eyebrow">📈 GitHub Trending</span>
+      <h1>每日热门仓库简报</h1>
+      <p class="sub">2026年06月30日 · 共 13 个仓库登上 Trending · 今日新增 +12,367 Stars</p>
+      <div class="stats">
+        <div class="stat"><div class="n">13</div><div class="l">Trending 仓库</div></div>
+        <div class="stat"><div class="n">+12,367</div><div class="l">今日新增 Stars</div></div>
+        <div class="stat"><div class="n">5</div><div class="l">编程语言</div></div>
       </div>
     </div>
-
-    <!-- 今日亮点 -->
-    <div class="section-title">✨ 今日亮点</div>
-    <div class="highlights">
-      <div class="highlight-card">
-        <h3><a href="https://github.com/ripienaar/free-for-dev" target="_blank">free-for-dev</a></h3>
-        <p>面向 DevOps 和基础设施开发者的免费 SaaS/PaaS/IaaS 服务清单，今日新增 1,935 ⭐，持续霸榜。</p>
-      </div>
-      <div class="highlight-card">
-        <h3><a href="https://github.com/xbtlin/ai-berkshire" target="_blank">ai-berkshire</a></h3>
-        <p>AI 时代的伯克希尔价值投资研究框架，融合四大师方法论 + 多 Agent 并行研究，今日 +1,386 ⭐。</p>
-      </div>
-      <div class="highlight-card">
-        <h3><a href="https://github.com/msitarzewski/agency-agents" target="_blank">agency-agents</a></h3>
-        <p>完整 AI 代理团队，涵盖前端向导、社区运营、创意注入等专项 Agent，今日 +1,425 ⭐。</p>
-      </div>
-      <div class="highlight-card">
-        <h3><a href="https://github.com/simplex-chat/simplex-chat" target="_blank">simplex-chat</a></h3>
-        <p>首个无任何用户标识符的完全私密消息网络，iOS/Android/桌面全平台支持，今日 +1,607 ⭐。</p>
-      </div>
-      <div class="highlight-card">
-        <h3><a href="https://github.com/HKUDS/Vibe-Trading" target="_blank">Vibe-Trading</a></h3>
-        <p>个人交易 Agent，AI 驱动的投资决策助手，今日 +839 ⭐。</p>
-      </div>
-      <div class="highlight-card">
-        <h3><a href="https://github.com/altic-dev/FluidVoice" target="_blank">FluidVoice</a></h3>
-        <p>macOS 最快离线语音听写应用，完全本地语音转文字，今日 +830 ⭐。</p>
-      </div>
-    </div>
-
-    <!-- 完整榜单 -->
-    <div class="section-title">🏆 今日完整榜单</div>
-
-    <div class="repo-card">
-      <div class="repo-header">
-        <div class="repo-rank">1</div>
-        <div>
-          <div class="repo-title"><a href="https://github.com/ripienaar/free-for-dev" target="_blank">ripienaar / free-for-dev</a></div>
+  </header>
+  <div class="backnav"><a href="index.html">← 返回日报列表</a></div>
+  <div class="wrap section">
+    <div class="section-head"><h2>🔥 今日热门</h2><span class="hint">按今日新增 Star 排序</span></div>
+    <div class="repo top1" style="--stripe:#888888">
+      <div class="rank">#1</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/ripienaar/free-for-dev" target="_blank"><span class="owner">ripienaar/</span>free-for-dev</a>
+          <span class="gain">+3 ★ 今日</span>
+        </div>
+        <p class="r-desc">面向 DevOps 和基础设施开发者的免费 SaaS/PaaS/IaaS 服务清单，今日新增 1,935 ⭐，持续霸榜。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>1,935</b></span>
+          <span>今日 <b>+3</b></span>
         </div>
       </div>
-      <div class="repo-desc">面向 DevOps 和基础设施开发者的免费 SaaS、PaaS 和 IaaS 服务清单，涵盖大量含免费层级的产品。</div>
-      <div class="repo-meta">
-        <span class="lang-tag" style="background:#e34c26;color:#fff;">HTML</span>
-        <span class="meta-item">⭐ <span class="star-total">126,753</span></span>
-        <span class="meta-item">🍴 13,262</span>
-        <span class="meta-item">🔥 <span class="star-today">+1,935</span> 今日</span>
-      </div>
     </div>
-
-    <div class="repo-card">
-      <div class="repo-header">
-        <div class="repo-rank">2</div>
-        <div>
-          <div class="repo-title"><a href="https://github.com/simplex-chat/simplex-chat" target="_blank">simplex-chat / simplex-chat</a></div>
+    <div class="repo top2" style="--stripe:#888888">
+      <div class="rank">#2</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/xbtlin/ai-berkshire" target="_blank"><span class="owner">xbtlin/</span>ai-berkshire</a>
+          <span class="gain">+1,935 ★ 今日</span>
+        </div>
+        <p class="r-desc">AI 时代的伯克希尔价值投资研究框架，融合四大师方法论 + 多 Agent 并行研究，今日 +1,386 ⭐。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>126,753</b></span>
+          <span>今日 <b>+1,935</b></span>
         </div>
       </div>
-      <div class="repo-desc">SimpleX — 首个完全不使用任何用户标识符的消息网络，100% 隐私设计！支持 iOS、Android 和桌面应用。</div>
-      <div class="repo-meta">
-        <span class="lang-tag" style="background:#8c7ed6;color:#fff;">Haskell</span>
-        <span class="meta-item">⭐ <span class="star-total">16,637</span></span>
-        <span class="meta-item">🍴 961</span>
-        <span class="meta-item">🔥 <span class="star-today">+1,607</span> 今日</span>
-      </div>
     </div>
-
-    <div class="repo-card">
-      <div class="repo-header">
-        <div class="repo-rank">3</div>
-        <div>
-          <div class="repo-title"><a href="https://github.com/msitarzewski/agency-agents" target="_blank">msitarzewski / agency-agents</a></div>
+    <div class="repo top3" style="--stripe:#888888">
+      <div class="rank">#3</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/msitarzewski/agency-agents" target="_blank"><span class="owner">msitarzewski/</span>agency-agents</a>
+          <span class="gain">+1,386 ★ 今日</span>
+        </div>
+        <p class="r-desc">完整 AI 代理团队，涵盖前端向导、社区运营、创意注入等专项 Agent，今日 +1,425 ⭐。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>126,753</b></span>
+          <span>今日 <b>+1,386</b></span>
         </div>
       </div>
-      <div class="repo-desc">触手可及的完整 AI 代理团队 — 从前端向导到 Reddit 社区忍者，从创意注入器到现实核查器。每个 Agent 都是具有个性和可交付成果的专项专家。</div>
-      <div class="repo-meta">
-        <span class="lang-tag" style="background:#89e051;color:#fff;">Shell</span>
-        <span class="meta-item">⭐ <span class="star-total">118,949</span></span>
-        <span class="meta-item">🍴 19,477</span>
-        <span class="meta-item">🔥 <span class="star-today">+1,425</span> 今日</span>
-      </div>
     </div>
-
-    <div class="repo-card">
-      <div class="repo-header">
-        <div class="repo-rank">4</div>
-        <div>
-          <div class="repo-title"><a href="https://github.com/xbtlin/ai-berkshire" target="_blank">xbtlin / ai-berkshire</a></div>
+    <div class="repo" style="--stripe:#e34c26">
+      <div class="rank">#4</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/simplex-chat/simplex-chat" target="_blank"><span class="owner">simplex-chat/</span>simplex-chat</a>
+          <span class="gain">+1,425 ★ 今日</span>
+        </div>
+        <p class="r-desc">首个无任何用户标识符的完全私密消息网络，iOS/Android/桌面全平台支持，今日 +1,607 ⭐。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#e34c26"></span>HTML</span>
+          <span>★ <b>126,753</b></span>
+          <span>今日 <b>+1,425</b></span>
         </div>
       </div>
-      <div class="repo-desc">AI 时代的伯克希尔：基于 Claude Code / Codex 的价值投资研究框架。融合巴菲特、芒格、段永平、李录四大师方法论 + 多 Agent 对抗性分析。</div>
-      <div class="repo-meta">
-        <span class="lang-tag" style="background:#3572A5;color:#fff;">Python</span>
-        <span class="meta-item">⭐ <span class="star-total">6,670</span></span>
-        <span class="meta-item">🍴 869</span>
-        <span class="meta-item">🔥 <span class="star-today">+1,386</span> 今日</span>
-      </div>
     </div>
-
-    <div class="repo-card">
-      <div class="repo-header">
-        <div class="repo-rank">5</div>
-        <div>
-          <div class="repo-title"><a href="https://github.com/browser-use/video-use" target="_blank">browser-use / video-use</a></div>
+    <div class="repo" style="--stripe:#e34c26">
+      <div class="rank">#5</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/HKUDS/Vibe-Trading" target="_blank"><span class="owner">HKUDS/</span>Vibe-Trading</a>
+          <span class="gain">+1,935 ★ 今日</span>
+        </div>
+        <p class="r-desc">个人交易 Agent，AI 驱动的投资决策助手，今日 +839 ⭐。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#e34c26"></span>HTML</span>
+          <span>★ <b>126,753</b></span>
+          <span>今日 <b>+1,935</b></span>
         </div>
       </div>
-      <div class="repo-desc">用编程 Agent 编辑视频 — 自然语言描述编辑需求，AI 自动完成视频剪辑。</div>
-      <div class="repo-meta">
-        <span class="lang-tag" style="background:#3572A5;color:#fff;">Python</span>
-        <span class="meta-item">⭐ <span class="star-total">11,961</span></span>
-        <span class="meta-item">🍴 1,573</span>
-        <span class="meta-item">🔥 <span class="star-today">+967</span> 今日</span>
-      </div>
     </div>
-
-    <div class="repo-card">
-      <div class="repo-header">
-        <div class="repo-rank">6</div>
-        <div>
-          <div class="repo-title"><a href="https://github.com/altic-dev/FluidVoice" target="_blank">altic-dev / FluidVoice</a></div>
+    <div class="repo" style="--stripe:#e34c26">
+      <div class="rank">#6</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/altic-dev/FluidVoice" target="_blank"><span class="owner">altic-dev/</span>FluidVoice</a>
+          <span class="gain">+1,935 ★ 今日</span>
+        </div>
+        <p class="r-desc">macOS 最快离线语音听写应用，完全本地语音转文字，今日 +830 ⭐。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#e34c26"></span>HTML</span>
+          <span>★ <b>126,753</b></span>
+          <span>今日 <b>+1,935</b></span>
         </div>
       </div>
-      <div class="repo-desc">FluidVoice — macOS 最快离线语音听写应用，完全本地语音转文字。⭐ 一颗星让我们走得更远 :)</div>
-      <div class="repo-meta">
-        <span class="lang-tag" style="background:#F05138;color:#fff;">Swift</span>
-        <span class="meta-item">⭐ <span class="star-total">4,417</span></span>
-        <span class="meta-item">🍴 277</span>
-        <span class="meta-item">🔥 <span class="star-today">+830</span> 今日</span>
-      </div>
     </div>
-
-    <div class="repo-card">
-      <div class="repo-header">
-        <div class="repo-rank">7</div>
-        <div>
-          <div class="repo-title"><a href="https://github.com/HKUDS/Vibe-Trading" target="_blank">HKUDS / Vibe-Trading</a></div>
+    <div class="repo" style="--stripe:#3572A5">
+      <div class="rank">#7</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/browser-use/video-use" target="_blank"><span class="owner">browser-use/</span>video-use</a>
+          <span class="gain">+1,386 ★ 今日</span>
+        </div>
+        <p class="r-desc">用编程 Agent 编辑视频 — 自然语言描述编辑需求，AI 自动完成视频剪辑。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3572A5"></span>Python</span>
+          <span>★ <b>11,961</b></span>
+          <span>今日 <b>+1,386</b></span>
         </div>
       </div>
-      <div class="repo-desc">Vibe-Trading：你的个人 AI 交易 Agent，智能投资决策助手。</div>
-      <div class="repo-meta">
-        <span class="lang-tag" style="background:#3572A5;color:#fff;">Python</span>
-        <span class="meta-item">⭐ <span class="star-total">15,119</span></span>
-        <span class="meta-item">🍴 2,688</span>
-        <span class="meta-item">🔥 <span class="star-today">+839</span> 今日</span>
-      </div>
     </div>
-
-    <div class="repo-card">
-      <div class="repo-header">
-        <div class="repo-rank">8</div>
-        <div>
-          <div class="repo-title"><a href="https://github.com/commaai/openpilot" target="_blank">commaai / openpilot</a></div>
+    <div class="repo" style="--stripe:#3572A5">
+      <div class="rank">#8</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/commaai/openpilot" target="_blank"><span class="owner">commaai/</span>openpilot</a>
+          <span class="gain">+839 ★ 今日</span>
+        </div>
+        <p class="r-desc"></p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3572A5"></span>Python</span>
+          <span>★ <b>62,783</b></span>
+          <span>今日 <b>+839</b></span>
         </div>
       </div>
-      <div class="repo-desc">openpilot 是一个机器人操作系统。目前可为 300+ 款支持的车型升级驾驶辅助系统。</div>
-      <div class="repo-meta">
-        <span class="lang-tag" style="background:#3572A5;color:#fff;">Python</span>
-        <span class="meta-item">⭐ <span class="star-total">62,783</span></span>
-        <span class="meta-item">🍴 11,111</span>
-        <span class="meta-item">🔥 <span class="star-today">+458</span> 今日</span>
-      </div>
     </div>
-
-    <div class="repo-card">
-      <div class="repo-header">
-        <div class="repo-rank">9</div>
-        <div>
-          <div class="repo-title"><a href="https://github.com/cupy/cupy" target="_blank">cupy / cupy</a></div>
+    <div class="repo" style="--stripe:#3572A5">
+      <div class="rank">#9</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/cupy/cupy" target="_blank"><span class="owner">cupy/</span>cupy</a>
+          <span class="gain">+458 ★ 今日</span>
+        </div>
+        <p class="r-desc">面向 GPU 的 NumPy 和 SciPy 实现，让 Python 科学计算在 GPU 上飞速运行。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3572A5"></span>Python</span>
+          <span>★ <b>11,831</b></span>
+          <span>今日 <b>+458</b></span>
         </div>
       </div>
-      <div class="repo-desc">面向 GPU 的 NumPy 和 SciPy 实现，让 Python 科学计算在 GPU 上飞速运行。</div>
-      <div class="repo-meta">
-        <span class="lang-tag" style="background:#3572A5;color:#fff;">Python</span>
-        <span class="meta-item">⭐ <span class="star-total">11,831</span></span>
-        <span class="meta-item">🍴 1,083</span>
-        <span class="meta-item">🔥 <span class="star-today">+352</span> 今日</span>
-      </div>
     </div>
-
-    <div class="repo-card">
-      <div class="repo-header">
-        <div class="repo-rank">10</div>
-        <div>
-          <div class="repo-title"><a href="https://github.com/0xNyk/council-of-high-intelligence" target="_blank">0xNyk / council-of-high-intelligence</a></div>
+    <div class="repo" style="--stripe:#89e051">
+      <div class="rank">#10</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/0xNyk/council-of-high-intelligence" target="_blank"><span class="owner">0xNyk/</span>council-of-high-intelligence</a>
+          <span class="gain">+352 ★ 今日</span>
+        </div>
+        <p class="r-desc">logto-io / logto</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#89e051"></span>Shell</span>
+          <span>★ <b>1,926</b></span>
+          <span>今日 <b>+352</b></span>
         </div>
       </div>
-      <div class="repo-desc">18 个 AI 角色对您的艰难决策进行审议，跨多个 LLM 提供商。亚里士多德、费曼、卡尼曼、托瓦兹等 — 结构化多轮审议，一个命令：/council。</div>
-      <div class="repo-meta">
-        <span class="lang-tag" style="background:#89e051;color:#fff;">Shell</span>
-        <span class="meta-item">⭐ <span class="star-total">1,926</span></span>
-        <span class="meta-item">🍴 202</span>
-        <span class="meta-item">🔥 <span class="star-today">+331</span> 今日</span>
-      </div>
     </div>
-
-    <div class="repo-card">
-      <div class="repo-header">
-        <div class="repo-rank">11</div>
-        <div>
-          <div class="repo-title"><a href="https://github.com/logto-io/logto" target="_blank">logto-io / logto</a></div>
+    <div class="repo" style="--stripe:#3178c6">
+      <div class="rank">#11</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/logto-io/logto" target="_blank"><span class="owner">logto-io/</span>logto</a>
+          <span class="gain">+331 ★ 今日</span>
+        </div>
+        <p class="r-desc">refactoringhq / tolaria</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3178c6"></span>TypeScript</span>
+          <span>★ <b>12,692</b></span>
+          <span>今日 <b>+331</b></span>
         </div>
       </div>
-      <div class="repo-desc">🧑‍🚀 面向 SaaS 和 AI 应用的认证与授权基础设施，基于 OIDC 和 OAuth 2.1 构建，支持多租户、SSO 和 RBAC。</div>
-      <div class="repo-meta">
-        <span class="lang-tag" style="background:#3178c6;color:#fff;">TypeScript</span>
-        <span class="meta-item">⭐ <span class="star-total">12,692</span></span>
-        <span class="meta-item">🍴 867</span>
-        <span class="meta-item">🔥 <span class="star-today">+158</span> 今日</span>
-      </div>
     </div>
-
-    <div class="repo-card">
-      <div class="repo-header">
-        <div class="repo-rank">12</div>
-        <div>
-          <div class="repo-title"><a href="https://github.com/soxoj/maigret" target="_blank">soxoj / maigret</a></div>
+    <div class="repo" style="--stripe:#3572A5">
+      <div class="rank">#12</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/soxoj/maigret" target="_blank"><span class="owner">soxoj/</span>maigret</a>
+          <span class="gain">+158 ★ 今日</span>
+        </div>
+        <p class="r-desc">refactoringhq / tolaria</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3572A5"></span>Python</span>
+          <span>★ <b>34,398</b></span>
+          <span>今日 <b>+158</b></span>
         </div>
       </div>
-      <div class="repo-desc">🕵️‍♂️ 通过用户名从 3000+ 网站收集某人的档案资料，强大的开源情报（OSINT）工具。</div>
-      <div class="repo-meta">
-        <span class="lang-tag" style="background:#3572A5;color:#fff;">Python</span>
-        <span class="meta-item">⭐ <span class="star-total">34,398</span></span>
-        <span class="meta-item">🍴 2,602</span>
-        <span class="meta-item">🔥 <span class="star-today">+224</span> 今日</span>
-      </div>
     </div>
-
-    <div class="repo-card">
-      <div class="repo-header">
-        <div class="repo-rank">13</div>
-        <div>
-          <div class="repo-title"><a href="https://github.com/refactoringhq/tolaria" target="_blank">refactoringhq / tolaria</a></div>
+    <div class="repo" style="--stripe:#3178c6">
+      <div class="rank">#13</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/refactoringhq/tolaria" target="_blank"><span class="owner">refactoringhq/</span>tolaria</a>
+          <span class="gain">+224 ★ 今日</span>
+        </div>
+        <p class="r-desc">用于管理 Markdown 知识库的桌面应用，帮助开发者和团队高效组织知识。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3178c6"></span>TypeScript</span>
+          <span>★ <b>17,531</b></span>
+          <span>今日 <b>+224</b></span>
         </div>
       </div>
-      <div class="repo-desc">用于管理 Markdown 知识库的桌面应用，帮助开发者和团队高效组织知识。</div>
-      <div class="repo-meta">
-        <span class="lang-tag" style="background:#3178c6;color:#fff;">TypeScript</span>
-        <span class="meta-item">⭐ <span class="star-total">17,531</span></span>
-        <span class="meta-item">🍴 1,206</span>
-        <span class="meta-item">🔥 <span class="star-today">+280</span> 今日</span>
-      </div>
-    </div>
-
-    <div class="footer">
-      <p>数据来源：<a href="https://github.com/trending" target="_blank">GitHub Trending</a> · 生成时间：2026-06-30 09:50 CST</p>
-      <p style="margin-top:8px;">由 <a href="https://github.com/lph12168x" target="_blank">lph12168x</a> 自动生成 · <a href="https://github.com/lph12168x/GitHub-Trending-Daily" target="_blank">查看仓库</a></p>
     </div>
   </div>
-
+  <div class="wrap section">
+    <div class="section-head"><h2>📊 编程语言分布</h2></div>
+    <div class="lang-list">
+        <div class="lrow">
+          <span class="lname"><span class="dot" style="background:#3572A5"></span>Python</span>
+          <span class="ltrack"><span class="lfill" style="--c:#3572A5;width:100%"></span></span>
+          <span class="lcount">4 个</span>
+        </div>
+        <div class="lrow">
+          <span class="lname"><span class="dot" style="background:#e34c26"></span>HTML</span>
+          <span class="ltrack"><span class="lfill" style="--c:#e34c26;width:75%"></span></span>
+          <span class="lcount">3 个</span>
+        </div>
+        <div class="lrow">
+          <span class="lname"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span class="ltrack"><span class="lfill" style="--c:#888888;width:75%"></span></span>
+          <span class="lcount">3 个</span>
+        </div>
+        <div class="lrow">
+          <span class="lname"><span class="dot" style="background:#3178c6"></span>TypeScript</span>
+          <span class="ltrack"><span class="lfill" style="--c:#3178c6;width:50%"></span></span>
+          <span class="lcount">2 个</span>
+        </div>
+        <div class="lrow">
+          <span class="lname"><span class="dot" style="background:#89e051"></span>Shell</span>
+          <span class="ltrack"><span class="lfill" style="--c:#89e051;width:25%"></span></span>
+          <span class="lcount">1 个</span>
+        </div>
+    </div>
+  </div>
+  <div class="wrap section">
+    <div class="insights">
+      <div class="section-head"><h2>💡 今日看点</h2></div>
+      <ul>
+<li><b>ripienaar/free-for-dev 领跑今日榜单</b>：今日新增 <b>+3</b> Stars。</li>
+<li><b>Python 最为活跃</b>：占据 4 个 Trending 席位，占比 30%。</li>
+<li><b>AI 赛道持续火热</b>：4 个仓库与 AI/Agent 相关，Claude Code 技能生态、AI 助手、Agent 框架多点开花。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer">
+    🔗 数据来源 <a href="https://github.com/trending" target="_blank">GitHub Trending</a> · 自动生成于 2026年06月30日 CST<br>
+    由 <a href="https://github.com/lph12168x" target="_blank">@lph12168x</a> 维护 · <a href="index.html">日报列表</a>
+  </div>
   <script>
-    function toggleTheme() {
-      const html = document.documentElement;
-      const btn = document.getElementById('themeBtn');
-      if (html.getAttribute('data-theme') === 'dark') {
-        html.removeAttribute('data-theme');
-        btn.textContent = '🌙 暗色主题';
-        localStorage.setItem('theme', 'light');
-      } else {
-        html.setAttribute('data-theme', 'dark');
-        btn.textContent = '☀️ 亮色主题';
-        localStorage.setItem('theme', 'dark');
-      }
-    }
-    // 初始化主题
-    (function() {
-      const saved = localStorage.getItem('theme');
-      if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        document.getElementById('themeBtn').textContent = '☀️ 亮色主题';
-      }
-    })();
+    (function(){var t=localStorage.getItem("gh-trending-theme");
+      if(t==="dark"){document.documentElement.setAttribute("data-theme","dark");
+        document.getElementById("themeBtn").innerHTML="☀️ Light";})();
+    function toggleTheme(){var d=document.documentElement.getAttribute("data-theme")==="dark";
+      if(d){document.documentElement.removeAttribute("data-theme");localStorage.setItem("gh-trending-theme","light");
+        document.getElementById("themeBtn").innerHTML="🌙 Dark";}
+      else{document.documentElement.setAttribute("data-theme","dark");localStorage.setItem("gh-trending-theme","dark");
+        document.getElementById("themeBtn").innerHTML="☀️ Light";}}
   </script>
 </body>
 </html>

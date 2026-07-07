@@ -1,546 +1,428 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GitHub Trending 简报 — 2026-06-23</title>
-<style>
-  :root {
-    --bg: #0d1117;
-    --card: #161b22;
-    --card-hover: #1c2230;
-    --border: #30363d;
-    --text: #e6edf3;
-    --text-muted: #8b949e;
-    --accent: #58a6ff;
-    --accent2: #f78166;
-    --green: #3fb950;
-    --yellow: #d29922;
-    --purple: #bc8cff;
-    --red: #f85149;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-  }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  .hero {
-    background: linear-gradient(135deg, #0d1117 0%, #161b22 40%, #1a0d2e 70%, #0d1117 100%);
-    padding: 48px 24px 40px;
-    text-align: center;
-    border-bottom: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: "";
-    position: absolute;
-    top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background: radial-gradient(circle at 30% 50%, rgba(88,166,255,0.06) 0%, transparent 40%),
-                radial-gradient(circle at 70% 50%, rgba(247,129,102,0.05) 0%, transparent 40%);
-    pointer-events: none;
-  }
-  .hero-content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
-  .hero .badge {
-    display: inline-block;
-    background: rgba(88,166,255,0.12);
-    border: 1px solid rgba(88,166,255,0.3);
-    color: var(--accent);
-    padding: 4px 16px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 16px;
-    letter-spacing: 0.5px;
-  }
-  .hero h1 {
-    font-size: 36px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #58a6ff 0%, #bc8cff 50%, #f78166 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 8px;
-  }
-  .hero .subtitle { color: var(--text-muted); font-size: 15px; }
-  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 36px;
-  }
-  .stat-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    transition: background 0.2s;
-  }
-  .stat-card:hover { background: var(--card-hover); }
-  .stat-card .stat-num {
-    font-size: 28px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #58a6ff, #bc8cff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .stat-card .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
-
-  .section-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .section-title .icon { font-size: 22px; }
-
-  .repo-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px 24px;
-    margin-bottom: 14px;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-  .repo-card:hover {
-    background: var(--card-hover);
-    border-color: var(--accent);
-  }
-  .repo-card .rank-badge {
-    position: absolute;
-    top: 14px;
-    right: 16px;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--text-muted);
-    background: rgba(48,54,61,0.6);
-    padding: 2px 10px;
-    border-radius: 10px;
-  }
-  .repo-card.rank-1 .rank-badge { background: rgba(211,171,35,0.2); color: #d4a72c; }
-  .repo-card.rank-2 .rank-badge { background: rgba(139,148,158,0.2); color: #c0c8d0; }
-  .repo-card.rank-3 .rank-badge { background: rgba(191,137,112,0.2); color: #cd7f32; }
-
-  .repo-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-  .repo-header .repo-icon { color: var(--text-muted); font-size: 18px; }
-  .repo-header .repo-name { font-size: 18px; font-weight: 700; }
-  .repo-header .repo-name a { color: var(--accent); }
-  .repo-desc { color: var(--text); font-size: 14px; margin-bottom: 14px; line-height: 1.55; }
-  .repo-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 18px;
-    align-items: center;
-  }
-  .repo-meta .meta-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 13px;
-    color: var(--text-muted);
-  }
-  .repo-meta .lang-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-  .lang-ts { background: #3178c6; }
-  .lang-py { background: #3572A5; }
-  .lang-rs { background: #dea584; }
-  .lang-clj { background: #db5855; }
-  .lang-c { background: #555; }
-  .lang-jn { background: #DA5B0B; }
-  .lang-sh { background: #89e051; }
-  .lang-sw { background: #F05138; }
-
-  .meta-star { color: var(--yellow); }
-  .meta-fork { color: var(--text-muted); }
-  .meta-today { color: var(--green); font-weight: 600; }
-
-  .footer-note {
-    text-align: center;
-    padding: 32px 24px;
-    color: var(--text-muted);
-    font-size: 13px;
-    border-top: 1px solid var(--border);
-    margin-top: 40px;
-  }
-
-  .lang-chart {
-    display: flex;
-    height: 10px;
-    border-radius: 6px;
-    overflow: hidden;
-    margin: 8px 0 16px;
-    background: var(--border);
-  }
-  .lang-chart .bar { height: 100%; transition: opacity 0.2s; }
-  .lang-chart .bar:hover { opacity: 0.8; }
-
-  .lang-legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-bottom: 24px;
-  }
-  .lang-legend .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-  .lang-legend .legend-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-
-  @media (max-width: 768px) {
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .hero h1 { font-size: 26px; }
-    .repo-meta { gap: 12px; }
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Trending 2026年06月23日 · 每日简报</title>
+  <style>
+:root{
+  --bg:#f6f7f9; --bg-soft:#eceff3; --card:#ffffff; --ink:#0b0f17; --muted:#5a6472;
+  --line:#e5e8ee; --accent:#6d5efc; --accent-2:#13c2a3;
+  --gold:#f6b73c; --silver:#9aa7b8; --bronze:#cd8a5c;
+  --shadow-sm:0 1px 2px rgba(16,24,40,.05); --shadow:0 6px 24px rgba(16,24,40,.08);
+  --shadow-lg:0 16px 40px rgba(16,24,40,.12); --radius:18px;
+}
+[data-theme="dark"]{
+  --bg:#080b10; --bg-soft:#0e131b; --card:#10151e; --ink:#e8edf4; --muted:#8a96a8;
+  --line:#1c2531; --accent:#8b7bff; --accent-2:#22d3b0;
+  --gold:#ffcc5c; --silver:#aab6c6; --bronze:#d99a6c;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3); --shadow:0 8px 28px rgba(0,0,0,.4);
+  --shadow-lg:0 18px 44px rgba(0,0,0,.5); --radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',Helvetica,Arial,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;
+  transition:background .3s,color .3s;min-height:100vh}
+a{color:inherit}
+.toggle{position:absolute;top:20px;right:22px;z-index:3;display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 14px;
+  border-radius:999px;cursor:pointer;font-size:.85rem;font-weight:600;transition:.2s}
+.toggle:hover{background:rgba(255,255,255,.18)}
+/* ---------- HERO ---------- */
+.hero{position:relative;overflow:hidden;color:#fff;text-align:center;padding:74px 24px 60px;
+  background:
+    radial-gradient(900px 420px at 12% -30%, rgba(109,94,252,.35), transparent 60%),
+    radial-gradient(820px 420px at 92% -10%, rgba(19,194,163,.28), transparent 55%),
+    linear-gradient(135deg,#0a0e16 0%,#0f1420 55%,#0a0e16 100%)}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:46px 46px;
+  -webkit-mask-image:radial-gradient(720px 380px at 50% 0%,#000,transparent 75%);
+          mask-image:radial-gradient(720px 380px at 50% 0%,#000,transparent 75%)}
+.hero-inner{position:relative;z-index:1;max-width:920px;margin:0 auto}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.16);padding:6px 14px;border-radius:999px;margin-bottom:18px}
+.hero h1{font-size:2.6rem;font-weight:800;letter-spacing:-.02em;margin-bottom:10px;
+  background:linear-gradient(180deg,#fff,#cdd3e0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{color:rgba(255,255,255,.74);font-size:1.05rem}
+.stats{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(6px);
+  border-radius:16px;padding:16px 22px;min-width:132px}
+.stat .n{font-size:1.7rem;font-weight:800;background:linear-gradient(90deg,#fff,#b9c0d4);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .l{font-size:.78rem;color:rgba(255,255,255,.66);margin-top:2px}
+/* ---------- LAYOUT ---------- */
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+.backnav{max-width:960px;margin:22px auto 0;padding:0 20px}
+.backnav a{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;
+  font-size:.9rem;font-weight:600;transition:.15s}
+.backnav a:hover{color:var(--accent)}
+.section{margin:46px auto}
+.section-head{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.section-head h2{font-size:1.4rem;font-weight:800;letter-spacing:-.01em}
+.section-head .hint{font-size:.85rem;color:var(--muted)}
+/* ---------- REPO CARD ---------- */
+.repo{position:relative;display:grid;grid-template-columns:56px 1fr;gap:18px;background:var(--card);
+  border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px 20px 24px;margin-bottom:14px;
+  box-shadow:var(--shadow-sm);transition:transform .18s ease,border-color .18s,box-shadow .18s}
+.repo:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--shadow-lg)}
+.repo::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:4px;border-radius:0 4px 4px 0;
+  background:var(--stripe,#cbd2dc)}
+.rank{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:1.15rem;background:var(--bg-soft);color:var(--muted);border:1px solid var(--line)}
+.repo.top1 .rank{background:linear-gradient(145deg,#fff3d1,#ffe39a);color:#9a6b00;border-color:#f3d27a}
+.repo.top2 .rank{background:linear-gradient(145deg,#f2f5f9,#dde4ee);color:#5b6b7e;border-color:#cfd8e4}
+.repo.top3 .rank{background:linear-gradient(145deg,#fbe7d6,#f0c9a6);color:#92552a;border-color:#e6c09a}
+.r-main{min-width:0}
+.r-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.r-name{font-size:1.12rem;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+.r-name:hover{color:var(--accent)}
+.r-name .owner{color:var(--muted);font-weight:500}
+.gain{margin-left:auto;font-size:.82rem;font-weight:700;color:#fff;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:5px 13px;border-radius:999px;
+  white-space:nowrap;box-shadow:var(--shadow-sm)}
+.r-desc{font-size:.92rem;color:var(--muted);line-height:1.6;margin-bottom:12px}
+.r-meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:.85rem;color:var(--muted)}
+.lang{display:inline-flex;align-items:center;gap:7px}
+.lang .dot{width:11px;height:11px;border-radius:50%}
+.r-meta b{color:var(--ink);font-weight:700}
+/* ---------- LANGUAGE BARS ---------- */
+.lang-list{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px}
+.lrow{display:flex;align-items:center;gap:12px}
+.lname{width:108px;flex-shrink:0;font-size:.88rem;color:var(--ink);font-weight:600;display:flex;align-items:center;gap:7px}
+.lname .dot{width:10px;height:10px;border-radius:50%}
+.ltrack{flex:1;height:9px;background:var(--bg-soft);border-radius:999px;overflow:hidden}
+.lfill{height:100%;border-radius:999px;background:var(--c,var(--accent))}
+.lcount{width:54px;text-align:right;font-size:.82rem;color:var(--muted);font-weight:600}
+/* ---------- INSIGHTS ---------- */
+.insights{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;
+  box-shadow:var(--shadow-sm)}
+.insights ul{list-style:none;display:grid;gap:12px;margin-top:6px}
+.insights li{position:relative;padding-left:26px;color:var(--muted);line-height:1.6}
+.insights li::before{content:"\25B9";position:absolute;left:0;top:0;color:var(--accent);font-weight:800}
+.insights li b{color:var(--ink)}
+/* ---------- FOOTER ---------- */
+.footer{margin-top:56px;border-top:1px solid var(--line);padding:30px 24px;text-align:center;
+  color:var(--muted);font-size:.85rem;line-height:1.8}
+.footer a{color:var(--accent);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+/* ---------- INDEX / ARCHIVE ---------- */
+.archive{max-width:1000px;margin:0 auto;padding:0 20px}
+.month{margin:46px auto 6px;font-size:1.15rem;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:10px}
+.month::after{content:"";flex:1;height:1px;background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;margin-top:18px}
+.day{display:flex;flex-direction:column;gap:6px;background:var(--card);border:1px solid var(--line);
+  border-radius:16px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;position:relative;overflow:hidden}
+.day:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:var(--shadow-lg)}
+.day .d-date{font-size:1.08rem;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.day .d-sub{font-size:.82rem;color:var(--muted)}
+.day .d-bar{margin-top:10px;height:6px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+.badge-new{position:absolute;top:13px;right:13px;font-size:.66rem;font-weight:700;color:#fff;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:3px 9px;border-radius:999px;
+  letter-spacing:.04em}
+@media(max-width:680px){
+  .hero h1{font-size:1.9rem}
+  .lang-list{grid-template-columns:1fr}
+  .repo{grid-template-columns:48px 1fr;gap:14px;padding:16px 16px 16px 20px}
+  .rank{width:48px;height:48px;font-size:1rem}
+  .gain{margin-left:0}
+}
 </style>
 </head>
 <body>
-
-<!-- Hero -->
-<div class="hero">
-  <div class="hero-content">
-    <span class="badge">GitHub Trending</span>
-    <h1>2026-06-23 每日简报</h1>
-    <p class="subtitle">AI 自动抓取 · 北京时间 10:00</p>
-  </div>
-</div>
-
-<div class="container">
-
-  <!-- Stats Grid -->
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-num">16</div>
-      <div class="stat-label">今日热门仓库</div>
+  <header class="hero">
+    <button class="toggle" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
+    <div class="hero-inner">
+      <span class="eyebrow">📈 GitHub Trending</span>
+      <h1>每日热门仓库简报</h1>
+      <p class="sub">2026年06月23日 · 共 16 个仓库登上 Trending · 今日新增 +15,515 Stars</p>
+      <div class="stats">
+        <div class="stat"><div class="n">16</div><div class="l">Trending 仓库</div></div>
+        <div class="stat"><div class="n">+15,515</div><div class="l">今日新增 Stars</div></div>
+        <div class="stat"><div class="n">1</div><div class="l">编程语言</div></div>
+      </div>
     </div>
-    <div class="stat-card">
-      <div class="stat-num">~18.6K</div>
-      <div class="stat-label">今日新增 Stars</div>
+  </header>
+  <div class="backnav"><a href="index.html">← 返回日报列表</a></div>
+  <div class="wrap section">
+    <div class="section-head"><h2>🔥 今日热门</h2><span class="hint">按今日新增 Star 排序</span></div>
+    <div class="repo top1" style="--stripe:#888888">
+      <div class="rank">#1</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/calesthio/OpenMontage" target="_blank"><span class="owner">calesthio/</span>OpenMontage</a>
+          <span class="gain">+1 ★ 今日</span>
+        </div>
+        <p class="r-desc">World's first open-source, agentic video production system. 12 pipelines, 52 tools, 500+ agent skills. Turn your AI coding assistant into a full video production studio.</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>12,243</b></span>
+          <span>今日 <b>+1</b></span>
+        </div>
+      </div>
     </div>
-    <div class="stat-card">
-      <div class="stat-num">826K</div>
-      <div class="stat-label">总 Stars 规模</div>
+    <div class="repo top2" style="--stripe:#888888">
+      <div class="rank">#2</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/palmier-io/palmier-pro" target="_blank"><span class="owner">palmier-io/</span>palmier-pro</a>
+          <span class="gain">+2,938 ★ 今日</span>
+        </div>
+        <p class="r-desc">macOS video editor built for AI</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>7,443</b></span>
+          <span>今日 <b>+2,938</b></span>
+        </div>
+      </div>
     </div>
-    <div class="stat-card">
-      <div class="stat-num">7</div>
-      <div class="stat-label">编程语言种类</div>
+    <div class="repo top3" style="--stripe:#888888">
+      <div class="rank">#3</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/mattpocock/skills" target="_blank"><span class="owner">mattpocock/</span>skills</a>
+          <span class="gain">+2,463 ★ 今日</span>
+        </div>
+        <p class="r-desc">Skills for Real Engineers. Straight from my .claude directory.</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>141,746</b></span>
+          <span>今日 <b>+2,463</b></span>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <!-- Top 3 Highlights -->
-  <div class="section-title"><span class="icon">&#x1F3C6;</span> Top 3 今日之星</div>
-
-  <div class="repo-card rank-1">
-    <span class="rank-badge">#1</span>
-    <div class="repo-header">
-      <span class="repo-icon">&#x1F4C1;</span>
-      <span class="repo-name"><a href="https://github.com/calesthio/OpenMontage" target="_blank">calesthio/OpenMontage</a></span>
+    <div class="repo" style="--stripe:#888888">
+      <div class="rank">#4</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/ZhuLinsen/daily_stock_analysis" target="_blank"><span class="owner">ZhuLinsen/</span>daily_stock_analysis</a>
+          <span class="gain">+1,557 ★ 今日</span>
+        </div>
+        <p class="r-desc">LLM 驱动的多市场股票智能分析系统：多源行情、实时新闻、决策看板与自动推送，支持零成本定时运行。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>45,881</b></span>
+          <span>今日 <b>+1,557</b></span>
+        </div>
+      </div>
     </div>
-    <div class="repo-desc">World's first open-source, agentic video production system. 12 pipelines, 52 tools, 500+ agent skills. Turn your AI coding assistant into a full video production studio.</div>
-    <div class="repo-meta">
-      <span class="meta-item"><span class="lang-dot lang-py"></span> Python</span>
-      <span class="meta-item meta-star">&#x2605; 12,243</span>
-      <span class="meta-item meta-fork">&#x2442; 1,562</span>
-      <span class="meta-item meta-today">&#x1F4C8; +2,938 today</span>
+    <div class="repo" style="--stripe:#888888">
+      <div class="rank">#5</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/DeusData/codebase-memory-mcp" target="_blank"><span class="owner">DeusData/</span>codebase-memory-mcp</a>
+          <span class="gain">+1,557 ★ 今日</span>
+        </div>
+        <p class="r-desc">High-performance code intelligence MCP server. Indexes codebases into a persistent knowledge graph — average repo in milliseconds. 158 languages, sub-ms queries, 99% fewer tokens.</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>11,648</b></span>
+          <span>今日 <b>+1,557</b></span>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div class="repo-card rank-2">
-    <span class="rank-badge">#2</span>
-    <div class="repo-header">
-      <span class="repo-icon">&#x1F4C1;</span>
-      <span class="repo-name"><a href="https://github.com/palmier-io/palmier-pro" target="_blank">palmier-io/palmier-pro</a></span>
+    <div class="repo" style="--stripe:#888888">
+      <div class="rank">#6</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills" target="_blank"><span class="owner">mukul975/</span>Anthropic-Cybersecurity-Skills</a>
+          <span class="gain">+1,185 ★ 今日</span>
+        </div>
+        <p class="r-desc">bytedance/deer-flow</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>18,751</b></span>
+          <span>今日 <b>+1,185</b></span>
+        </div>
+      </div>
     </div>
-    <div class="repo-desc">macOS video editor built for AI</div>
-    <div class="repo-meta">
-      <span class="meta-item"><span class="lang-dot lang-sw"></span> Swift</span>
-      <span class="meta-item meta-star">&#x2605; 7,443</span>
-      <span class="meta-item meta-fork">&#x2442; 507</span>
-      <span class="meta-item meta-today">&#x1F4C8; +2,463 today</span>
+    <div class="repo" style="--stripe:#888888">
+      <div class="rank">#7</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/bytedance/deer-flow" target="_blank"><span class="owner">bytedance/</span>deer-flow</a>
+          <span class="gain">+956 ★ 今日</span>
+        </div>
+        <p class="r-desc">An open-source long-horizon SuperAgent harness that researches, codes, and creates. With sandboxes, memories, tools, skill, subagents and message gateway, it handles tasks from minutes to hours.</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>73,296</b></span>
+          <span>今日 <b>+956</b></span>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div class="repo-card rank-3">
-    <span class="rank-badge">#3</span>
-    <div class="repo-header">
-      <span class="repo-icon">&#x1F4C1;</span>
-      <span class="repo-name"><a href="https://github.com/mattpocock/skills" target="_blank">mattpocock/skills</a></span>
+    <div class="repo" style="--stripe:#888888">
+      <div class="rank">#8</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/penpot/penpot" target="_blank"><span class="owner">penpot/</span>penpot</a>
+          <span class="gain">+738 ★ 今日</span>
+        </div>
+        <p class="r-desc">Penpot: The open-source design tool for design and code collaboration</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>52,897</b></span>
+          <span>今日 <b>+738</b></span>
+        </div>
+      </div>
     </div>
-    <div class="repo-desc">Skills for Real Engineers. Straight from my .claude directory.</div>
-    <div class="repo-meta">
-      <span class="meta-item"><span class="lang-dot lang-sh"></span> Shell</span>
-      <span class="meta-item meta-star">&#x2605; 141,746</span>
-      <span class="meta-item meta-fork">&#x2442; 12,260</span>
-      <span class="meta-item meta-today">&#x1F4C8; +2,051 today</span>
+    <div class="repo" style="--stripe:#888888">
+      <div class="rank">#9</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/firecrawl/firecrawl" target="_blank"><span class="owner">firecrawl/</span>firecrawl</a>
+          <span class="gain">+728 ★ 今日</span>
+        </div>
+        <p class="r-desc">The API to search, scrape, and interact with the web at scale. &#x1F525;</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>137,345</b></span>
+          <span>今日 <b>+728</b></span>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <!-- All Trending Repos -->
-  <div class="section-title" style="margin-top: 32px;"><span class="icon">&#x1F525;</span> 全部热门仓库</div>
-
-  <div class="repo-card">
-    <span class="rank-badge">#4</span>
-    <div class="repo-header">
-      <span class="repo-icon">&#x1F4C1;</span>
-      <span class="repo-name"><a href="https://github.com/ZhuLinsen/daily_stock_analysis" target="_blank">ZhuLinsen/daily_stock_analysis</a></span>
+    <div class="repo" style="--stripe:#888888">
+      <div class="rank">#10</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/garrytan/gstack" target="_blank"><span class="owner">garrytan/</span>gstack</a>
+          <span class="gain">+615 ★ 今日</span>
+        </div>
+        <p class="r-desc">Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>113,186</b></span>
+          <span>今日 <b>+615</b></span>
+        </div>
+      </div>
     </div>
-    <div class="repo-desc">LLM 驱动的多市场股票智能分析系统：多源行情、实时新闻、决策看板与自动推送，支持零成本定时运行。</div>
-    <div class="repo-meta">
-      <span class="meta-item"><span class="lang-dot lang-py"></span> Python</span>
-      <span class="meta-item meta-star">&#x2605; 45,881</span>
-      <span class="meta-item meta-fork">&#x2442; 41,934</span>
-      <span class="meta-item meta-today">&#x1F4C8; +1,557 today</span>
+    <div class="repo" style="--stripe:#888888">
+      <div class="rank">#11</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/Stirling-Tools/Stirling-PDF" target="_blank"><span class="owner">Stirling-Tools/</span>Stirling-PDF</a>
+          <span class="gain">+573 ★ 今日</span>
+        </div>
+        <p class="r-desc">tursodatabase/turso</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>82,970</b></span>
+          <span>今日 <b>+573</b></span>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div class="repo-card">
-    <span class="rank-badge">#5</span>
-    <div class="repo-header">
-      <span class="repo-icon">&#x1F4C1;</span>
-      <span class="repo-name"><a href="https://github.com/DeusData/codebase-memory-mcp" target="_blank">DeusData/codebase-memory-mcp</a></span>
+    <div class="repo" style="--stripe:#888888">
+      <div class="rank">#12</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/tursodatabase/turso" target="_blank"><span class="owner">tursodatabase/</span>turso</a>
+          <span class="gain">+547 ★ 今日</span>
+        </div>
+        <p class="r-desc">Turso is an in-process SQL database, compatible with SQLite.</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>21,504</b></span>
+          <span>今日 <b>+547</b></span>
+        </div>
+      </div>
     </div>
-    <div class="repo-desc">High-performance code intelligence MCP server. Indexes codebases into a persistent knowledge graph — average repo in milliseconds. 158 languages, sub-ms queries, 99% fewer tokens.</div>
-    <div class="repo-meta">
-      <span class="meta-item"><span class="lang-dot lang-c"></span> C</span>
-      <span class="meta-item meta-star">&#x2605; 11,648</span>
-      <span class="meta-item meta-fork">&#x2442; 860</span>
-      <span class="meta-item meta-today">&#x1F4C8; +1,185 today</span>
+    <div class="repo" style="--stripe:#888888">
+      <div class="rank">#13</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/jamiepine/voicebox" target="_blank"><span class="owner">jamiepine/</span>voicebox</a>
+          <span class="gain">+540 ★ 今日</span>
+        </div>
+        <p class="r-desc">The open-source AI voice studio. Clone, dictate, create.</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>32,302</b></span>
+          <span>今日 <b>+540</b></span>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div class="repo-card">
-    <span class="rank-badge">#6</span>
-    <div class="repo-header">
-      <span class="repo-icon">&#x1F4C1;</span>
-      <span class="repo-name"><a href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills" target="_blank">mukul975/Anthropic-Cybersecurity-Skills</a></span>
+    <div class="repo" style="--stripe:#888888">
+      <div class="rank">#14</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/heygen-com/hyperframes" target="_blank"><span class="owner">heygen-com/</span>hyperframes</a>
+          <span class="gain">+529 ★ 今日</span>
+        </div>
+        <p class="r-desc">Write HTML. Render video. Built for agents.</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>30,040</b></span>
+          <span>今日 <b>+529</b></span>
+        </div>
+      </div>
     </div>
-    <div class="repo-desc">817 structured cybersecurity skills for AI agents, mapped to 6 frameworks: MITRE ATT&CK, NIST CSF 2.0, MITRE ATLAS, D3FEND, NIST AI RMF & MITRE F3. Works with Claude Code, GitHub Copilot, Cursor, Gemini CLI & 20+ platforms.</div>
-    <div class="repo-meta">
-      <span class="meta-item"><span class="lang-dot lang-py"></span> Python</span>
-      <span class="meta-item meta-star">&#x2605; 18,751</span>
-      <span class="meta-item meta-fork">&#x2442; 2,214</span>
-      <span class="meta-item meta-today">&#x1F4C8; +956 today</span>
+    <div class="repo" style="--stripe:#888888">
+      <div class="rank">#15</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/lyogavin/airllm" target="_blank"><span class="owner">lyogavin/</span>airllm</a>
+          <span class="gain">+395 ★ 今日</span>
+        </div>
+        <p class="r-desc">AirLLM 70B inference with single 4GB GPU</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>21,072</b></span>
+          <span>今日 <b>+395</b></span>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div class="repo-card">
-    <span class="rank-badge">#7</span>
-    <div class="repo-header">
-      <span class="repo-icon">&#x1F4C1;</span>
-      <span class="repo-name"><a href="https://github.com/bytedance/deer-flow" target="_blank">bytedance/deer-flow</a></span>
-    </div>
-    <div class="repo-desc">An open-source long-horizon SuperAgent harness that researches, codes, and creates. With sandboxes, memories, tools, skill, subagents and message gateway, it handles tasks from minutes to hours.</div>
-    <div class="repo-meta">
-      <span class="meta-item"><span class="lang-dot lang-py"></span> Python</span>
-      <span class="meta-item meta-star">&#x2605; 73,296</span>
-      <span class="meta-item meta-fork">&#x2442; 9,907</span>
-      <span class="meta-item meta-today">&#x1F4C8; +738 today</span>
-    </div>
-  </div>
-
-  <div class="repo-card">
-    <span class="rank-badge">#8</span>
-    <div class="repo-header">
-      <span class="repo-icon">&#x1F4C1;</span>
-      <span class="repo-name"><a href="https://github.com/penpot/penpot" target="_blank">penpot/penpot</a></span>
-    </div>
-    <div class="repo-desc">Penpot: The open-source design tool for design and code collaboration</div>
-    <div class="repo-meta">
-      <span class="meta-item"><span class="lang-dot lang-clj"></span> Clojure</span>
-      <span class="meta-item meta-star">&#x2605; 52,897</span>
-      <span class="meta-item meta-fork">&#x2442; 3,387</span>
-      <span class="meta-item meta-today">&#x1F4C8; +728 today</span>
-    </div>
-  </div>
-
-  <div class="repo-card">
-    <span class="rank-badge">#9</span>
-    <div class="repo-header">
-      <span class="repo-icon">&#x1F4C1;</span>
-      <span class="repo-name"><a href="https://github.com/firecrawl/firecrawl" target="_blank">firecrawl/firecrawl</a></span>
-    </div>
-    <div class="repo-desc">The API to search, scrape, and interact with the web at scale. &#x1F525;</div>
-    <div class="repo-meta">
-      <span class="meta-item"><span class="lang-dot lang-ts"></span> TypeScript</span>
-      <span class="meta-item meta-star">&#x2605; 137,345</span>
-      <span class="meta-item meta-fork">&#x2442; 7,962</span>
-      <span class="meta-item meta-today">&#x1F4C8; +615 today</span>
-    </div>
-  </div>
-
-  <div class="repo-card">
-    <span class="rank-badge">#10</span>
-    <div class="repo-header">
-      <span class="repo-icon">&#x1F4C1;</span>
-      <span class="repo-name"><a href="https://github.com/garrytan/gstack" target="_blank">garrytan/gstack</a></span>
-    </div>
-    <div class="repo-desc">Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA</div>
-    <div class="repo-meta">
-      <span class="meta-item"><span class="lang-dot lang-ts"></span> TypeScript</span>
-      <span class="meta-item meta-star">&#x2605; 113,186</span>
-      <span class="meta-item meta-fork">&#x2442; 16,796</span>
-      <span class="meta-item meta-today">&#x1F4C8; +573 today</span>
-    </div>
-  </div>
-
-  <div class="repo-card">
-    <span class="rank-badge">#11</span>
-    <div class="repo-header">
-      <span class="repo-icon">&#x1F4C1;</span>
-      <span class="repo-name"><a href="https://github.com/Stirling-Tools/Stirling-PDF" target="_blank">Stirling-Tools/Stirling-PDF</a></span>
-    </div>
-    <div class="repo-desc">#1 PDF Application on GitHub that lets you edit PDFs on any device anywhere</div>
-    <div class="repo-meta">
-      <span class="meta-item"><span class="lang-dot lang-ts"></span> TypeScript</span>
-      <span class="meta-item meta-star">&#x2605; 82,970</span>
-      <span class="meta-item meta-fork">&#x2442; 7,239</span>
-      <span class="meta-item meta-today">&#x1F4C8; +547 today</span>
-    </div>
-  </div>
-
-  <div class="repo-card">
-    <span class="rank-badge">#12</span>
-    <div class="repo-header">
-      <span class="repo-icon">&#x1F4C1;</span>
-      <span class="repo-name"><a href="https://github.com/tursodatabase/turso" target="_blank">tursodatabase/turso</a></span>
-    </div>
-    <div class="repo-desc">Turso is an in-process SQL database, compatible with SQLite.</div>
-    <div class="repo-meta">
-      <span class="meta-item"><span class="lang-dot lang-rs"></span> Rust</span>
-      <span class="meta-item meta-star">&#x2605; 21,504</span>
-      <span class="meta-item meta-fork">&#x2442; 1,089</span>
-      <span class="meta-item meta-today">&#x1F4C8; +540 today</span>
-    </div>
-  </div>
-
-  <div class="repo-card">
-    <span class="rank-badge">#13</span>
-    <div class="repo-header">
-      <span class="repo-icon">&#x1F4C1;</span>
-      <span class="repo-name"><a href="https://github.com/jamiepine/voicebox" target="_blank">jamiepine/voicebox</a></span>
-    </div>
-    <div class="repo-desc">The open-source AI voice studio. Clone, dictate, create.</div>
-    <div class="repo-meta">
-      <span class="meta-item"><span class="lang-dot lang-ts"></span> TypeScript</span>
-      <span class="meta-item meta-star">&#x2605; 32,302</span>
-      <span class="meta-item meta-fork">&#x2442; 3,938</span>
-      <span class="meta-item meta-today">&#x1F4C8; +529 today</span>
-    </div>
-  </div>
-
-  <div class="repo-card">
-    <span class="rank-badge">#14</span>
-    <div class="repo-header">
-      <span class="repo-icon">&#x1F4C1;</span>
-      <span class="repo-name"><a href="https://github.com/heygen-com/hyperframes" target="_blank">heygen-com/hyperframes</a></span>
-    </div>
-    <div class="repo-desc">Write HTML. Render video. Built for agents.</div>
-    <div class="repo-meta">
-      <span class="meta-item"><span class="lang-dot lang-ts"></span> TypeScript</span>
-      <span class="meta-item meta-star">&#x2605; 30,040</span>
-      <span class="meta-item meta-fork">&#x2442; 2,825</span>
-      <span class="meta-item meta-today">&#x1F4C8; +395 today</span>
-    </div>
-  </div>
-
-  <div class="repo-card">
-    <span class="rank-badge">#15</span>
-    <div class="repo-header">
-      <span class="repo-icon">&#x1F4C1;</span>
-      <span class="repo-name"><a href="https://github.com/lyogavin/airllm" target="_blank">lyogavin/airllm</a></span>
-    </div>
-    <div class="repo-desc">AirLLM 70B inference with single 4GB GPU</div>
-    <div class="repo-meta">
-      <span class="meta-item"><span class="lang-dot lang-jn"></span> Jupyter Notebook</span>
-      <span class="meta-item meta-star">&#x2605; 21,072</span>
-      <span class="meta-item meta-fork">&#x2442; 2,424</span>
-      <span class="meta-item meta-today">&#x1F4C8; +193 today</span>
+    <div class="repo" style="--stripe:#888888">
+      <div class="rank">#16</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/JCodesMore/ai-website-cloner-template" target="_blank"><span class="owner">JCodesMore/</span>ai-website-cloner-template</a>
+          <span class="gain">+193 ★ 今日</span>
+        </div>
+        <p class="r-desc">Clone any website with one command using AI coding agents</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span>★ <b>17,785</b></span>
+          <span>今日 <b>+193</b></span>
+        </div>
+      </div>
     </div>
   </div>
-
-  <div class="repo-card">
-    <span class="rank-badge">#16</span>
-    <div class="repo-header">
-      <span class="repo-icon">&#x1F4C1;</span>
-      <span class="repo-name"><a href="https://github.com/JCodesMore/ai-website-cloner-template" target="_blank">JCodesMore/ai-website-cloner-template</a></span>
-    </div>
-    <div class="repo-desc">Clone any website with one command using AI coding agents</div>
-    <div class="repo-meta">
-      <span class="meta-item"><span class="lang-dot lang-ts"></span> TypeScript</span>
-      <span class="meta-item meta-star">&#x2605; 17,785</span>
-      <span class="meta-item meta-fork">&#x2442; 2,747</span>
-      <span class="meta-item meta-today">&#x1F4C8; +100 today</span>
+  <div class="wrap section">
+    <div class="section-head"><h2>📊 编程语言分布</h2></div>
+    <div class="lang-list">
+        <div class="lrow">
+          <span class="lname"><span class="dot" style="background:#888888"></span>Unknown</span>
+          <span class="ltrack"><span class="lfill" style="--c:#888888;width:100%"></span></span>
+          <span class="lcount">16 个</span>
+        </div>
     </div>
   </div>
-
-  <!-- Language Distribution -->
-  <div class="section-title" style="margin-top: 36px;"><span class="icon">&#x1F4CA;</span> 语言分布</div>
-
-  <div class="lang-chart">
-    <div class="bar lang-ts" style="width: 37.5%;" title="TypeScript: 6"></div>
-    <div class="bar lang-py" style="width: 25%;" title="Python: 4"></div>
-    <div class="bar lang-sh" style="width: 6.25%;" title="Shell: 1"></div>
-    <div class="bar lang-clj" style="width: 6.25%;" title="Clojure: 1"></div>
-    <div class="bar lang-rs" style="width: 6.25%;" title="Rust: 1"></div>
-    <div class="bar lang-c" style="width: 6.25%;" title="C: 1"></div>
-    <div class="bar lang-sw" style="width: 6.25%;" title="Swift: 1"></div>
-    <div class="bar lang-jn" style="width: 6.25%;" title="Jupyter: 1"></div>
+  <div class="wrap section">
+    <div class="insights">
+      <div class="section-head"><h2>💡 今日看点</h2></div>
+      <ul>
+<li><b>calesthio/OpenMontage 领跑今日榜单</b>：今日新增 <b>+1</b> Stars。</li>
+<li><b>Unknown 最为活跃</b>：占据 16 个 Trending 席位，占比 100%。</li>
+<li><b>AI 赛道持续火热</b>：10 个仓库与 AI/Agent 相关，Claude Code 技能生态、AI 助手、Agent 框架多点开花。</li>
+<li><b>中国项目表现亮眼</b>：1 个来自中国团队/开发者的项目上榜。</li>
+      </ul>
+    </div>
   </div>
-
-  <div class="lang-legend">
-    <span class="legend-item"><span class="legend-dot lang-ts"></span> TypeScript 6</span>
-    <span class="legend-item"><span class="legend-dot lang-py"></span> Python 4</span>
-    <span class="legend-item"><span class="legend-dot lang-sh"></span> Shell 1</span>
-    <span class="legend-item"><span class="legend-dot lang-clj"></span> Clojure 1</span>
-    <span class="legend-item"><span class="legend-dot lang-rs"></span> Rust 1</span>
-    <span class="legend-item"><span class="legend-dot lang-c"></span> C 1</span>
-    <span class="legend-item"><span class="legend-dot lang-sw"></span> Swift 1</span>
-    <span class="legend-item"><span class="legend-dot lang-jn"></span> Jupyter 1</span>
+  <div class="footer">
+    🔗 数据来源 <a href="https://github.com/trending" target="_blank">GitHub Trending</a> · 自动生成于 2026年06月23日 CST<br>
+    由 <a href="https://github.com/lph12168x" target="_blank">@lph12168x</a> 维护 · <a href="index.html">日报列表</a>
   </div>
-
-  <!-- Insights -->
-  <div class="section-title"><span class="icon">&#x1F4AC;</span> 今日洞察</div>
-  <div class="repo-card" style="border-color: rgba(188,140,255,0.3);">
-    <ul style="color: var(--text-muted); font-size: 14px; line-height: 2; padding-left: 20px;">
-      <li>&#x1F3AC; <strong style="color: var(--text);">视频/AI 创作领跑</strong>：OpenMontage (+2,938) 和 palmier-pro (+2,463) 分列第 1-2 名，AI 视频生产成为今日最热赛道。</li>
-      <li>&#x1F916; <strong style="color: var(--text);">AI Agent 生态持续扩张</strong>：bytedance/deer-flow (+738)、mukul975/Anthropic-Cybersecurity-Skills (+956) 表明 Agent 工具链正在向垂直安全领域渗透。</li>
-      <li>&#x1F4CA; <strong style="color: var(--text);">股票分析成新宠</strong>：ZhuLinsen/daily_stock_analysis (+1,557) 以 LLM 驱动多市场分析跻身 Top 4，国内金融+AI 融合需求强劲。</li>
-      <li>&#x1F9E0; <strong style="color: var(--text);">MCP 代码智能高速崛起</strong>：DeusData/codebase-memory-mcp (+1,185) 用单二进制实现毫秒级代码图谱索引，资源效率惊人。</li>
-      <li>&#x1F3A8; <strong style="color: var(--text);">TypeScript 占据主导</strong>：16 个仓库中 TypeScript 占 6 席 (37.5%)，Python 占 4 席 (25%)，TS 在前端工具和 Agent 平台中优势明显。</li>
-    </ul>
-  </div>
-
-</div>
-
-<div class="footer-note">
-  数据来源：<a href="https://github.com/trending" target="_blank">GitHub Trending</a> &middot;
-  生成时间：2026-06-23 10:00 CST &middot;
-  自动推送至 <a href="https://github.com/lph12168x/GitHub-Trending-Daily" target="_blank">lph12168x/GitHub-Trending-Daily</a>
-</div>
-
+  <script>
+    (function(){var t=localStorage.getItem("gh-trending-theme");
+      if(t==="dark"){document.documentElement.setAttribute("data-theme","dark");
+        document.getElementById("themeBtn").innerHTML="☀️ Light";})();
+    function toggleTheme(){var d=document.documentElement.getAttribute("data-theme")==="dark";
+      if(d){document.documentElement.removeAttribute("data-theme");localStorage.setItem("gh-trending-theme","light");
+        document.getElementById("themeBtn").innerHTML="🌙 Dark";}
+      else{document.documentElement.setAttribute("data-theme","dark");localStorage.setItem("gh-trending-theme","dark");
+        document.getElementById("themeBtn").innerHTML="☀️ Light";}}
+  </script>
 </body>
 </html>
