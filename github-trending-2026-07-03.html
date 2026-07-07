@@ -1,429 +1,462 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GitHub Trending 2026年07月03日 &middot; 每日简报</title>
-<style>*, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
-:root {
-    --bg: #f6f8fa; --bg-card: #ffffff; --text: #1f2328; --text-secondary: #656d76;
-    --border: #d0d7de; --accent: #0969da; --accent-light: #ddf4ff;
-    --star-color: #e67700; --rank-bg: #f6f8fa; --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Trending 2026年07月03日 · 每日简报</title>
+  <style>
+:root{
+  --bg:#f6f7f9; --bg-soft:#eceff3; --card:#ffffff; --ink:#0b0f17; --muted:#5a6472;
+  --line:#e5e8ee; --accent:#6d5efc; --accent-2:#13c2a3;
+  --gold:#f6b73c; --silver:#9aa7b8; --bronze:#cd8a5c;
+  --shadow-sm:0 1px 2px rgba(16,24,40,.05); --shadow:0 6px 24px rgba(16,24,40,.08);
+  --shadow-lg:0 16px 40px rgba(16,24,40,.12); --radius:18px;
 }
-[data-theme="dark"] {
-    --bg: #0d1117; --bg-card: #161b22; --text: #e6edf3; --text-secondary: #8b949e;
-    --border: #30363d; --accent: #58a6ff; --accent-light: #0c2d6b;
-    --star-color: #f0883e; --rank-bg: #0d1117; --shadow: 0 1px 3px rgba(0,0,0,0.3);
+[data-theme="dark"]{
+  --bg:#080b10; --bg-soft:#0e131b; --card:#10151e; --ink:#e8edf4; --muted:#8a96a8;
+  --line:#1c2531; --accent:#8b7bff; --accent-2:#22d3b0;
+  --gold:#ffcc5c; --silver:#aab6c6; --bronze:#d99a6c;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3); --shadow:0 8px 28px rgba(0,0,0,.4);
+  --shadow-lg:0 18px 44px rgba(0,0,0,.5); --radius:18px;
 }
-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; transition: background 0.3s, color 0.3s; }
-.header { background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%); color: #fff; padding: 48px 24px 36px; text-align: center; position: relative; }
-.header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
-.header .subtitle { color: rgba(255,255,255,0.7); font-size: 1rem; }
-.theme-toggle { position: absolute; top: 20px; right: 24px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); color: #fff; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; }
-.theme-toggle:hover { background: rgba(255,255,255,0.25); }
-.summary { max-width: 900px; margin: 32px auto 0; padding: 20px 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; box-shadow: var(--shadow); }
-.summary-item { text-align: center; }
-.summary-num { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
-.summary-label { font-size: 0.85rem; color: var(--text-secondary); margin-top: 2px; }
-.container { max-width: 900px; margin: 32px auto; padding: 0 24px; }
-.repo-card { display: flex; gap: 16px; padding: 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; box-shadow: var(--shadow); transition: transform 0.15s; }
-.repo-card:hover { transform: translateY(-2px); }
-.repo-rank { flex-shrink: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: var(--rank-bg); border: 1px solid var(--border); border-radius: 10px; font-weight: 700; font-size: 0.95rem; color: var(--text-secondary); }
-.repo-card:nth-child(1) .repo-rank { background: #ffd70022; border-color: #ffd70044; color: #ffd700; }
-.repo-card:nth-child(2) .repo-rank { background: #c0c0c022; border-color: #c0c0c044; color: #c0c0c0; }
-.repo-card:nth-child(3) .repo-rank { background: #cd7f3222; border-color: #cd7f3244; color: #cd7f32; }
-.repo-body { flex: 1; min-width: 0; }
-.repo-header { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
-.repo-name { font-size: 1.1rem; font-weight: 600; color: var(--accent); text-decoration: none; }
-.repo-name:hover { text-decoration: underline; }
-.stars-today { font-size: 0.8rem; background: var(--accent-light); color: var(--accent); padding: 2px 10px; border-radius: 20px; font-weight: 600; white-space: nowrap; }
-.repo-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.5; }
-.repo-meta { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-secondary); flex-wrap: wrap; }
-.lang-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
-.meta-sep { color: var(--border); }
-.today-stars { color: var(--star-color); font-weight: 600; }
-.stats-section { max-width: 900px; margin: 0 auto 32px; padding: 0 24px; }
-.stats-section h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 16px; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px; }
-.lang-grid { display: flex; flex-wrap: wrap; gap: 10px; }
-.lang-badge { display: flex; align-items: center; gap: 6px; background: var(--bg-card); border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; color: var(--text-secondary); box-shadow: var(--shadow); }
-.lang-badge .dot { width: 10px; height: 10px; border-radius: 50%; }
-.lang-badge strong { color: var(--text); }
-.insight-box { max-width: 900px; margin: 0 auto 32px; padding: 20px 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); }
-.insight-box h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; color: var(--text); }
-.insight-box ul { margin-left: 20px; }
-.insight-box li { margin-bottom: 8px; color: var(--text-secondary); line-height: 1.5; }
-.insight-box li strong { color: var(--text); }
-.back-nav { max-width: 900px; margin: 0 auto 20px; padding: 0 24px; }
-.back-nav a { color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
-.back-nav a:hover { text-decoration: underline; }
-.footer { text-align: center; padding: 32px 24px; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 32px; }
-.footer a { color: var(--accent); text-decoration: none; }</style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',Helvetica,Arial,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;
+  transition:background .3s,color .3s;min-height:100vh}
+a{color:inherit}
+.toggle{position:absolute;top:20px;right:22px;z-index:3;display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 14px;
+  border-radius:999px;cursor:pointer;font-size:.85rem;font-weight:600;transition:.2s}
+.toggle:hover{background:rgba(255,255,255,.18)}
+/* ---------- HERO ---------- */
+.hero{position:relative;overflow:hidden;color:#fff;text-align:center;padding:74px 24px 60px;
+  background:
+    radial-gradient(900px 420px at 12% -30%, rgba(109,94,252,.35), transparent 60%),
+    radial-gradient(820px 420px at 92% -10%, rgba(19,194,163,.28), transparent 55%),
+    linear-gradient(135deg,#0a0e16 0%,#0f1420 55%,#0a0e16 100%)}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:46px 46px;
+  -webkit-mask-image:radial-gradient(720px 380px at 50% 0%,#000,transparent 75%);
+          mask-image:radial-gradient(720px 380px at 50% 0%,#000,transparent 75%)}
+.hero-inner{position:relative;z-index:1;max-width:920px;margin:0 auto}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.16);padding:6px 14px;border-radius:999px;margin-bottom:18px}
+.hero h1{font-size:2.6rem;font-weight:800;letter-spacing:-.02em;margin-bottom:10px;
+  background:linear-gradient(180deg,#fff,#cdd3e0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{color:rgba(255,255,255,.74);font-size:1.05rem}
+.stats{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(6px);
+  border-radius:16px;padding:16px 22px;min-width:132px}
+.stat .n{font-size:1.7rem;font-weight:800;background:linear-gradient(90deg,#fff,#b9c0d4);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .l{font-size:.78rem;color:rgba(255,255,255,.66);margin-top:2px}
+/* ---------- LAYOUT ---------- */
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+.backnav{max-width:960px;margin:22px auto 0;padding:0 20px}
+.backnav a{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;
+  font-size:.9rem;font-weight:600;transition:.15s}
+.backnav a:hover{color:var(--accent)}
+.section{margin:46px auto}
+.section-head{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.section-head h2{font-size:1.4rem;font-weight:800;letter-spacing:-.01em}
+.section-head .hint{font-size:.85rem;color:var(--muted)}
+/* ---------- REPO CARD ---------- */
+.repo{position:relative;display:grid;grid-template-columns:56px 1fr;gap:18px;background:var(--card);
+  border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px 20px 24px;margin-bottom:14px;
+  box-shadow:var(--shadow-sm);transition:transform .18s ease,border-color .18s,box-shadow .18s}
+.repo:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--shadow-lg)}
+.repo::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:4px;border-radius:0 4px 4px 0;
+  background:var(--stripe,#cbd2dc)}
+.rank{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:1.15rem;background:var(--bg-soft);color:var(--muted);border:1px solid var(--line)}
+.repo.top1 .rank{background:linear-gradient(145deg,#fff3d1,#ffe39a);color:#9a6b00;border-color:#f3d27a}
+.repo.top2 .rank{background:linear-gradient(145deg,#f2f5f9,#dde4ee);color:#5b6b7e;border-color:#cfd8e4}
+.repo.top3 .rank{background:linear-gradient(145deg,#fbe7d6,#f0c9a6);color:#92552a;border-color:#e6c09a}
+.r-main{min-width:0}
+.r-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.r-name{font-size:1.12rem;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+.r-name:hover{color:var(--accent)}
+.r-name .owner{color:var(--muted);font-weight:500}
+.gain{margin-left:auto;font-size:.82rem;font-weight:700;color:#fff;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:5px 13px;border-radius:999px;
+  white-space:nowrap;box-shadow:var(--shadow-sm)}
+.r-desc{font-size:.92rem;color:var(--muted);line-height:1.6;margin-bottom:12px}
+.r-meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:.85rem;color:var(--muted)}
+.lang{display:inline-flex;align-items:center;gap:7px}
+.lang .dot{width:11px;height:11px;border-radius:50%}
+.r-meta b{color:var(--ink);font-weight:700}
+/* ---------- LANGUAGE BARS ---------- */
+.lang-list{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px}
+.lrow{display:flex;align-items:center;gap:12px}
+.lname{width:108px;flex-shrink:0;font-size:.88rem;color:var(--ink);font-weight:600;display:flex;align-items:center;gap:7px}
+.lname .dot{width:10px;height:10px;border-radius:50%}
+.ltrack{flex:1;height:9px;background:var(--bg-soft);border-radius:999px;overflow:hidden}
+.lfill{height:100%;border-radius:999px;background:var(--c,var(--accent))}
+.lcount{width:54px;text-align:right;font-size:.82rem;color:var(--muted);font-weight:600}
+/* ---------- INSIGHTS ---------- */
+.insights{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;
+  box-shadow:var(--shadow-sm)}
+.insights ul{list-style:none;display:grid;gap:12px;margin-top:6px}
+.insights li{position:relative;padding-left:26px;color:var(--muted);line-height:1.6}
+.insights li::before{content:"\25B9";position:absolute;left:0;top:0;color:var(--accent);font-weight:800}
+.insights li b{color:var(--ink)}
+/* ---------- FOOTER ---------- */
+.footer{margin-top:56px;border-top:1px solid var(--line);padding:30px 24px;text-align:center;
+  color:var(--muted);font-size:.85rem;line-height:1.8}
+.footer a{color:var(--accent);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+/* ---------- INDEX / ARCHIVE ---------- */
+.archive{max-width:1000px;margin:0 auto;padding:0 20px}
+.month{margin:46px auto 6px;font-size:1.15rem;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:10px}
+.month::after{content:"";flex:1;height:1px;background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;margin-top:18px}
+.day{display:flex;flex-direction:column;gap:6px;background:var(--card);border:1px solid var(--line);
+  border-radius:16px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;position:relative;overflow:hidden}
+.day:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:var(--shadow-lg)}
+.day .d-date{font-size:1.08rem;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.day .d-sub{font-size:.82rem;color:var(--muted)}
+.day .d-bar{margin-top:10px;height:6px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+.badge-new{position:absolute;top:13px;right:13px;font-size:.66rem;font-weight:700;color:#fff;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:3px 9px;border-radius:999px;
+  letter-spacing:.04em}
+@media(max-width:680px){
+  .hero h1{font-size:1.9rem}
+  .lang-list{grid-template-columns:1fr}
+  .repo{grid-template-columns:48px 1fr;gap:14px;padding:16px 16px 16px 20px}
+  .rank{width:48px;height:48px;font-size:1rem}
+  .gain{margin-left:0}
+}
+</style>
 </head>
 <body>
-<header class="header">
-    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">&#127769; Dark</button>
-    <h1>&#128299; GitHub Trending 每日简报</h1>
-    <p class="subtitle">2026年07月03日 &middot; 17 repos &middot; +11126 stars today</p>
-</header>
-<div class="back-nav" style="padding-top:24px"><a href="index.html">&larr; 返回日报列表</a></div>
-<div class="summary">
-    <div class="summary-item"><div class="summary-num">17</div><div class="summary-label">Trending 仓库</div></div>
-    <div class="summary-item"><div class="summary-num">+11126</div><div class="summary-label">今日新增 Stars</div></div>
-    <div class="summary-item"><div class="summary-num">0</div><div class="summary-label">中国项目</div></div>
-    <div class="summary-item"><div class="summary-num">5</div><div class="summary-label">编程语言</div></div>
-</div>
-
-<div class="container">
-        <div class="repo-card">
-            <div class="repo-rank">#1</div>
-            <div class="repo-body">
-                <div class="repo-header">
-                    <a class="repo-name" href="https://github.com/usestrix/strix" target="_blank">usestrix/strix</a>
-                    <span class="stars-today">+2137 &#11088; today</span>
-                </div>
-                <p class="repo-desc">开源 AI 渗透测试工具，用于发现和修复应用安全漏洞。</p>
-                <div class="repo-meta">
-                    <span class="lang-dot" style="background:#3776AB"></span>
-                    <span>Python</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span>&#11088; 32278</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span class="today-stars">&#128200; +2137 today</span>
-                </div>
-            </div>
-        </div>
-        <div class="repo-card">
-            <div class="repo-rank">#2</div>
-            <div class="repo-body">
-                <div class="repo-header">
-                    <a class="repo-name" href="https://github.com/JuliusBrussee/caveman" target="_blank">JuliusBrussee/caveman</a>
-                    <span class="stars-today">+926 &#11088; today</span>
-                </div>
-                <p class="repo-desc">为什么用很多 token？原始人说话方式减少 65% token 消耗 —— Claude Code 技能。</p>
-                <div class="repo-meta">
-                    <span class="lang-dot" style="background:#F7DF1E"></span>
-                    <span>JavaScript</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span>&#11088; 80995</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span class="today-stars">&#128200; +926 today</span>
-                </div>
-            </div>
-        </div>
-        <div class="repo-card">
-            <div class="repo-rank">#3</div>
-            <div class="repo-body">
-                <div class="repo-header">
-                    <a class="repo-name" href="https://github.com/msitarzewski/agency-agents" target="_blank">msitarzewski/agency-agents</a>
-                    <span class="stars-today">+3032 &#11088; today</span>
-                </div>
-                <p class="repo-desc">触手可及的完整 AI 机构 —— 从前端魔法师到 Reddit 社区忍者，每个 Agent 都是专注领域的专家。</p>
-                <div class="repo-meta">
-                    <span class="lang-dot" style="background:#89E051"></span>
-                    <span>Shell</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span>&#11088; 125521</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span class="today-stars">&#128200; +3032 today</span>
-                </div>
-            </div>
-        </div>
-        <div class="repo-card">
-            <div class="repo-rank">#4</div>
-            <div class="repo-body">
-                <div class="repo-header">
-                    <a class="repo-name" href="https://github.com/hasaneyldrm/exercises-dataset" target="_blank">hasaneyldrm/exercises-dataset</a>
-                    <span class="stars-today">+938 &#11088; today</span>
-                </div>
-                <p class="repo-desc">包含 433 个健身动作的完整数据集，每个条目包含名称、分类、目标肌群、所需设备、动作说明。</p>
-                <div class="repo-meta">
-                    <span class="lang-dot" style="background:#E34F26"></span>
-                    <span>HTML</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span>&#11088; 9280</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span class="today-stars">&#128200; +938 today</span>
-                </div>
-            </div>
-        </div>
-        <div class="repo-card">
-            <div class="repo-rank">#5</div>
-            <div class="repo-body">
-                <div class="repo-header">
-                    <a class="repo-name" href="https://github.com/santifer/career-ops" target="_blank">santifer/career-ops</a>
-                    <span class="stars-today">+372 &#11088; today</span>
-                </div>
-                <p class="repo-desc">基于 Claude Code 构建的 AI 驱动求职系统，支持 14 种技能模式。</p>
-                <div class="repo-meta">
-                    <span class="lang-dot" style="background:#F7DF1E"></span>
-                    <span>JavaScript</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span>&#11088; 57851</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span class="today-stars">&#128200; +372 today</span>
-                </div>
-            </div>
-        </div>
-        <div class="repo-card">
-            <div class="repo-rank">#6</div>
-            <div class="repo-body">
-                <div class="repo-header">
-                    <a class="repo-name" href="https://github.com/obra/superpowers" target="_blank">obra/superpowers</a>
-                    <span class="stars-today">+897 &#11088; today</span>
-                </div>
-                <p class="repo-desc">Agent 技能框架和软件开发方法论，真正有效。</p>
-                <div class="repo-meta">
-                    <span class="lang-dot" style="background:#89E051"></span>
-                    <span>Shell</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span>&#11088; 244461</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span class="today-stars">&#128200; +897 today</span>
-                </div>
-            </div>
-        </div>
-        <div class="repo-card">
-            <div class="repo-rank">#7</div>
-            <div class="repo-body">
-                <div class="repo-header">
-                    <a class="repo-name" href="https://github.com/ChromeDevTools/chrome-devtools-mcp" target="_blank">ChromeDevTools/chrome-devtools-mcp</a>
-                    <span class="stars-today">+104 &#11088; today</span>
-                </div>
-                <p class="repo-desc">面向编程 Agent 的 Chrome 开发者工具。</p>
-                <div class="repo-meta">
-                    <span class="lang-dot" style="background:#3178C6"></span>
-                    <span>TypeScript</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span>&#11088; 45095</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span class="today-stars">&#128200; +104 today</span>
-                </div>
-            </div>
-        </div>
-        <div class="repo-card">
-            <div class="repo-rank">#8</div>
-            <div class="repo-body">
-                <div class="repo-header">
-                    <a class="repo-name" href="https://github.com/browser-use/video-use" target="_blank">browser-use/video-use</a>
-                    <span class="stars-today">+554 &#11088; today</span>
-                </div>
-                <p class="repo-desc">用编程 Agent 编辑视频。</p>
-                <div class="repo-meta">
-                    <span class="lang-dot" style="background:#3776AB"></span>
-                    <span>Python</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span>&#11088; 13808</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span class="today-stars">&#128200; +554 today</span>
-                </div>
-            </div>
-        </div>
-        <div class="repo-card">
-            <div class="repo-rank">#9</div>
-            <div class="repo-body">
-                <div class="repo-header">
-                    <a class="repo-name" href="https://github.com/actions/checkout" target="_blank">actions/checkout</a>
-                    <span class="stars-today">+26 &#11088; today</span>
-                </div>
-                <p class="repo-desc">用于检出代码仓库的 GitHub Action。</p>
-                <div class="repo-meta">
-                    <span class="lang-dot" style="background:#3178C6"></span>
-                    <span>TypeScript</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span>&#11088; 8166</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span class="today-stars">&#128200; +26 today</span>
-                </div>
-            </div>
-        </div>
-        <div class="repo-card">
-            <div class="repo-rank">#10</div>
-            <div class="repo-body">
-                <div class="repo-header">
-                    <a class="repo-name" href="https://github.com/affaan-m/ECC" target="_blank">affaan-m/ECC</a>
-                    <span class="stars-today">+486 &#11088; today</span>
-                </div>
-                <p class="repo-desc">Agent harness 性能优化系统，为 Claude Code、Codex 等提供技能支持。</p>
-                <div class="repo-meta">
-                    <span class="lang-dot" style="background:#F7DF1E"></span>
-                    <span>JavaScript</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span>&#11088; 225201</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span class="today-stars">&#128200; +486 today</span>
-                </div>
-            </div>
-        </div>
-        <div class="repo-card">
-            <div class="repo-rank">#11</div>
-            <div class="repo-body">
-                <div class="repo-header">
-                    <a class="repo-name" href="https://github.com/HKUDS/Vibe-Trading" target="_blank">HKUDS/Vibe-Trading</a>
-                    <span class="stars-today">+939 &#11088; today</span>
-                </div>
-                <p class="repo-desc">Vibe-Trading：你的个人交易 Agent。</p>
-                <div class="repo-meta">
-                    <span class="lang-dot" style="background:#3776AB"></span>
-                    <span>Python</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span>&#11088; 17358</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span class="today-stars">&#128200; +939 today</span>
-                </div>
-            </div>
-        </div>
-        <div class="repo-card">
-            <div class="repo-rank">#12</div>
-            <div class="repo-body">
-                <div class="repo-header">
-                    <a class="repo-name" href="https://github.com/agentskills/agentskills" target="_blank">agentskills/agentskills</a>
-                    <span class="stars-today">+86 &#11088; today</span>
-                </div>
-                <p class="repo-desc">Agent 技能规范和文档。</p>
-                <div class="repo-meta">
-                    <span class="lang-dot" style="background:#3776AB"></span>
-                    <span>Python</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span>&#11088; 21626</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span class="today-stars">&#128200; +86 today</span>
-                </div>
-            </div>
-        </div>
-        <div class="repo-card">
-            <div class="repo-rank">#13</div>
-            <div class="repo-body">
-                <div class="repo-header">
-                    <a class="repo-name" href="https://github.com/openai/codex-plugin-cc" target="_blank">openai/codex-plugin-cc</a>
-                    <span class="stars-today">+352 &#11088; today</span>
-                </div>
-                <p class="repo-desc">在 Claude Code 中使用 Codex 进行代码审查或任务委派。</p>
-                <div class="repo-meta">
-                    <span class="lang-dot" style="background:#F7DF1E"></span>
-                    <span>JavaScript</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span>&#11088; 22642</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span class="today-stars">&#128200; +352 today</span>
-                </div>
-            </div>
-        </div>
-        <div class="repo-card">
-            <div class="repo-rank">#14</div>
-            <div class="repo-body">
-                <div class="repo-header">
-                    <a class="repo-name" href="https://github.com/langflow-ai/langflow" target="_blank">langflow-ai/langflow</a>
-                    <span class="stars-today">+117 &#11088; today</span>
-                </div>
-                <p class="repo-desc">用于构建和部署 AI 驱动的 Agent 和工作流的强大工具。</p>
-                <div class="repo-meta">
-                    <span class="lang-dot" style="background:#3776AB"></span>
-                    <span>Python</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span>&#11088; 150752</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span class="today-stars">&#128200; +117 today</span>
-                </div>
-            </div>
-        </div>
-        <div class="repo-card">
-            <div class="repo-rank">#15</div>
-            <div class="repo-body">
-                <div class="repo-header">
-                    <a class="repo-name" href="https://github.com/pytorch/pytorch" target="_blank">pytorch/pytorch</a>
-                    <span class="stars-today">+65 &#11088; today</span>
-                </div>
-                <p class="repo-desc">支持强 GPU 加速的 Python 张量和动态神经网络框架。</p>
-                <div class="repo-meta">
-                    <span class="lang-dot" style="background:#3776AB"></span>
-                    <span>Python</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span>&#11088; 101239</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span class="today-stars">&#128200; +65 today</span>
-                </div>
-            </div>
-        </div>
-        <div class="repo-card">
-            <div class="repo-rank">#16</div>
-            <div class="repo-body">
-                <div class="repo-header">
-                    <a class="repo-name" href="https://github.com/harvard-edge/cs249r_book" target="_blank">harvard-edge/cs249r_book</a>
-                    <span class="stars-today">+68 &#11088; today</span>
-                </div>
-                <p class="repo-desc">机器学习系统相关书籍。</p>
-                <div class="repo-meta">
-                    <span class="lang-dot" style="background:#3776AB"></span>
-                    <span>Python</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span>&#11088; 25599</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span class="today-stars">&#128200; +68 today</span>
-                </div>
-            </div>
-        </div>
-        <div class="repo-card">
-            <div class="repo-rank">#17</div>
-            <div class="repo-body">
-                <div class="repo-header">
-                    <a class="repo-name" href="https://github.com/ryanmcdermott/clean-code-javascript" target="_blank">ryanmcdermott/clean-code-javascript</a>
-                    <span class="stars-today">+27 &#11088; today</span>
-                </div>
-                <p class="repo-desc">适配 JavaScript 的《代码整洁之道》概念指南。</p>
-                <div class="repo-meta">
-                    <span class="lang-dot" style="background:#F7DF1E"></span>
-                    <span>JavaScript</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span>&#11088; 94572</span>
-                    <span class="meta-sep">&middot;</span>
-                    <span class="today-stars">&#128200; +27 today</span>
-                </div>
-            </div>
-        </div>
-</div>
-
-<div class="stats-section">
-    <h2>&#128200; 编程语言分布</h2>
-    <div class="lang-grid">
-<div class="lang-badge"><span class="dot" style="background:#3776AB"></span> <strong>Python</strong> 7 repos</div>
-<div class="lang-badge"><span class="dot" style="background:#F7DF1E"></span> <strong>JavaScript</strong> 5 repos</div>
-<div class="lang-badge"><span class="dot" style="background:#89E051"></span> <strong>Shell</strong> 2 repos</div>
-<div class="lang-badge"><span class="dot" style="background:#3178C6"></span> <strong>TypeScript</strong> 2 repos</div>
-<div class="lang-badge"><span class="dot" style="background:#E34F26"></span> <strong>HTML</strong> 1 repos</div>
+  <header class="hero">
+    <button class="toggle" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
+    <div class="hero-inner">
+      <span class="eyebrow">📈 GitHub Trending</span>
+      <h1>每日热门仓库简报</h1>
+      <p class="sub">2026年07月03日 · 共 17 个仓库登上 Trending</p>
+      <div class="stats">
+        <div class="stat"><div class="n">17</div><div class="l">Trending 仓库</div></div>
+        <div class="stat"><div class="n">+11,126</div><div class="l">今日新增 Stars</div></div>
+        <div class="stat"><div class="n">5</div><div class="l">编程语言</div></div>
+      </div>
     </div>
-</div>
-
-<div class="insight-box">
-    <h2>&#128161; 今日看点</h2>
-    <ul>
-<li><strong>usestrix/strix 领跑今日榜单</strong>：以 +2137 Stars 领跑，开源 AI 渗透测试工具，用于发现和修复应用安全漏洞。...</li>
-<li><strong>Python 最为活跃</strong>：占据 7 个 Trending 席位，占比 41%。</li>
-<li><strong>AI 赛道持续火热</strong>：10 个仓库与 AI/LLM 相关。</li>
-    </ul>
-</div>
-
-<div class="footer">
-    &#128299; GitHub Trending Daily &middot; 数据来源 <a href="https://github.com/trending" target="_blank">GitHub Trending</a> &middot; 自动生成于 2026年07月03日 CST<br>
-    由 <a href="https://github.com/lph12168x" target="_blank">@lph12168x</a> 维护 &middot; <a href="index.html">日报列表</a>
-</div>
-
-<script>
-(function(){
-    var t = localStorage.getItem("gh-trending-theme");
-    if (t === "dark") document.documentElement.setAttribute("data-theme","dark");
-})();
-function toggleTheme(){
-    var isDark = document.documentElement.getAttribute("data-theme") === "dark";
-    if (isDark) {
-        document.documentElement.removeAttribute("data-theme");
-        localStorage.setItem("gh-trending-theme","light");
-        document.getElementById("themeBtn").innerHTML = "&#127769; Dark";
-    } else {
-        document.documentElement.setAttribute("data-theme","dark");
-        localStorage.setItem("gh-trending-theme","dark");
-        document.getElementById("themeBtn").innerHTML = "&#9728;&#65039; Light";
-    }
-}
-</script>
+  </header>
+  <div class="backnav"><a href="index.html">← 返回日报列表</a></div>
+  <div class="wrap section">
+    <div class="section-head"><h2>🔥 今日热门</h2><span class="hint">按今日新增 Star 排序</span></div>
+    <div class="repo top1" style="--stripe:#3776AB">
+      <div class="rank">#1</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/usestrix/strix" target="_blank"><span class="owner">usestrix/</span>strix</a>
+          <span class="gain">+2,137 ★ 今日</span>
+        </div>
+        <p class="r-desc">开源 AI 渗透测试工具，用于发现和修复应用安全漏洞。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3776AB"></span>Python</span>
+          <span>★ <b>32,278</b></span>
+          <span>今日 <b>+2,137</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo top2" style="--stripe:#F7DF1E">
+      <div class="rank">#2</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/JuliusBrussee/caveman" target="_blank"><span class="owner">JuliusBrussee/</span>caveman</a>
+          <span class="gain">+926 ★ 今日</span>
+        </div>
+        <p class="r-desc">为什么用很多 token？原始人说话方式减少 65% token 消耗 —— Claude Code 技能。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#F7DF1E"></span>JavaScript</span>
+          <span>★ <b>80,995</b></span>
+          <span>今日 <b>+926</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo top3" style="--stripe:#89E051">
+      <div class="rank">#3</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/msitarzewski/agency-agents" target="_blank"><span class="owner">msitarzewski/</span>agency-agents</a>
+          <span class="gain">+3,032 ★ 今日</span>
+        </div>
+        <p class="r-desc">触手可及的完整 AI 机构 —— 从前端魔法师到 Reddit 社区忍者，每个 Agent 都是专注领域的专家。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#89E051"></span>Shell</span>
+          <span>★ <b>125,521</b></span>
+          <span>今日 <b>+3,032</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#E34F26">
+      <div class="rank">#4</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/hasaneyldrm/exercises-dataset" target="_blank"><span class="owner">hasaneyldrm/</span>exercises-dataset</a>
+          <span class="gain">+938 ★ 今日</span>
+        </div>
+        <p class="r-desc">包含 433 个健身动作的完整数据集，每个条目包含名称、分类、目标肌群、所需设备、动作说明。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#E34F26"></span>HTML</span>
+          <span>★ <b>9,280</b></span>
+          <span>今日 <b>+938</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#F7DF1E">
+      <div class="rank">#5</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/santifer/career-ops" target="_blank"><span class="owner">santifer/</span>career-ops</a>
+          <span class="gain">+372 ★ 今日</span>
+        </div>
+        <p class="r-desc">基于 Claude Code 构建的 AI 驱动求职系统，支持 14 种技能模式。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#F7DF1E"></span>JavaScript</span>
+          <span>★ <b>57,851</b></span>
+          <span>今日 <b>+372</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#89E051">
+      <div class="rank">#6</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/obra/superpowers" target="_blank"><span class="owner">obra/</span>superpowers</a>
+          <span class="gain">+897 ★ 今日</span>
+        </div>
+        <p class="r-desc">Agent 技能框架和软件开发方法论，真正有效。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#89E051"></span>Shell</span>
+          <span>★ <b>244,461</b></span>
+          <span>今日 <b>+897</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#3178C6">
+      <div class="rank">#7</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/ChromeDevTools/chrome-devtools-mcp" target="_blank"><span class="owner">ChromeDevTools/</span>chrome-devtools-mcp</a>
+          <span class="gain">+104 ★ 今日</span>
+        </div>
+        <p class="r-desc">面向编程 Agent 的 Chrome 开发者工具。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3178C6"></span>TypeScript</span>
+          <span>★ <b>45,095</b></span>
+          <span>今日 <b>+104</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#3776AB">
+      <div class="rank">#8</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/browser-use/video-use" target="_blank"><span class="owner">browser-use/</span>video-use</a>
+          <span class="gain">+554 ★ 今日</span>
+        </div>
+        <p class="r-desc">用编程 Agent 编辑视频。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3776AB"></span>Python</span>
+          <span>★ <b>13,808</b></span>
+          <span>今日 <b>+554</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#3178C6">
+      <div class="rank">#9</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/actions/checkout" target="_blank"><span class="owner">actions/</span>checkout</a>
+          <span class="gain">+26 ★ 今日</span>
+        </div>
+        <p class="r-desc">用于检出代码仓库的 GitHub Action。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3178C6"></span>TypeScript</span>
+          <span>★ <b>8,166</b></span>
+          <span>今日 <b>+26</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#F7DF1E">
+      <div class="rank">#10</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/affaan-m/ECC" target="_blank"><span class="owner">affaan-m/</span>ECC</a>
+          <span class="gain">+486 ★ 今日</span>
+        </div>
+        <p class="r-desc">Agent harness 性能优化系统，为 Claude Code、Codex 等提供技能支持。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#F7DF1E"></span>JavaScript</span>
+          <span>★ <b>225,201</b></span>
+          <span>今日 <b>+486</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#3776AB">
+      <div class="rank">#11</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/HKUDS/Vibe-Trading" target="_blank"><span class="owner">HKUDS/</span>Vibe-Trading</a>
+          <span class="gain">+939 ★ 今日</span>
+        </div>
+        <p class="r-desc">Vibe-Trading：你的个人交易 Agent。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3776AB"></span>Python</span>
+          <span>★ <b>17,358</b></span>
+          <span>今日 <b>+939</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#3776AB">
+      <div class="rank">#12</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/agentskills/agentskills" target="_blank"><span class="owner">agentskills/</span>agentskills</a>
+          <span class="gain">+86 ★ 今日</span>
+        </div>
+        <p class="r-desc">Agent 技能规范和文档。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3776AB"></span>Python</span>
+          <span>★ <b>21,626</b></span>
+          <span>今日 <b>+86</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#F7DF1E">
+      <div class="rank">#13</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/openai/codex-plugin-cc" target="_blank"><span class="owner">openai/</span>codex-plugin-cc</a>
+          <span class="gain">+352 ★ 今日</span>
+        </div>
+        <p class="r-desc">在 Claude Code 中使用 Codex 进行代码审查或任务委派。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#F7DF1E"></span>JavaScript</span>
+          <span>★ <b>22,642</b></span>
+          <span>今日 <b>+352</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#3776AB">
+      <div class="rank">#14</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/langflow-ai/langflow" target="_blank"><span class="owner">langflow-ai/</span>langflow</a>
+          <span class="gain">+117 ★ 今日</span>
+        </div>
+        <p class="r-desc">用于构建和部署 AI 驱动的 Agent 和工作流的强大工具。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3776AB"></span>Python</span>
+          <span>★ <b>150,752</b></span>
+          <span>今日 <b>+117</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#3776AB">
+      <div class="rank">#15</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/pytorch/pytorch" target="_blank"><span class="owner">pytorch/</span>pytorch</a>
+          <span class="gain">+65 ★ 今日</span>
+        </div>
+        <p class="r-desc">支持强 GPU 加速的 Python 张量和动态神经网络框架。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3776AB"></span>Python</span>
+          <span>★ <b>101,239</b></span>
+          <span>今日 <b>+65</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#3776AB">
+      <div class="rank">#16</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/harvard-edge/cs249r_book" target="_blank"><span class="owner">harvard-edge/</span>cs249r_book</a>
+          <span class="gain">+68 ★ 今日</span>
+        </div>
+        <p class="r-desc">机器学习系统相关书籍。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3776AB"></span>Python</span>
+          <span>★ <b>25,599</b></span>
+          <span>今日 <b>+68</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#F7DF1E">
+      <div class="rank">#17</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/ryanmcdermott/clean-code-javascript" target="_blank"><span class="owner">ryanmcdermott/</span>clean-code-javascript</a>
+          <span class="gain">+27 ★ 今日</span>
+        </div>
+        <p class="r-desc">适配 JavaScript 的《代码整洁之道》概念指南。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#F7DF1E"></span>JavaScript</span>
+          <span>★ <b>94,572</b></span>
+          <span>今日 <b>+27</b></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap section">
+    <div class="section-head"><h2>📊 编程语言分布</h2></div>
+    <div class="lang-list">
+        <div class="lrow">
+          <span class="lname"><span class="dot" style="background:#3776AB"></span>Python</span>
+          <span class="ltrack"><span class="lfill" style="--c:#3776AB;width:100%"></span></span>
+          <span class="lcount">7 个</span>
+        </div>
+        <div class="lrow">
+          <span class="lname"><span class="dot" style="background:#F7DF1E"></span>JavaScript</span>
+          <span class="ltrack"><span class="lfill" style="--c:#F7DF1E;width:71%"></span></span>
+          <span class="lcount">5 个</span>
+        </div>
+        <div class="lrow">
+          <span class="lname"><span class="dot" style="background:#89E051"></span>Shell</span>
+          <span class="ltrack"><span class="lfill" style="--c:#89E051;width:28%"></span></span>
+          <span class="lcount">2 个</span>
+        </div>
+        <div class="lrow">
+          <span class="lname"><span class="dot" style="background:#3178C6"></span>TypeScript</span>
+          <span class="ltrack"><span class="lfill" style="--c:#3178C6;width:28%"></span></span>
+          <span class="lcount">2 个</span>
+        </div>
+        <div class="lrow">
+          <span class="lname"><span class="dot" style="background:#E34F26"></span>HTML</span>
+          <span class="ltrack"><span class="lfill" style="--c:#E34F26;width:14%"></span></span>
+          <span class="lcount">1 个</span>
+        </div>
+    </div>
+  </div>
+  <div class="wrap section">
+    <div class="insights">
+      <div class="section-head"><h2>💡 今日看点</h2></div>
+      <ul>
+<li><b>usestrix/strix 领跑今日榜单</b>：今日新增 <b>+2,137</b> Stars。</li>
+<li><b>Python 最为活跃</b>：占据 7 个 Trending 席位，占比 41%。</li>
+<li><b>AI 赛道持续火热</b>：12 个仓库与 AI/Agent 相关，Claude Code 技能生态、AI 助手、Agent 框架多点开花。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer">
+    🔗 数据来源 <a href="https://github.com/trending" target="_blank">GitHub Trending</a> · 自动生成于 2026年07月03日 CST<br>
+    由 <a href="https://github.com/lph12168x" target="_blank">@lph12168x</a> 维护 · <a href="index.html">日报列表</a>
+  </div>
+  <script>
+    (function(){var t=localStorage.getItem("gh-trending-theme");
+      if(t==="dark"){document.documentElement.setAttribute("data-theme","dark");
+        document.getElementById("themeBtn").innerHTML="☀️ Light";})();
+    function toggleTheme(){var d=document.documentElement.getAttribute("data-theme")==="dark";
+      if(d){document.documentElement.removeAttribute("data-theme");localStorage.setItem("gh-trending-theme","light");
+        document.getElementById("themeBtn").innerHTML="🌙 Dark";}
+      else{document.documentElement.setAttribute("data-theme","dark");localStorage.setItem("gh-trending-theme","dark");
+        document.getElementById("themeBtn").innerHTML="☀️ Light";}}
+  </script>
 </body>
 </html>
