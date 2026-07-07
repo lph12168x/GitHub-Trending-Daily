@@ -4,107 +4,175 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GitHub Trending 每日简报 · 归档</title>
-  <style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  <style>
 :root{
-  --bg:#f6f8fa;--bg-card:#fff;--text:#1f2328;--text-secondary:#656d76;
-  --border:#d0d7de;--accent:#0969da;--accent-light:#ddf4ff;
-  --star:#e67700;--rank-bg:#f6f8fa;--shadow:0 1px 3px rgba(0,0,0,.08);
-  --gold:#ffd700;--silver:#c0c0c0;--bronze:#cd7f32;
+  --bg:#f6f7f9; --bg-soft:#eceff3; --card:#ffffff; --ink:#0b0f17; --muted:#5a6472;
+  --line:#e5e8ee; --accent:#6d5efc; --accent-2:#13c2a3;
+  --gold:#f6b73c; --silver:#9aa7b8; --bronze:#cd8a5c;
+  --shadow-sm:0 1px 2px rgba(16,24,40,.05); --shadow:0 6px 24px rgba(16,24,40,.08);
+  --shadow-lg:0 16px 40px rgba(16,24,40,.12); --radius:18px;
 }
 [data-theme="dark"]{
-  --bg:#0d1117;--bg-card:#161b22;--text:#e6edf3;--text-secondary:#8b949e;
-  --border:#30363d;--accent:#58a6ff;--accent-light:#0c2d6b;
-  --star:#f0883e;--rank-bg:#0d1117;--shadow:0 1px 3px rgba(0,0,0,.3);
+  --bg:#080b10; --bg-soft:#0e131b; --card:#10151e; --ink:#e8edf4; --muted:#8a96a8;
+  --line:#1c2531; --accent:#8b7bff; --accent-2:#22d3b0;
+  --gold:#ffcc5c; --silver:#aab6c6; --bronze:#d99a6c;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3); --shadow:0 8px 28px rgba(0,0,0,.4);
+  --shadow-lg:0 18px 44px rgba(0,0,0,.5); --radius:18px;
 }
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .3s,color .3s;min-height:100vh}
-.header{background:linear-gradient(135deg,#0d1117 0%,#161b22 50%,#0d1117 100%);color:#fff;padding:48px 24px 36px;text-align:center;position:relative}
-.header h1{font-size:2rem;font-weight:700;margin-bottom:8px}
-.header .subtitle{color:rgba(255,255,255,.7);font-size:1rem}
-.theme-toggle{position:absolute;top:20px;right:24px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:.9rem;transition:background .2s}
-.theme-toggle:hover{background:rgba(255,255,255,.25)}
-.back-nav{max-width:900px;margin:24px auto 0;padding:0 24px}
-.back-nav a{color:var(--accent);text-decoration:none;font-size:.9rem;font-weight:600}
-.back-nav a:hover{text-decoration:underline}
-.summary{max-width:900px;margin:20px auto 0;padding:20px 24px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;display:flex;gap:32px;flex-wrap:wrap;justify-content:center;box-shadow:var(--shadow)}
-.summary-item{text-align:center}
-.summary-num{font-size:1.8rem;font-weight:700;color:var(--accent)}
-.summary-label{font-size:.85rem;color:var(--text-secondary);margin-top:2px}
-.container{max-width:900px;margin:32px auto;padding:0 24px}
-.repo-card{display:flex;gap:16px;padding:20px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;box-shadow:var(--shadow);transition:transform .15s,border-color .2s}
-.repo-card:hover{transform:translateY(-2px);border-color:var(--accent)}
-.repo-rank{flex-shrink:0;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--rank-bg);border:2px solid var(--border);border-radius:10px;font-weight:700;font-size:1rem;color:var(--text-secondary)}
-.repo-card:nth-child(1) .repo-rank{border-color:var(--gold);color:var(--gold);background:rgba(255,215,0,.1)}
-.repo-card:nth-child(2) .repo-rank{border-color:var(--silver);color:var(--silver);background:rgba(192,192,192,.1)}
-.repo-card:nth-child(3) .repo-rank{border-color:var(--bronze);color:var(--bronze);background:rgba(205,127,50,.1)}
-.repo-body{flex:1;min-width:0}
-.repo-header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px}
-.repo-name{font-size:1.1rem;font-weight:600;color:var(--accent);text-decoration:none}
-.repo-name:hover{text-decoration:underline}
-.stars-today{font-size:.8rem;background:var(--accent-light);color:var(--accent);padding:3px 12px;border-radius:20px;font-weight:600;white-space:nowrap}
-.repo-desc{font-size:.9rem;color:var(--text-secondary);margin-bottom:10px;line-height:1.55}
-.repo-meta{display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--text-secondary);flex-wrap:wrap}
-.lang-dot{width:12px;height:12px;border-radius:50%;display:inline-block;flex-shrink:0}
-.meta-sep{color:var(--border)}
-.today-stars{color:var(--star);font-weight:600}
-.stats-section{max-width:900px;margin:0 auto 32px;padding:0 24px}
-.stats-section h2{font-size:1.3rem;font-weight:700;margin-bottom:16px;color:var(--text);border-bottom:1px solid var(--border);padding-bottom:8px}
-.lang-grid{display:flex;flex-wrap:wrap;gap:10px}
-.lang-badge{display:flex;align-items:center;gap:6px;background:var(--bg-card);border:1px solid var(--border);padding:6px 14px;border-radius:20px;font-size:.85rem;color:var(--text-secondary);box-shadow:var(--shadow)}
-.lang-badge .dot{width:10px;height:10px;border-radius:50%}
-.lang-badge strong{color:var(--text)}
-.insight-box{max-width:900px;margin:0 auto 32px;padding:20px 24px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow)}
-.insight-box h2{font-size:1.2rem;font-weight:700;margin-bottom:12px;color:var(--text)}
-.insight-box ul{margin-left:20px}
-.insight-box li{margin-bottom:8px;color:var(--text-secondary);line-height:1.5}
-.insight-box li strong{color:var(--text)}
-.footer{text-align:center;padding:32px 24px;color:var(--text-secondary);font-size:.85rem;border-top:1px solid var(--border);margin-top:32px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',Helvetica,Arial,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;
+  transition:background .3s,color .3s;min-height:100vh}
+a{color:inherit}
+.toggle{position:absolute;top:20px;right:22px;z-index:3;display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 14px;
+  border-radius:999px;cursor:pointer;font-size:.85rem;font-weight:600;transition:.2s}
+.toggle:hover{background:rgba(255,255,255,.18)}
+/* ---------- HERO ---------- */
+.hero{position:relative;overflow:hidden;color:#fff;text-align:center;padding:74px 24px 60px;
+  background:
+    radial-gradient(900px 420px at 12% -30%, rgba(109,94,252,.35), transparent 60%),
+    radial-gradient(820px 420px at 92% -10%, rgba(19,194,163,.28), transparent 55%),
+    linear-gradient(135deg,#0a0e16 0%,#0f1420 55%,#0a0e16 100%)}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:46px 46px;
+  -webkit-mask-image:radial-gradient(720px 380px at 50% 0%,#000,transparent 75%);
+          mask-image:radial-gradient(720px 380px at 50% 0%,#000,transparent 75%)}
+.hero-inner{position:relative;z-index:1;max-width:920px;margin:0 auto}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.16);padding:6px 14px;border-radius:999px;margin-bottom:18px}
+.hero h1{font-size:2.6rem;font-weight:800;letter-spacing:-.02em;margin-bottom:10px;
+  background:linear-gradient(180deg,#fff,#cdd3e0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{color:rgba(255,255,255,.74);font-size:1.05rem}
+.stats{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(6px);
+  border-radius:16px;padding:16px 22px;min-width:132px}
+.stat .n{font-size:1.7rem;font-weight:800;background:linear-gradient(90deg,#fff,#b9c0d4);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .l{font-size:.78rem;color:rgba(255,255,255,.66);margin-top:2px}
+/* ---------- LAYOUT ---------- */
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+.backnav{max-width:960px;margin:22px auto 0;padding:0 20px}
+.backnav a{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;
+  font-size:.9rem;font-weight:600;transition:.15s}
+.backnav a:hover{color:var(--accent)}
+.section{margin:46px auto}
+.section-head{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.section-head h2{font-size:1.4rem;font-weight:800;letter-spacing:-.01em}
+.section-head .hint{font-size:.85rem;color:var(--muted)}
+/* ---------- REPO CARD ---------- */
+.repo{position:relative;display:grid;grid-template-columns:56px 1fr;gap:18px;background:var(--card);
+  border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px 20px 24px;margin-bottom:14px;
+  box-shadow:var(--shadow-sm);transition:transform .18s ease,border-color .18s,box-shadow .18s}
+.repo:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--shadow-lg)}
+.repo::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:4px;border-radius:0 4px 4px 0;
+  background:var(--stripe,#cbd2dc)}
+.rank{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:1.15rem;background:var(--bg-soft);color:var(--muted);border:1px solid var(--line)}
+.repo.top1 .rank{background:linear-gradient(145deg,#fff3d1,#ffe39a);color:#9a6b00;border-color:#f3d27a}
+.repo.top2 .rank{background:linear-gradient(145deg,#f2f5f9,#dde4ee);color:#5b6b7e;border-color:#cfd8e4}
+.repo.top3 .rank{background:linear-gradient(145deg,#fbe7d6,#f0c9a6);color:#92552a;border-color:#e6c09a}
+.r-main{min-width:0}
+.r-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.r-name{font-size:1.12rem;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+.r-name:hover{color:var(--accent)}
+.r-name .owner{color:var(--muted);font-weight:500}
+.gain{margin-left:auto;font-size:.82rem;font-weight:700;color:#fff;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:5px 13px;border-radius:999px;
+  white-space:nowrap;box-shadow:var(--shadow-sm)}
+.r-desc{font-size:.92rem;color:var(--muted);line-height:1.6;margin-bottom:12px}
+.r-meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:.85rem;color:var(--muted)}
+.lang{display:inline-flex;align-items:center;gap:7px}
+.lang .dot{width:11px;height:11px;border-radius:50%}
+.r-meta b{color:var(--ink);font-weight:700}
+/* ---------- LANGUAGE BARS ---------- */
+.lang-list{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px}
+.lrow{display:flex;align-items:center;gap:12px}
+.lname{width:108px;flex-shrink:0;font-size:.88rem;color:var(--ink);font-weight:600;display:flex;align-items:center;gap:7px}
+.lname .dot{width:10px;height:10px;border-radius:50%}
+.ltrack{flex:1;height:9px;background:var(--bg-soft);border-radius:999px;overflow:hidden}
+.lfill{height:100%;border-radius:999px;background:var(--c,var(--accent))}
+.lcount{width:54px;text-align:right;font-size:.82rem;color:var(--muted);font-weight:600}
+/* ---------- INSIGHTS ---------- */
+.insights{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;
+  box-shadow:var(--shadow-sm)}
+.insights ul{list-style:none;display:grid;gap:12px;margin-top:6px}
+.insights li{position:relative;padding-left:26px;color:var(--muted);line-height:1.6}
+.insights li::before{content:"\25B9";position:absolute;left:0;top:0;color:var(--accent);font-weight:800}
+.insights li b{color:var(--ink)}
+/* ---------- FOOTER ---------- */
+.footer{margin-top:56px;border-top:1px solid var(--line);padding:30px 24px;text-align:center;
+  color:var(--muted);font-size:.85rem;line-height:1.8}
 .footer a{color:var(--accent);text-decoration:none}
 .footer a:hover{text-decoration:underline}
-@media(max-width:600px){
-  .header h1{font-size:1.4rem}
-  .summary{gap:16px}
-  .summary-num{font-size:1.3rem}
-  .repo-card{flex-direction:column;gap:10px}
-  .repo-rank{width:36px;height:36px;font-size:.85rem}
-}</style>
+/* ---------- INDEX / ARCHIVE ---------- */
+.archive{max-width:1000px;margin:0 auto;padding:0 20px}
+.month{margin:46px auto 6px;font-size:1.15rem;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:10px}
+.month::after{content:"";flex:1;height:1px;background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;margin-top:18px}
+.day{display:flex;flex-direction:column;gap:6px;background:var(--card);border:1px solid var(--line);
+  border-radius:16px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;position:relative;overflow:hidden}
+.day:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:var(--shadow-lg)}
+.day .d-date{font-size:1.08rem;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.day .d-sub{font-size:.82rem;color:var(--muted)}
+.day .d-bar{margin-top:10px;height:6px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+.badge-new{position:absolute;top:13px;right:13px;font-size:.66rem;font-weight:700;color:#fff;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:3px 9px;border-radius:999px;
+  letter-spacing:.04em}
+@media(max-width:680px){
+  .hero h1{font-size:1.9rem}
+  .lang-list{grid-template-columns:1fr}
+  .repo{grid-template-columns:48px 1fr;gap:14px;padding:16px 16px 16px 20px}
+  .rank{width:48px;height:48px;font-size:1rem}
+  .gain{margin-left:0}
+}
+</style>
 </head>
 <body>
-  <header class="header">
-    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
-    <h1>🔍 GitHub Trending 每日简报</h1>
-    <p class="subtitle">日报归档 · 22 期</p>
-  </header>
-  <div class="container">
-    <div class="insight-box">
-      <h2>📅 日报列表</h2>
-      <ul style="list-style:none;padding:0">
-        <li><a href="github-trending-2026-07-07.html">2026年07月07日 日报</a></li>         <li><a href="github-trending-2026-07-06.html">2026年07月06日 日报</a></li>         <li><a href="github-trending-2026-07-05.html">2026年07月05日 日报</a></li>         <li><a href="github-trending-2026-07-04.html">2026年07月04日 日报</a></li>         <li><a href="github-trending-2026-07-03.html">2026年07月03日 日报</a></li>         <li><a href="github-trending-2026-07-02.html">2026年07月02日 日报</a></li>         <li><a href="github-trending-2026-07-01.html">2026年07月01日 日报</a></li>         <li><a href="github-trending-2026-06-30.html">2026年06月30日 日报</a></li>         <li><a href="github-trending-2026-06-29.html">2026年06月29日 日报</a></li>         <li><a href="github-trending-2026-06-26.html">2026年06月26日 日报</a></li>         <li><a href="github-trending-2026-06-25.html">2026年06月25日 日报</a></li>         <li><a href="github-trending-2026-06-24.html">2026年06月24日 日报</a></li>         <li><a href="github-trending-2026-06-23.html">2026年06月23日 日报</a></li>         <li><a href="github-trending-2026-06-22.html">2026年06月22日 日报</a></li>         <li><a href="github-trending-2026-06-18.html">2026年06月18日 日报</a></li>         <li><a href="github-trending-2026-06-17.html">2026年06月17日 日报</a></li>         <li><a href="github-trending-2026-06-16.html">2026年06月16日 日报</a></li>         <li><a href="github-trending-2026-06-15.html">2026年06月15日 日报</a></li>         <li><a href="github-trending-2026-06-12.html">2026年06月12日 日报</a></li>         <li><a href="github-trending-2026-06-11.html">2026年06月11日 日报</a></li>         <li><a href="github-trending-2026-06-10.html">2026年06月10日 日报</a></li>         <li><a href="github-trending-2026-06-09.html">2026年06月09日 日报</a></li>
-      </ul>
+  <header class="hero">
+    <button class="toggle" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
+    <div class="hero-inner">
+      <span class="eyebrow">📚 Archive</span>
+      <h1>GitHub Trending 日报归档</h1>
+      <p class="sub">已累计 3 期每日热门仓库简报</p>
     </div>
+  </header>
+  <div class="archive">
+  <div class="month">2026 年 07 月</div>
+  <div class="grid">
+      <a class="day" href="github-trending-2026-07-07.html">
+        <div class="d-date">2026年07月07日 <span class='badge-new'>最新</span></div>
+        <div class="d-sub">16 个仓库 · 今日 +12,774 ★</div>
+        <div class="d-bar"></div>
+      </a>
+      <a class="day" href="github-trending-2026-07-06.html">
+        <div class="d-date">2026年07月06日</div>
+        <div class="d-sub">22 个仓库 · 今日 +12,070 ★</div>
+        <div class="d-bar"></div>
+      </a>
+      <a class="day" href="github-trending-2026-07-05.html">
+        <div class="d-date">2026年07月05日</div>
+        <div class="d-sub">18 个仓库 · 今日 +9,520 ★</div>
+        <div class="d-bar"></div>
+      </a>
+  </div>
   </div>
   <div class="footer">
-    🔗 数据来源 <a href="https://github.com/trending" target="_blank">GitHub Trending</a> ·     <a href="https://github.com/lph12168x/GitHub-Trending-Daily" target="_blank">GitHub 仓库</a>
+    🔗 数据来源 <a href="https://github.com/trending" target="_blank">GitHub Trending</a> ·
+    <a href="https://github.com/lph12168x/GitHub-Trending-Daily" target="_blank">GitHub 仓库</a>
   </div>
   <script>
-    (function(){
-      var t = localStorage.getItem("gh-trending-theme");
-      if (t === "dark") {
-        document.documentElement.setAttribute("data-theme","dark");
-        document.getElementById("themeBtn").innerHTML = "☀️ Light";
-      }
-    })();
-    function toggleTheme(){
-      var isDark = document.documentElement.getAttribute("data-theme") === "dark";
-      if (isDark) {
-        document.documentElement.removeAttribute("data-theme");
-        localStorage.setItem("gh-trending-theme","light");
-        document.getElementById("themeBtn").innerHTML = "🌙 Dark";
-      } else {
-        document.documentElement.setAttribute("data-theme","dark");
-        localStorage.setItem("gh-trending-theme","dark");
-        document.getElementById("themeBtn").innerHTML = "☀️ Light";
-      }
-    }
+    (function(){var t=localStorage.getItem("gh-trending-theme");
+      if(t==="dark"){document.documentElement.setAttribute("data-theme","dark");
+        document.getElementById("themeBtn").innerHTML="☀️ Light";})();
+    function toggleTheme(){var d=document.documentElement.getAttribute("data-theme")==="dark";
+      if(d){document.documentElement.removeAttribute("data-theme");localStorage.setItem("gh-trending-theme","light");
+        document.getElementById("themeBtn").innerHTML="🌙 Dark";}
+      else{document.documentElement.setAttribute("data-theme","dark");localStorage.setItem("gh-trending-theme","dark");
+        document.getElementById("themeBtn").innerHTML="☀️ Light";}}
   </script>
 </body>
 </html>

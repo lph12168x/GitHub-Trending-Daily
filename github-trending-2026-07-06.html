@@ -4,518 +4,546 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GitHub Trending 2026年07月06日 · 每日简报</title>
-  <style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  <style>
 :root{
-  --bg:#f6f8fa;--bg-card:#fff;--text:#1f2328;--text-secondary:#656d76;
-  --border:#d0d7de;--accent:#0969da;--accent-light:#ddf4ff;
-  --star:#e67700;--rank-bg:#f6f8fa;--shadow:0 1px 3px rgba(0,0,0,.08);
-  --gold:#ffd700;--silver:#c0c0c0;--bronze:#cd7f32;
+  --bg:#f6f7f9; --bg-soft:#eceff3; --card:#ffffff; --ink:#0b0f17; --muted:#5a6472;
+  --line:#e5e8ee; --accent:#6d5efc; --accent-2:#13c2a3;
+  --gold:#f6b73c; --silver:#9aa7b8; --bronze:#cd8a5c;
+  --shadow-sm:0 1px 2px rgba(16,24,40,.05); --shadow:0 6px 24px rgba(16,24,40,.08);
+  --shadow-lg:0 16px 40px rgba(16,24,40,.12); --radius:18px;
 }
 [data-theme="dark"]{
-  --bg:#0d1117;--bg-card:#161b22;--text:#e6edf3;--text-secondary:#8b949e;
-  --border:#30363d;--accent:#58a6ff;--accent-light:#0c2d6b;
-  --star:#f0883e;--rank-bg:#0d1117;--shadow:0 1px 3px rgba(0,0,0,.3);
+  --bg:#080b10; --bg-soft:#0e131b; --card:#10151e; --ink:#e8edf4; --muted:#8a96a8;
+  --line:#1c2531; --accent:#8b7bff; --accent-2:#22d3b0;
+  --gold:#ffcc5c; --silver:#aab6c6; --bronze:#d99a6c;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3); --shadow:0 8px 28px rgba(0,0,0,.4);
+  --shadow-lg:0 18px 44px rgba(0,0,0,.5); --radius:18px;
 }
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .3s,color .3s}
-.header{background:linear-gradient(135deg,#0d1117 0%,#161b22 50%,#0d1117 100%);color:#fff;padding:48px 24px 36px;text-align:center;position:relative}
-.header h1{font-size:2rem;font-weight:700;margin-bottom:8px}
-.header .subtitle{color:rgba(255,255,255,.7);font-size:1rem}
-.theme-toggle{position:absolute;top:20px;right:24px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:.9rem;transition:background .2s}
-.theme-toggle:hover{background:rgba(255,255,255,.25)}
-.back-nav{max-width:900px;margin:24px auto 0;padding:0 24px}
-.back-nav a{color:var(--accent);text-decoration:none;font-size:.9rem;font-weight:600}
-.back-nav a:hover{text-decoration:underline}
-.summary{max-width:900px;margin:20px auto 0;padding:20px 24px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;display:flex;gap:32px;flex-wrap:wrap;justify-content:center;box-shadow:var(--shadow)}
-.summary-item{text-align:center}
-.summary-num{font-size:1.8rem;font-weight:700;color:var(--accent)}
-.summary-label{font-size:.85rem;color:var(--text-secondary);margin-top:2px}
-.container{max-width:900px;margin:32px auto;padding:0 24px}
-.repo-card{display:flex;gap:16px;padding:20px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;box-shadow:var(--shadow);transition:transform .15s,border-color .2s}
-.repo-card:hover{transform:translateY(-2px);border-color:var(--accent)}
-.repo-rank{flex-shrink:0;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--rank-bg);border:2px solid var(--border);border-radius:10px;font-weight:700;font-size:1rem;color:var(--text-secondary)}
-.repo-card:nth-child(1) .repo-rank{border-color:var(--gold);color:var(--gold);background:rgba(255,215,0,.1)}
-.repo-card:nth-child(2) .repo-rank{border-color:var(--silver);color:var(--silver);background:rgba(192,192,192,.1)}
-.repo-card:nth-child(3) .repo-rank{border-color:var(--bronze);color:var(--bronze);background:rgba(205,127,50,.1)}
-.repo-body{flex:1;min-width:0}
-.repo-header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px}
-.repo-name{font-size:1.1rem;font-weight:600;color:var(--accent);text-decoration:none}
-.repo-name:hover{text-decoration:underline}
-.stars-today{font-size:.8rem;background:var(--accent-light);color:var(--accent);padding:3px 12px;border-radius:20px;font-weight:600;white-space:nowrap}
-.repo-desc{font-size:.9rem;color:var(--text-secondary);margin-bottom:10px;line-height:1.55}
-.repo-meta{display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--text-secondary);flex-wrap:wrap}
-.lang-dot{width:12px;height:12px;border-radius:50%;display:inline-block;flex-shrink:0}
-.meta-sep{color:var(--border)}
-.today-stars{color:var(--star);font-weight:600}
-.stats-section{max-width:900px;margin:0 auto 32px;padding:0 24px}
-.stats-section h2{font-size:1.3rem;font-weight:700;margin-bottom:16px;color:var(--text);border-bottom:1px solid var(--border);padding-bottom:8px}
-.lang-grid{display:flex;flex-wrap:wrap;gap:10px}
-.lang-badge{display:flex;align-items:center;gap:6px;background:var(--bg-card);border:1px solid var(--border);padding:6px 14px;border-radius:20px;font-size:.85rem;color:var(--text-secondary);box-shadow:var(--shadow)}
-.lang-badge .dot{width:10px;height:10px;border-radius:50%}
-.lang-badge strong{color:var(--text)}
-.insight-box{max-width:900px;margin:0 auto 32px;padding:20px 24px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow)}
-.insight-box h2{font-size:1.2rem;font-weight:700;margin-bottom:12px;color:var(--text)}
-.insight-box ul{margin-left:20px}
-.insight-box li{margin-bottom:8px;color:var(--text-secondary);line-height:1.5}
-.insight-box li strong{color:var(--text)}
-.footer{text-align:center;padding:32px 24px;color:var(--text-secondary);font-size:.85rem;border-top:1px solid var(--border);margin-top:32px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',Helvetica,Arial,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;
+  transition:background .3s,color .3s;min-height:100vh}
+a{color:inherit}
+.toggle{position:absolute;top:20px;right:22px;z-index:3;display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 14px;
+  border-radius:999px;cursor:pointer;font-size:.85rem;font-weight:600;transition:.2s}
+.toggle:hover{background:rgba(255,255,255,.18)}
+/* ---------- HERO ---------- */
+.hero{position:relative;overflow:hidden;color:#fff;text-align:center;padding:74px 24px 60px;
+  background:
+    radial-gradient(900px 420px at 12% -30%, rgba(109,94,252,.35), transparent 60%),
+    radial-gradient(820px 420px at 92% -10%, rgba(19,194,163,.28), transparent 55%),
+    linear-gradient(135deg,#0a0e16 0%,#0f1420 55%,#0a0e16 100%)}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:46px 46px;
+  -webkit-mask-image:radial-gradient(720px 380px at 50% 0%,#000,transparent 75%);
+          mask-image:radial-gradient(720px 380px at 50% 0%,#000,transparent 75%)}
+.hero-inner{position:relative;z-index:1;max-width:920px;margin:0 auto}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.16);padding:6px 14px;border-radius:999px;margin-bottom:18px}
+.hero h1{font-size:2.6rem;font-weight:800;letter-spacing:-.02em;margin-bottom:10px;
+  background:linear-gradient(180deg,#fff,#cdd3e0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{color:rgba(255,255,255,.74);font-size:1.05rem}
+.stats{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(6px);
+  border-radius:16px;padding:16px 22px;min-width:132px}
+.stat .n{font-size:1.7rem;font-weight:800;background:linear-gradient(90deg,#fff,#b9c0d4);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .l{font-size:.78rem;color:rgba(255,255,255,.66);margin-top:2px}
+/* ---------- LAYOUT ---------- */
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+.backnav{max-width:960px;margin:22px auto 0;padding:0 20px}
+.backnav a{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;
+  font-size:.9rem;font-weight:600;transition:.15s}
+.backnav a:hover{color:var(--accent)}
+.section{margin:46px auto}
+.section-head{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.section-head h2{font-size:1.4rem;font-weight:800;letter-spacing:-.01em}
+.section-head .hint{font-size:.85rem;color:var(--muted)}
+/* ---------- REPO CARD ---------- */
+.repo{position:relative;display:grid;grid-template-columns:56px 1fr;gap:18px;background:var(--card);
+  border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px 20px 24px;margin-bottom:14px;
+  box-shadow:var(--shadow-sm);transition:transform .18s ease,border-color .18s,box-shadow .18s}
+.repo:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--shadow-lg)}
+.repo::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:4px;border-radius:0 4px 4px 0;
+  background:var(--stripe,#cbd2dc)}
+.rank{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:1.15rem;background:var(--bg-soft);color:var(--muted);border:1px solid var(--line)}
+.repo.top1 .rank{background:linear-gradient(145deg,#fff3d1,#ffe39a);color:#9a6b00;border-color:#f3d27a}
+.repo.top2 .rank{background:linear-gradient(145deg,#f2f5f9,#dde4ee);color:#5b6b7e;border-color:#cfd8e4}
+.repo.top3 .rank{background:linear-gradient(145deg,#fbe7d6,#f0c9a6);color:#92552a;border-color:#e6c09a}
+.r-main{min-width:0}
+.r-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.r-name{font-size:1.12rem;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+.r-name:hover{color:var(--accent)}
+.r-name .owner{color:var(--muted);font-weight:500}
+.gain{margin-left:auto;font-size:.82rem;font-weight:700;color:#fff;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:5px 13px;border-radius:999px;
+  white-space:nowrap;box-shadow:var(--shadow-sm)}
+.r-desc{font-size:.92rem;color:var(--muted);line-height:1.6;margin-bottom:12px}
+.r-meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:.85rem;color:var(--muted)}
+.lang{display:inline-flex;align-items:center;gap:7px}
+.lang .dot{width:11px;height:11px;border-radius:50%}
+.r-meta b{color:var(--ink);font-weight:700}
+/* ---------- LANGUAGE BARS ---------- */
+.lang-list{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px}
+.lrow{display:flex;align-items:center;gap:12px}
+.lname{width:108px;flex-shrink:0;font-size:.88rem;color:var(--ink);font-weight:600;display:flex;align-items:center;gap:7px}
+.lname .dot{width:10px;height:10px;border-radius:50%}
+.ltrack{flex:1;height:9px;background:var(--bg-soft);border-radius:999px;overflow:hidden}
+.lfill{height:100%;border-radius:999px;background:var(--c,var(--accent))}
+.lcount{width:54px;text-align:right;font-size:.82rem;color:var(--muted);font-weight:600}
+/* ---------- INSIGHTS ---------- */
+.insights{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;
+  box-shadow:var(--shadow-sm)}
+.insights ul{list-style:none;display:grid;gap:12px;margin-top:6px}
+.insights li{position:relative;padding-left:26px;color:var(--muted);line-height:1.6}
+.insights li::before{content:"\25B9";position:absolute;left:0;top:0;color:var(--accent);font-weight:800}
+.insights li b{color:var(--ink)}
+/* ---------- FOOTER ---------- */
+.footer{margin-top:56px;border-top:1px solid var(--line);padding:30px 24px;text-align:center;
+  color:var(--muted);font-size:.85rem;line-height:1.8}
 .footer a{color:var(--accent);text-decoration:none}
 .footer a:hover{text-decoration:underline}
+/* ---------- INDEX / ARCHIVE ---------- */
+.archive{max-width:1000px;margin:0 auto;padding:0 20px}
+.month{margin:46px auto 6px;font-size:1.15rem;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:10px}
+.month::after{content:"";flex:1;height:1px;background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;margin-top:18px}
+.day{display:flex;flex-direction:column;gap:6px;background:var(--card);border:1px solid var(--line);
+  border-radius:16px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;position:relative;overflow:hidden}
+.day:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:var(--shadow-lg)}
+.day .d-date{font-size:1.08rem;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.day .d-sub{font-size:.82rem;color:var(--muted)}
+.day .d-bar{margin-top:10px;height:6px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+.badge-new{position:absolute;top:13px;right:13px;font-size:.66rem;font-weight:700;color:#fff;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:3px 9px;border-radius:999px;
+  letter-spacing:.04em}
+@media(max-width:680px){
+  .hero h1{font-size:1.9rem}
+  .lang-list{grid-template-columns:1fr}
+  .repo{grid-template-columns:48px 1fr;gap:14px;padding:16px 16px 16px 20px}
+  .rank{width:48px;height:48px;font-size:1rem}
+  .gain{margin-left:0}
+}
 </style>
 </head>
 <body>
-  <header class="header">
-    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
-    <h1>🔍 GitHub Trending 每日简报</h1>
-    <p class="subtitle">2026年07月06日 · 22 个仓库 · 今日新增 +12,070 Stars</p>
+  <header class="hero">
+    <button class="toggle" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
+    <div class="hero-inner">
+      <span class="eyebrow">📈 GitHub Trending</span>
+      <h1>每日热门仓库简报</h1>
+      <p class="sub">2026年07月06日 · 共 22 个仓库登上 Trending</p>
+      <div class="stats">
+        <div class="stat"><div class="n">22</div><div class="l">Trending 仓库</div></div>
+        <div class="stat"><div class="n">+12,070</div><div class="l">今日新增 Stars</div></div>
+        <div class="stat"><div class="n">7</div><div class="l">编程语言</div></div>
+      </div>
+    </div>
   </header>
-  <div class="back-nav"><a href="index.html">← 返回日报列表</a></div>
-  <div class="summary">
-    <div class="summary-item"><div class="summary-num">22</div><div class="summary-label">Trending 仓库</div></div>
-    <div class="summary-item"><div class="summary-num">+12,070</div><div class="summary-label">今日新增 Stars</div></div>
-    <div class="summary-item"><div class="summary-num">7</div><div class="summary-label">编程语言</div></div>
-  </div>
-  <div class="container">
-  <div class="repo-card">
-    <div class="repo-rank">#1</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/Zackriya-Solutions/meetily" target="_blank">Zackriya-Solutions/meetily</a>
-        <span class="stars-today">+1,409 ⭐ today</span>
+  <div class="backnav"><a href="index.html">← 返回日报列表</a></div>
+  <div class="wrap section">
+    <div class="section-head"><h2>🔥 今日热门</h2><span class="hint">按今日新增 Star 排序</span></div>
+    <div class="repo top1" style="--stripe:#CE422B">
+      <div class="rank">#1</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/Zackriya-Solutions/meetily" target="_blank"><span class="owner">Zackriya-Solutions/</span>meetily</a>
+          <span class="gain">+1,409 ★ 今日</span>
+        </div>
+        <p class="r-desc">隐私优先的AI会议助手，支持4倍速Parakeet/Whisper实时转录、说话人分离、Ollama本地总结，100%本地处理无需云端。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#CE422B"></span>Rust</span>
+          <span>★ <b>17,000</b></span>
+          <span>今日 <b>+1,409</b></span>
+        </div>
       </div>
-      <p class="repo-desc">隐私优先的AI会议助手，支持4倍速Parakeet/Whisper实时转录、说话人分离、Ollama本地总结，100%本地处理无需云端。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#CE422B"></span>
-        <span>Rust</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 17,000</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +1,409 today</span>
+    </div>
+    <div class="repo top2" style="--stripe:#F7DF1E">
+      <div class="rank">#2</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/openai/codex-plugin-cc" target="_blank"><span class="owner">openai/</span>codex-plugin-cc</a>
+          <span class="gain">+1,532 ★ 今日</span>
+        </div>
+        <p class="r-desc">允许在Claude Code中使用Codex进行代码审查或任务委派。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#F7DF1E"></span>JavaScript</span>
+          <span>★ <b>25,470</b></span>
+          <span>今日 <b>+1,532</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo top3" style="--stripe:#F7DF1E">
+      <div class="rank">#3</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/asgeirtj/system_prompts_leaks" target="_blank"><span class="owner">asgeirtj/</span>system_prompts_leaks</a>
+          <span class="gain">+981 ★ 今日</span>
+        </div>
+        <p class="r-desc">收集Anthropic、OpenAI、Google、xAI以及Cursor、Copilot等工具的泄露系统提示词。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#F7DF1E"></span>JavaScript</span>
+          <span>★ <b>49,955</b></span>
+          <span>今日 <b>+981</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#F7DF1E">
+      <div class="rank">#4</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/LeonLinx/taste-skill" target="_blank"><span class="owner">LeonLinx/</span>taste-skill</a>
+          <span class="gain">+863 ★ 今日</span>
+        </div>
+        <p class="r-desc">为AI提供审美能力，避免AI生成无聊、通用的千篇一律内容。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#F7DF1E"></span>JavaScript</span>
+          <span>★ <b>57,492</b></span>
+          <span>今日 <b>+863</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#3776AB">
+      <div class="rank">#5</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/alirezarezvani/claude-skills" target="_blank"><span class="owner">alirezarezvani/</span>claude-skills</a>
+          <span class="gain">+392 ★ 今日</span>
+        </div>
+        <p class="r-desc">包含337个Claude Code技能、代理技能和插件，支持10+编码代理。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3776AB"></span>Python</span>
+          <span>★ <b>20,568</b></span>
+          <span>今日 <b>+392</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#3776AB">
+      <div class="rank">#6</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/rommapp/romm" target="_blank"><span class="owner">rommapp/</span>romm</a>
+          <span class="gain">+410 ★ 今日</span>
+        </div>
+        <p class="r-desc">美观、强大的自托管游戏ROM管理器和播放器。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3776AB"></span>Python</span>
+          <span>★ <b>10,540</b></span>
+          <span>今日 <b>+410</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#CE422B">
+      <div class="rank">#7</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/ogulcancelik/herdr" target="_blank"><span class="owner">ogulcancelik/</span>herdr</a>
+          <span class="gain">+651 ★ 今日</span>
+        </div>
+        <p class="r-desc">运行在终端中的代理多路复用器。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#CE422B"></span>Rust</span>
+          <span>★ <b>12,070</b></span>
+          <span>今日 <b>+651</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#3178C6">
+      <div class="rank">#8</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/alibaba/page-agent" target="_blank"><span class="owner">alibaba/</span>page-agent</a>
+          <span class="gain">+805 ★ 今日</span>
+        </div>
+        <p class="r-desc">网页内GUI代理，支持用自然语言控制网页界面。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3178C6"></span>TypeScript</span>
+          <span>★ <b>23,884</b></span>
+          <span>今日 <b>+805</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#3776AB">
+      <div class="rank">#9</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/harvard-edge/cs249r_book" target="_blank"><span class="owner">harvard-edge/</span>cs249r_book</a>
+          <span class="gain">+329 ★ 今日</span>
+        </div>
+        <p class="r-desc">机器学习系统相关书籍。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3776AB"></span>Python</span>
+          <span>★ <b>26,841</b></span>
+          <span>今日 <b>+329</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#3776AB">
+      <div class="rank">#10</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/usestrix/strix" target="_blank"><span class="owner">usestrix/</span>strix</a>
+          <span class="gain">+1,114 ★ 今日</span>
+        </div>
+        <p class="r-desc">开源AI渗透测试工具，可发现并修复应用漏洞。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3776AB"></span>Python</span>
+          <span>★ <b>37,121</b></span>
+          <span>今日 <b>+1,114</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#3776AB">
+      <div class="rank">#11</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/hesreallyhim/awesome-claude-code" target="_blank"><span class="owner">hesreallyhim/</span>awesome-claude-code</a>
+          <span class="gain">+148 ★ 今日</span>
+        </div>
+        <p class="r-desc">Claude Code相关优质资源精选集合。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3776AB"></span>Python</span>
+          <span>★ <b>48,361</b></span>
+          <span>今日 <b>+148</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#F7DF1E">
+      <div class="rank">#12</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/coreyhaines31/marketingskills" target="_blank"><span class="owner">coreyhaines31/</span>marketingskills</a>
+          <span class="gain">+145 ★ 今日</span>
+        </div>
+        <p class="r-desc">面向Claude Code和AI代理的营销技能集合。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#F7DF1E"></span>JavaScript</span>
+          <span>★ <b>36,430</b></span>
+          <span>今日 <b>+145</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#F7DF1E">
+      <div class="rank">#13</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/JuliusBrussee/caveman" target="_blank"><span class="owner">JuliusBrussee/</span>caveman</a>
+          <span class="gain">+1,052 ★ 今日</span>
+        </div>
+        <p class="r-desc">Claude Code技能，通过类原始人表达的方式减少65%的token使用量。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#F7DF1E"></span>JavaScript</span>
+          <span>★ <b>84,870</b></span>
+          <span>今日 <b>+1,052</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#178600">
+      <div class="rank">#14</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/CoplayDev/unity-mcp" target="_blank"><span class="owner">CoplayDev/</span>unity-mcp</a>
+          <span class="gain">+414 ★ 今日</span>
+        </div>
+        <p class="r-desc">Unity MCP，是AI助手和Unity编辑器之间的桥梁。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#178600"></span>C#</span>
+          <span>★ <b>11,922</b></span>
+          <span>今日 <b>+414</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#3178C6">
+      <div class="rank">#15</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/facebook/astryx" target="_blank"><span class="owner">facebook/</span>astryx</a>
+          <span class="gain">+522 ★ 今日</span>
+        </div>
+        <p class="r-desc">完全可定制、支持AI代理的开源设计系统。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3178C6"></span>TypeScript</span>
+          <span>★ <b>5,887</b></span>
+          <span>今日 <b>+522</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#3178C6">
+      <div class="rank">#16</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/immich-app/immich" target="_blank"><span class="owner">immich-app/</span>immich</a>
+          <span class="gain">+470 ★ 今日</span>
+        </div>
+        <p class="r-desc">高性能自托管照片和视频管理解决方案。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3178C6"></span>TypeScript</span>
+          <span>★ <b>106,114</b></span>
+          <span>今日 <b>+470</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#CE422B">
+      <div class="rank">#17</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/ruvnet/RuView" target="_blank"><span class="owner">ruvnet/</span>RuView</a>
+          <span class="gain">+161 ★ 今日</span>
+        </div>
+        <p class="r-desc">将普通WiFi信号转换为实时空间智能、生命体征监测和presence检测。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#CE422B"></span>Rust</span>
+          <span>★ <b>76,722</b></span>
+          <span>今日 <b>+161</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#00ADD8">
+      <div class="rank">#18</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/gastownhall/gastown" target="_blank"><span class="owner">gastownhall/</span>gastown</a>
+          <span class="gain">+51 ★ 今日</span>
+        </div>
+        <p class="r-desc">多代理工作区管理器。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#00ADD8"></span>Go</span>
+          <span>★ <b>16,382</b></span>
+          <span>今日 <b>+51</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#178600">
+      <div class="rank">#19</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/dotnet/skills" target="_blank"><span class="owner">dotnet/</span>skills</a>
+          <span class="gain">+246 ★ 今日</span>
+        </div>
+        <p class="r-desc">辅助AI编码代理处理.NET和C#相关任务的技能仓库。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#178600"></span>C#</span>
+          <span>★ <b>4,038</b></span>
+          <span>今日 <b>+246</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#3776AB">
+      <div class="rank">#20</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/OthmanAdi/planning-with-files" target="_blank"><span class="owner">OthmanAdi/</span>planning-with-files</a>
+          <span class="gain">+66 ★ 今日</span>
+        </div>
+        <p class="r-desc">面向AI编码代理和长运行代理任务的持久化基于文件的规划工具。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3776AB"></span>Python</span>
+          <span>★ <b>24,710</b></span>
+          <span>今日 <b>+66</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#F05138">
+      <div class="rank">#21</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/steipete/CodexBar" target="_blank"><span class="owner">steipete/</span>CodexBar</a>
+          <span class="gain">+153 ★ 今日</span>
+        </div>
+        <p class="r-desc">展示OpenAI Codex和Claude Code的使用统计。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#F05138"></span>Swift</span>
+          <span>★ <b>16,219</b></span>
+          <span>今日 <b>+153</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="repo" style="--stripe:#3776AB">
+      <div class="rank">#22</div>
+      <div class="r-main">
+        <div class="r-head">
+          <a class="r-name" href="https://github.com/anthropics/claude-code" target="_blank"><span class="owner">anthropics/</span>claude-code</a>
+          <span class="gain">+156 ★ 今日</span>
+        </div>
+        <p class="r-desc">终端内的代理式编码工具，可理解代码库，通过自然语言命令执行常规任务。</p>
+        <div class="r-meta">
+          <span class="lang"><span class="dot" style="background:#3776AB"></span>Python</span>
+          <span>★ <b>136,296</b></span>
+          <span>今日 <b>+156</b></span>
+        </div>
       </div>
     </div>
   </div>
-  <div class="repo-card">
-    <div class="repo-rank">#2</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/openai/codex-plugin-cc" target="_blank">openai/codex-plugin-cc</a>
-        <span class="stars-today">+1,532 ⭐ today</span>
-      </div>
-      <p class="repo-desc">允许在Claude Code中使用Codex进行代码审查或任务委派。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#F7DF1E"></span>
-        <span>JavaScript</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 25,470</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +1,532 today</span>
-      </div>
+  <div class="wrap section">
+    <div class="section-head"><h2>📊 编程语言分布</h2></div>
+    <div class="lang-list">
+        <div class="lrow">
+          <span class="lname"><span class="dot" style="background:#3776AB"></span>Python</span>
+          <span class="ltrack"><span class="lfill" style="--c:#3776AB;width:100%"></span></span>
+          <span class="lcount">7 个</span>
+        </div>
+        <div class="lrow">
+          <span class="lname"><span class="dot" style="background:#F7DF1E"></span>JavaScript</span>
+          <span class="ltrack"><span class="lfill" style="--c:#F7DF1E;width:71%"></span></span>
+          <span class="lcount">5 个</span>
+        </div>
+        <div class="lrow">
+          <span class="lname"><span class="dot" style="background:#CE422B"></span>Rust</span>
+          <span class="ltrack"><span class="lfill" style="--c:#CE422B;width:42%"></span></span>
+          <span class="lcount">3 个</span>
+        </div>
+        <div class="lrow">
+          <span class="lname"><span class="dot" style="background:#3178C6"></span>TypeScript</span>
+          <span class="ltrack"><span class="lfill" style="--c:#3178C6;width:42%"></span></span>
+          <span class="lcount">3 个</span>
+        </div>
+        <div class="lrow">
+          <span class="lname"><span class="dot" style="background:#178600"></span>C#</span>
+          <span class="ltrack"><span class="lfill" style="--c:#178600;width:28%"></span></span>
+          <span class="lcount">2 个</span>
+        </div>
+        <div class="lrow">
+          <span class="lname"><span class="dot" style="background:#00ADD8"></span>Go</span>
+          <span class="ltrack"><span class="lfill" style="--c:#00ADD8;width:14%"></span></span>
+          <span class="lcount">1 个</span>
+        </div>
+        <div class="lrow">
+          <span class="lname"><span class="dot" style="background:#F05138"></span>Swift</span>
+          <span class="ltrack"><span class="lfill" style="--c:#F05138;width:14%"></span></span>
+          <span class="lcount">1 个</span>
+        </div>
     </div>
   </div>
-  <div class="repo-card">
-    <div class="repo-rank">#3</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/asgeirtj/system_prompts_leaks" target="_blank">asgeirtj/system_prompts_leaks</a>
-        <span class="stars-today">+981 ⭐ today</span>
-      </div>
-      <p class="repo-desc">收集Anthropic、OpenAI、Google、xAI以及Cursor、Copilot等工具的泄露系统提示词。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#F7DF1E"></span>
-        <span>JavaScript</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 49,955</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +981 today</span>
-      </div>
+  <div class="wrap section">
+    <div class="insights">
+      <div class="section-head"><h2>💡 今日看点</h2></div>
+      <ul>
+<li><b>Zackriya-Solutions/meetily 领跑今日榜单</b>：今日新增 <b>+1,409</b> Stars。</li>
+<li><b>Python 最为活跃</b>：占据 7 个 Trending 席位，占比 31%。</li>
+<li><b>AI 赛道持续火热</b>：14 个仓库与 AI/Agent 相关，Claude Code 技能生态、AI 助手、Agent 框架多点开花。</li>
+<li><b>Rust 表现抢眼</b>：3 个 Rust 项目上榜，端侧高性能工具持续受追捧。</li>
+<li><b>中国项目表现亮眼</b>：1 个来自中国团队/开发者的项目上榜。</li>
+      </ul>
     </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#4</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/LeonLinx/taste-skill" target="_blank">LeonLinx/taste-skill</a>
-        <span class="stars-today">+863 ⭐ today</span>
-      </div>
-      <p class="repo-desc">为AI提供审美能力，避免AI生成无聊、通用的千篇一律内容。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#F7DF1E"></span>
-        <span>JavaScript</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 57,492</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +863 today</span>
-      </div>
-    </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#5</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/alirezarezvani/claude-skills" target="_blank">alirezarezvani/claude-skills</a>
-        <span class="stars-today">+392 ⭐ today</span>
-      </div>
-      <p class="repo-desc">包含337个Claude Code技能、代理技能和插件，支持10+编码代理。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#3776AB"></span>
-        <span>Python</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 20,568</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +392 today</span>
-      </div>
-    </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#6</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/rommapp/romm" target="_blank">rommapp/romm</a>
-        <span class="stars-today">+410 ⭐ today</span>
-      </div>
-      <p class="repo-desc">美观、强大的自托管游戏ROM管理器和播放器。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#3776AB"></span>
-        <span>Python</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 10,540</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +410 today</span>
-      </div>
-    </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#7</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/ogulcancelik/herdr" target="_blank">ogulcancelik/herdr</a>
-        <span class="stars-today">+651 ⭐ today</span>
-      </div>
-      <p class="repo-desc">运行在终端中的代理多路复用器。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#CE422B"></span>
-        <span>Rust</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 12,070</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +651 today</span>
-      </div>
-    </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#8</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/alibaba/page-agent" target="_blank">alibaba/page-agent</a>
-        <span class="stars-today">+805 ⭐ today</span>
-      </div>
-      <p class="repo-desc">网页内GUI代理，支持用自然语言控制网页界面。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#3178C6"></span>
-        <span>TypeScript</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 23,884</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +805 today</span>
-      </div>
-    </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#9</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/harvard-edge/cs249r_book" target="_blank">harvard-edge/cs249r_book</a>
-        <span class="stars-today">+329 ⭐ today</span>
-      </div>
-      <p class="repo-desc">机器学习系统相关书籍。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#3776AB"></span>
-        <span>Python</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 26,841</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +329 today</span>
-      </div>
-    </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#10</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/usestrix/strix" target="_blank">usestrix/strix</a>
-        <span class="stars-today">+1,114 ⭐ today</span>
-      </div>
-      <p class="repo-desc">开源AI渗透测试工具，可发现并修复应用漏洞。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#3776AB"></span>
-        <span>Python</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 37,121</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +1,114 today</span>
-      </div>
-    </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#11</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/hesreallyhim/awesome-claude-code" target="_blank">hesreallyhim/awesome-claude-code</a>
-        <span class="stars-today">+148 ⭐ today</span>
-      </div>
-      <p class="repo-desc">Claude Code相关优质资源精选集合。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#3776AB"></span>
-        <span>Python</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 48,361</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +148 today</span>
-      </div>
-    </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#12</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/coreyhaines31/marketingskills" target="_blank">coreyhaines31/marketingskills</a>
-        <span class="stars-today">+145 ⭐ today</span>
-      </div>
-      <p class="repo-desc">面向Claude Code和AI代理的营销技能集合。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#F7DF1E"></span>
-        <span>JavaScript</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 36,430</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +145 today</span>
-      </div>
-    </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#13</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/JuliusBrussee/caveman" target="_blank">JuliusBrussee/caveman</a>
-        <span class="stars-today">+1,052 ⭐ today</span>
-      </div>
-      <p class="repo-desc">Claude Code技能，通过类原始人表达的方式减少65%的token使用量。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#F7DF1E"></span>
-        <span>JavaScript</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 84,870</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +1,052 today</span>
-      </div>
-    </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#14</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/CoplayDev/unity-mcp" target="_blank">CoplayDev/unity-mcp</a>
-        <span class="stars-today">+414 ⭐ today</span>
-      </div>
-      <p class="repo-desc">Unity MCP，是AI助手和Unity编辑器之间的桥梁。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#178600"></span>
-        <span>C#</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 11,922</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +414 today</span>
-      </div>
-    </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#15</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/facebook/astryx" target="_blank">facebook/astryx</a>
-        <span class="stars-today">+522 ⭐ today</span>
-      </div>
-      <p class="repo-desc">完全可定制、支持AI代理的开源设计系统。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#3178C6"></span>
-        <span>TypeScript</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 5,887</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +522 today</span>
-      </div>
-    </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#16</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/immich-app/immich" target="_blank">immich-app/immich</a>
-        <span class="stars-today">+470 ⭐ today</span>
-      </div>
-      <p class="repo-desc">高性能自托管照片和视频管理解决方案。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#3178C6"></span>
-        <span>TypeScript</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 106,114</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +470 today</span>
-      </div>
-    </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#17</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/ruvnet/RuView" target="_blank">ruvnet/RuView</a>
-        <span class="stars-today">+161 ⭐ today</span>
-      </div>
-      <p class="repo-desc">将普通WiFi信号转换为实时空间智能、生命体征监测和presence检测。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#CE422B"></span>
-        <span>Rust</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 76,722</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +161 today</span>
-      </div>
-    </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#18</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/gastownhall/gastown" target="_blank">gastownhall/gastown</a>
-        <span class="stars-today">+51 ⭐ today</span>
-      </div>
-      <p class="repo-desc">多代理工作区管理器。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#00ADD8"></span>
-        <span>Go</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 16,382</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +51 today</span>
-      </div>
-    </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#19</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/dotnet/skills" target="_blank">dotnet/skills</a>
-        <span class="stars-today">+246 ⭐ today</span>
-      </div>
-      <p class="repo-desc">辅助AI编码代理处理.NET和C#相关任务的技能仓库。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#178600"></span>
-        <span>C#</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 4,038</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +246 today</span>
-      </div>
-    </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#20</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/OthmanAdi/planning-with-files" target="_blank">OthmanAdi/planning-with-files</a>
-        <span class="stars-today">+66 ⭐ today</span>
-      </div>
-      <p class="repo-desc">面向AI编码代理和长运行代理任务的持久化基于文件的规划工具。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#3776AB"></span>
-        <span>Python</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 24,710</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +66 today</span>
-      </div>
-    </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#21</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/steipete/CodexBar" target="_blank">steipete/CodexBar</a>
-        <span class="stars-today">+153 ⭐ today</span>
-      </div>
-      <p class="repo-desc">展示OpenAI Codex和Claude Code的使用统计。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#F05138"></span>
-        <span>Swift</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 16,219</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +153 today</span>
-      </div>
-    </div>
-  </div>
-  <div class="repo-card">
-    <div class="repo-rank">#22</div>
-    <div class="repo-body">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/anthropics/claude-code" target="_blank">anthropics/claude-code</a>
-        <span class="stars-today">+156 ⭐ today</span>
-      </div>
-      <p class="repo-desc">终端内的代理式编码工具，可理解代码库，通过自然语言命令执行常规任务。</p>
-      <div class="repo-meta">
-        <span class="lang-dot" style="background:#3776AB"></span>
-        <span>Python</span>
-        <span class="meta-sep">·</span>
-        <span>⭐ 136,296</span>
-        <span class="meta-sep">·</span>
-        <span class="today-stars">📈 +156 today</span>
-      </div>
-    </div>
-  </div>
-  </div>
-  <div class="stats-section">
-    <h2>📊 编程语言分布</h2>
-    <div class="lang-grid">
-    <div class="lang-badge"><span class="dot" style="background:#3776AB"></span> <strong>Python</strong> 7 个</div>
-    <div class="lang-badge"><span class="dot" style="background:#F7DF1E"></span> <strong>JavaScript</strong> 5 个</div>
-    <div class="lang-badge"><span class="dot" style="background:#CE422B"></span> <strong>Rust</strong> 3 个</div>
-    <div class="lang-badge"><span class="dot" style="background:#3178C6"></span> <strong>TypeScript</strong> 3 个</div>
-    <div class="lang-badge"><span class="dot" style="background:#178600"></span> <strong>C#</strong> 2 个</div>
-    <div class="lang-badge"><span class="dot" style="background:#00ADD8"></span> <strong>Go</strong> 1 个</div>
-    <div class="lang-badge"><span class="dot" style="background:#F05138"></span> <strong>Swift</strong> 1 个</div>
-    </div>
-  </div>
-  <div class="insight-box">
-    <h2>💡 今日看点</h2>
-    <ul>
-<li><strong>Zackriya-Solutions/meetily 领跑今日榜单</strong>：今日新增 <strong>+1,409</strong> Stars，隐私优先的AI会议助手，支持4倍速Parakeet/Whisper实时转录、说话人分离、Ollama…</li>
-<li><strong>Python 最为活跃</strong>：占据 7 个 Trending 席位，占比 31%。</li>
-<li><strong>AI 赛道持续火热</strong>：14 个仓库与 AI/Agent 相关，AI 渗透测试、Agent 技能框架多点开花。</li>
-    </ul>
   </div>
   <div class="footer">
     🔗 数据来源 <a href="https://github.com/trending" target="_blank">GitHub Trending</a> · 自动生成于 2026年07月06日 CST<br>
     由 <a href="https://github.com/lph12168x" target="_blank">@lph12168x</a> 维护 · <a href="index.html">日报列表</a>
   </div>
   <script>
-    (function(){
-      var t = localStorage.getItem("gh-trending-theme");
-      if (t === "dark") {
-        document.documentElement.setAttribute("data-theme","dark");
-        document.getElementById("themeBtn").innerHTML = "☀️ Light";
-      }
-    })();
-    function toggleTheme(){
-      var isDark = document.documentElement.getAttribute("data-theme") === "dark";
-      if (isDark) {
-        document.documentElement.removeAttribute("data-theme");
-        localStorage.setItem("gh-trending-theme","light");
-        document.getElementById("themeBtn").innerHTML = "🌙 Dark";
-      } else {
-        document.documentElement.setAttribute("data-theme","dark");
-        localStorage.setItem("gh-trending-theme","dark");
-        document.getElementById("themeBtn").innerHTML = "☀️ Light";
-      }
-    }
+    (function(){var t=localStorage.getItem("gh-trending-theme");
+      if(t==="dark"){document.documentElement.setAttribute("data-theme","dark");
+        document.getElementById("themeBtn").innerHTML="☀️ Light";})();
+    function toggleTheme(){var d=document.documentElement.getAttribute("data-theme")==="dark";
+      if(d){document.documentElement.removeAttribute("data-theme");localStorage.setItem("gh-trending-theme","light");
+        document.getElementById("themeBtn").innerHTML="🌙 Dark";}
+      else{document.documentElement.setAttribute("data-theme","dark");localStorage.setItem("gh-trending-theme","dark");
+        document.getElementById("themeBtn").innerHTML="☀️ Light";}}
   </script>
 </body>
 </html>
