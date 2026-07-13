@@ -28,7 +28,6 @@ a{color:inherit}
   background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 14px;
   border-radius:999px;cursor:pointer;font-size:.85rem;font-weight:600;transition:.2s}
 .toggle:hover{background:rgba(255,255,255,.18)}
-/* ---------- HERO ---------- */
 .hero{position:relative;overflow:hidden;color:#fff;text-align:center;padding:74px 24px 60px;
   background:
     radial-gradient(900px 420px at 12% -30%, rgba(109,94,252,.35), transparent 60%),
@@ -53,7 +52,6 @@ a{color:inherit}
 .stat .n{font-size:1.7rem;font-weight:800;background:linear-gradient(90deg,#fff,#b9c0d4);
   -webkit-background-clip:text;background-clip:text;color:transparent}
 .stat .l{font-size:.78rem;color:rgba(255,255,255,.66);margin-top:2px}
-/* ---------- LAYOUT ---------- */
 .wrap{max-width:960px;margin:0 auto;padding:0 20px}
 .backnav{max-width:960px;margin:22px auto 0;padding:0 20px}
 .backnav a{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;
@@ -63,7 +61,6 @@ a{color:inherit}
 .section-head{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;flex-wrap:wrap}
 .section-head h2{font-size:1.4rem;font-weight:800;letter-spacing:-.01em}
 .section-head .hint{font-size:.85rem;color:var(--muted)}
-/* ---------- REPO CARD ---------- */
 .repo{position:relative;display:grid;grid-template-columns:56px 1fr;gap:18px;background:var(--card);
   border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px 20px 24px;margin-bottom:14px;
   box-shadow:var(--shadow-sm);transition:transform .18s ease,border-color .18s,box-shadow .18s}
@@ -88,7 +85,6 @@ a{color:inherit}
 .lang{display:inline-flex;align-items:center;gap:7px}
 .lang .dot{width:11px;height:11px;border-radius:50%}
 .r-meta b{color:var(--ink);font-weight:700}
-/* ---------- LANGUAGE BARS ---------- */
 .lang-list{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px}
 .lrow{display:flex;align-items:center;gap:12px}
 .lname{width:108px;flex-shrink:0;font-size:.88rem;color:var(--ink);font-weight:600;display:flex;align-items:center;gap:7px}
@@ -96,19 +92,16 @@ a{color:inherit}
 .ltrack{flex:1;height:9px;background:var(--bg-soft);border-radius:999px;overflow:hidden}
 .lfill{height:100%;border-radius:999px;background:var(--c,var(--accent))}
 .lcount{width:54px;text-align:right;font-size:.82rem;color:var(--muted);font-weight:600}
-/* ---------- INSIGHTS ---------- */
 .insights{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;
   box-shadow:var(--shadow-sm)}
 .insights ul{list-style:none;display:grid;gap:12px;margin-top:6px}
 .insights li{position:relative;padding-left:26px;color:var(--muted);line-height:1.6}
 .insights li::before{content:"\25B9";position:absolute;left:0;top:0;color:var(--accent);font-weight:800}
 .insights li b{color:var(--ink)}
-/* ---------- FOOTER ---------- */
 .footer{margin-top:56px;border-top:1px solid var(--line);padding:30px 24px;text-align:center;
   color:var(--muted);font-size:.85rem;line-height:1.8}
 .footer a{color:var(--accent);text-decoration:none}
 .footer a:hover{text-decoration:underline}
-/* ---------- INDEX / ARCHIVE ---------- */
 .archive{max-width:1000px;margin:0 auto;padding:0 20px}
 .month{margin:46px auto 6px;font-size:1.15rem;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:10px}
 .month::after{content:"";flex:1;height:1px;background:var(--line)}
@@ -137,14 +130,19 @@ a{color:inherit}
     <div class="hero-inner">
       <span class="eyebrow">📚 Archive</span>
       <h1>GitHub Trending 日报归档</h1>
-      <p class="sub">已累计 28 期每日热门仓库简报</p>
+      <p class="sub">已累计 29 期每日热门仓库简报</p>
     </div>
   </header>
   <div class="archive">
   <div class="month">2026 年 07 月</div>
   <div class="grid">
+      <a class="day" href="github-trending-2026-07-14.html">
+        <div class="d-date">2026年07月14日 <span class="badge-new">最新</span></div>
+        <div class="d-sub">10 个仓库 · 今日 +6,395 ★</div>
+        <div class="d-bar"></div>
+      </a>
       <a class="day" href="github-trending-2026-07-13.html">
-        <div class="d-date">2026年07月13日 <span class="badge-new">最新</span></div>
+        <div class="d-date">2026年07月13日</div>
         <div class="d-sub">17 个仓库 · 今日 +5,110 ★</div>
         <div class="d-bar"></div>
       </a>
