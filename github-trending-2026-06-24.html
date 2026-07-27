@@ -129,7 +129,18 @@ a{color:inherit}
   .rank{width:48px;height:48px;font-size:1rem}
   .gain{margin-left:0}
 }
-</style>
+
+.pagenav{max-width:960px;margin:22px auto 0;padding:0 20px;display:flex;gap:10px;flex-wrap:wrap}
+.pagenav a,.pagenav span{display:inline-flex;align-items:center;gap:6px;text-decoration:none;
+  font-size:.86rem;font-weight:600;padding:8px 14px;border-radius:999px;
+  border:1px solid var(--line);background:var(--card);color:var(--muted);transition:.15s}
+.pagenav a:hover{color:var(--accent);border-color:var(--accent);transform:translateY(-1px)}
+.pagenav .pn-home{color:var(--accent);border-color:var(--accent)}
+.pagenav .pn-latest{color:var(--accent-2);border-color:var(--accent-2)}
+.pagenav .disabled{opacity:.4;pointer-events:none}
+@media(max-width:680px){.pagenav{gap:8px}.pagenav a,.pagenav span{padding:7px 11px;font-size:.8rem}}
+
+  </style>
 </head>
 <body>
   <header class="hero">
@@ -149,7 +160,7 @@ a{color:inherit}
   <nav class="pagenav"><a class="pn-prev" href="github-trending-2026-06-23.html">← 上一个</a><a class="pn-home" href="index.html">🏠 主页</a><a class="pn-latest" href="github-trending-2026-07-27.html">⚡ 最新</a><a class="pn-next" href="github-trending-2026-06-25.html">下一个 →</a></nav>
   <!--PAGENAV-END-->
 
-  <div class="wrap section">
+<div class="wrap section">
     <div class="section-head"><h2>🔥 今日热门</h2><span class="hint">按总 Star 数排序</span></div>
     <div class="repo top1" style="--stripe:#3776AB">
       <div class="rank">#1</div>
